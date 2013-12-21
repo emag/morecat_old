@@ -9,8 +9,8 @@
     <name>morecat-api</name>
 
     <scm>
-        <url>https://github.com/emag/morecat</url>
-        <connection>scm:git:git@github.com:emag/morecat.git</connection>
+        <url>https://github.com/emag/morecat-api</url>
+        <connection>scm:git:git@github.com:emag/morecat-api.git</connection>
         <tag>HEAD</tag>
     </scm>
 
