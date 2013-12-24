@@ -25,7 +25,7 @@
         <version.wildfly>8.0.0.Beta1</version.wildfly>
 
         <version.lombok>1.12.2</version.lombok>
-        <version.querydsl>3.2.4</version.querydsl>
+        <version.hibernate.jpamodelgen>4.3.0.Final</version.hibernate.jpamodelgen>
         <version.slf4j.api>1.7.5</version.slf4j.api>
         <version.logback.classic>1.0.7</version.logback.classic>
         <version.arquillian>1.1.2.Final</version.arquillian>
@@ -81,6 +81,12 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${version.hibernate.jpamodelgen}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
