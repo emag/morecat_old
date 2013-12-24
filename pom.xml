@@ -95,22 +95,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <version>${version.querydsl}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-jpa</artifactId>
-            <version>${version.querydsl}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-sql</artifactId>
-            <version>${version.querydsl}</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${version.slf4j.api}</version>
@@ -311,22 +295,6 @@
                     <artifactId>wildfly-dist</artifactId>
                     <version>${version.wildfly}}</version>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.mysema.maven</groupId>
-                <artifactId>apt-maven-plugin</artifactId>
-                <version>${version.apt.maven.plugin}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>target/generated-sources/java</outputDirectory>
-                            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
