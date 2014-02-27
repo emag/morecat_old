@@ -1,6 +1,6 @@
 package org.emamotor.morecat.service;
 
-import org.emamotor.morecat.dao.EntryDAO;
+import org.emamotor.morecat.repository.EntryRepository;
 import org.emamotor.morecat.model.Entry;
 
 import javax.enterprise.inject.Model;
@@ -14,26 +14,26 @@ import java.util.List;
 public class EntryService {
 
     @Inject
-    private EntryDAO entryDAO;
+    private EntryRepository entryRepository;
 
     public List<Entry> findAll() {
-        return entryDAO.findAll();
+        return entryRepository.findAll();
     }
 
     public Entry findById(Integer id) {
-        return entryDAO.findById(id);
+        return entryRepository.findById(id);
     }
 
     public Entry create(Entry newEntry) {
-        return entryDAO.create(newEntry);
+        return entryRepository.create(newEntry);
     }
 
     public Entry update(Entry updateContent) {
-        return entryDAO.update(updateContent);
+        return entryRepository.update(updateContent);
     }
 
     public void delete(Integer id) {
-        entryDAO.delete(id);
+        entryRepository.delete(id);
     }
 
 }
