@@ -6,7 +6,7 @@ import javax.persistence.*;
  * @author tanabe
  */
 @Entity
-public class Admin {
+public class Setting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

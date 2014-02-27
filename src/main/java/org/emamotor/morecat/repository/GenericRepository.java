@@ -1,4 +1,4 @@
-package org.emamotor.morecat.dao;
+package org.emamotor.morecat.repository;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -9,16 +9,16 @@ import java.util.List;
 /**
  * @author Yoshimasa Tanabe
  */
-public abstract class GenericDAO<T> {
+public abstract class GenericRepository<T> {
 
     @Inject
     private EntityManager em;
 
     private Class<T> entityClass;
 
-    public GenericDAO() {}
+    public GenericRepository() {}
 
-    public GenericDAO(Class<T> entityClass) {
+    public GenericRepository(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
