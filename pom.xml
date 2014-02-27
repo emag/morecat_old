@@ -20,7 +20,7 @@
         <!-- versions -->
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
-        <version.jboss.javaee.7.0.bom>1.0.0.Final</version.jboss.javaee.7.0.bom>
+        <version.wildfly.bom>8.0.0.Final</version.wildfly.bom>
 
         <version.primefaces>4.0</version.primefaces>
         <version.lombok>1.12.2</version.lombok>
@@ -28,7 +28,7 @@
         <version.slf4j.api>1.7.5</version.slf4j.api>
         <version.logback.classic>1.0.7</version.logback.classic>
         <version.arquillian>1.1.2.Final</version.arquillian>
-        <version.wildfly.arquillian.container>8.0.0.Beta1</version.wildfly.arquillian.container>
+        <version.wildfly.arquillian.container>8.0.0.Final</version.wildfly.arquillian.container>
         <version.junit>4.11</version.junit>
 
         <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
@@ -65,9 +65,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-javaee-7.0</artifactId>
-                <version>${version.jboss.javaee.7.0.bom}</version>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>jboss-javaee-7.0-with-all</artifactId>
+                <version>${version.wildfly.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -78,6 +78,11 @@
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
