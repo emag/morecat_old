@@ -5,34 +5,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
-<h:head>
-</h:head>
-<h:body>
+<ui:composition template="WEB-INF/templates/template.xhtml">
 
-    <p:layout fullPage="true">
+    <ui:define name="title">Settings: Morecat Admin</ui:define>
 
-        <p:layoutUnit id="top" position="north" size="50">
-            MoreCat Admin Ver.${versionController.version}
-        </p:layoutUnit>
+    <ui:define name="content">
+        Blog Name: ${settingController.setting.blogName}
+    </ui:define>
 
-        <p:layoutUnit id="left" position="west" size="200" resizable="true" collapsible="true" header="Menu">
-            <h:form>
-                <p:menu style="width: 90%">
-                    <p:menuitem value="New Entry" icon="ui-icon-pencil"/>
-                    <p:separator/>
-                    <p:menuitem value="Overview" icon="ui-icon-home"/>
-                    <p:menuitem value="Entries" icon="ui-icon-document"/>
-                    <p:menuitem value="Stats" icon="ui-icon-signal"/>
-                    <p:menuitem value="Settings" icon="ui-icon-wrench"/>
-                </p:menu>
-            </h:form>
-        </p:layoutUnit>
-
-        <p:layoutUnit id="center" position="center">
-            Blog Name: ${settingController.setting.blogName}
-        </p:layoutUnit>
-
-    </p:layout>
-
-</h:body>
+</ui:composition>
 </html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>
+        <ui:insert name="title">Default title</ui:insert>
+    </title>
+</h:head>
+<h:body>
+    <p:layout fullPage="true">
+
+        <p:layoutUnit id="header" position="north" size="50">
+            MoreCat Admin ${versionController.version}
+        </p:layoutUnit>
+
+        <p:layoutUnit id="menu" position="west" size="200" resizable="true" collapsible="true" header="Menu">
+            <h:form>
+                <p:menu style="width: 90%">
+                    <p:menuitem value="New Entry" icon="ui-icon-pencil"/>
+                    <p:separator/>
+                    <p:menuitem value="Overview" icon="ui-icon-home"/>
+                    <p:menuitem value="Entries" icon="ui-icon-document"/>
+                    <p:menuitem value="Stats" icon="ui-icon-signal"/>
+                    <p:menuitem value="Settings" icon="ui-icon-wrench"/>
+                </p:menu>
+            </h:form>
+        </p:layoutUnit>
+
+        <p:layoutUnit id="content" position="center">
+            <ui:insert name="content">Default content</ui:insert>
+        </p:layoutUnit>
+
+    </p:layout>
+</h:body>
+</html>

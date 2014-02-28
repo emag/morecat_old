@@ -5,25 +5,11 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
-<h:head>
-</h:head>
-<h:body>
+<ui:composition template="WEB-INF/templates/template.xhtml">
 
-    <p:layout fullPage="true">
+    <ui:define name="title">Overview: Morecat Admin</ui:define>
 
-        <p:layoutUnit id="top" position="north" size="50">
-            MoreCat Admin
-        </p:layoutUnit>
+    <ui:define name="content">Overview</ui:define>
 
-        <p:layoutUnit id="left" position="west" size="200" resizable="true" collapsible="true" header="Menu">
-        </p:layoutUnit>
-
-        <p:layoutUnit id="center" position="center">
-            <h:form>
-            </h:form>
-        </p:layoutUnit>
-
-    </p:layout>
-
-</h:body>
+</ui:composition>
 </html>
