@@ -1,12 +1,16 @@
 package org.emamotor.morecat.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 /**
  * @author tanabe
  */
 @Entity
-public class Admin {
+@Table(name = "settings")
+@Data
+public class Setting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

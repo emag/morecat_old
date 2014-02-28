@@ -12,15 +12,24 @@
     <p:layout fullPage="true">
 
         <p:layoutUnit id="top" position="north" size="50">
-            MoreCat Admin
+            MoreCat Admin Ver.${versionController.version}
         </p:layoutUnit>
 
         <p:layoutUnit id="left" position="west" size="200" resizable="true" collapsible="true" header="Menu">
+            <h:form>
+                <p:menu style="width: 90%">
+                    <p:menuitem value="New Entry" icon="ui-icon-pencil"/>
+                    <p:separator/>
+                    <p:menuitem value="Overview" icon="ui-icon-home"/>
+                    <p:menuitem value="Entries" icon="ui-icon-document"/>
+                    <p:menuitem value="Stats" icon="ui-icon-signal"/>
+                    <p:menuitem value="Settings" icon="ui-icon-wrench"/>
+                </p:menu>
+            </h:form>
         </p:layoutUnit>
 
         <p:layoutUnit id="center" position="center">
-            <h:form>
-            </h:form>
+            Blog Name: ${settingController.setting.blogName}
         </p:layoutUnit>
 
     </p:layout>
