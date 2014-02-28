@@ -14,18 +14,18 @@
     <p:layout fullPage="true">
 
         <p:layoutUnit id="header" position="north" size="50">
-            MoreCat Admin ${versionController.version}
+            MoreCat ${versionController.version}
         </p:layoutUnit>
 
         <p:layoutUnit id="menu" position="west" size="200" resizable="true" collapsible="true" header="Menu">
             <h:form>
                 <p:menu style="width: 90%">
-                    <p:menuitem value="New Entry" icon="ui-icon-pencil"/>
+                    <p:menuitem value="New Entry" icon="ui-icon-pencil" />
                     <p:separator/>
-                    <p:menuitem value="Overview" icon="ui-icon-home"/>
+                    <p:menuitem value="Overview" outcome="overview" icon="ui-icon-home"/>
                     <p:menuitem value="Entries" icon="ui-icon-document"/>
                     <p:menuitem value="Stats" icon="ui-icon-signal"/>
-                    <p:menuitem value="Settings" icon="ui-icon-wrench"/>
+                    <p:menuitem value="Settings" outcome="settings" icon="ui-icon-wrench"/>
                 </p:menu>
             </h:form>
         </p:layoutUnit>
