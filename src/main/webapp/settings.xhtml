@@ -10,7 +10,12 @@
     <ui:define name="title">Settings: Morecat Admin</ui:define>
 
     <ui:define name="content">
-        Blog Name: ${settingController.setting.blogName}
+
+        <p:panelGrid columns="2">
+            <h:outputLabel for="blog_name" value="Blog Name: " />
+            <h:outputText id="blog_name" value="${settingController.setting.blogName}"/>
+        </p:panelGrid>
+        
     </ui:define>
 
 </ui:composition>
