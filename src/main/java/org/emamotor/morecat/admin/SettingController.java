@@ -17,8 +17,16 @@ public class SettingController {
 
     private Setting setting;
 
+    public void doFind() {
+        setting = settingService.find();
+    }
+
+    public String doUpdate() {
+        return "/mc-admin/settings/view";
+    }
+
     public Setting getSetting() {
-        return settingService.find();
+        return setting;
     }
 
 }

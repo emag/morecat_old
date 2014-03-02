@@ -7,6 +7,10 @@
       xmlns:h="http://java.sun.com/jsf/html">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
+    <f:metadata>
+        <f:viewAction action="#{settingController.doFind}"/>
+    </f:metadata>
+
     <ui:define name="title">Settings: Morecat Admin</ui:define>
 
     <ui:define name="content">
@@ -14,8 +18,10 @@
         <h2>Settings</h2>
 
         <p:panelGrid columns="2">
+
             <h:outputLabel for="blog_name" value="Blog Name: " />
             <h:outputText id="blog_name" value="${settingController.setting.blogName}"/>
+
         </p:panelGrid>
 
     </ui:define>
