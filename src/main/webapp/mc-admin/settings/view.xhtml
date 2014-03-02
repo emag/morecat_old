@@ -18,6 +18,12 @@
             <h:outputLabel for="blog_name" value="Blog Name" />
             <h:outputText id="blog_name" value="${settingViewController.setting.blogName}"/>
 
+            <h:outputLabel for="blog_description" value="Description" />
+            <h:outputText id="blog_description" value="${settingViewController.setting.blogDescription}"/>
+
+            <h:outputLabel for="public" value="Public" />
+            <h:outputText id="public" value="${settingViewController.setting.secret}"/>
+
         </p:panelGrid>
 
         <h:link outcome="edit" value="Edit"/>

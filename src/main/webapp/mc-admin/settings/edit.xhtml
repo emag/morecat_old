@@ -19,6 +19,12 @@
                 <h:outputLabel for="blog_name" value="Blog Name"/>
                 <h:inputText id="blog_name" value="#{settingEditController.setting.blogName}"/>
 
+                <h:outputLabel for="blog_description" value="Description" />
+                <h:inputText id="blog_description" value="${settingEditController.setting.blogDescription}"/>
+
+                <h:outputLabel for="public" value="Public" />
+                <p:selectBooleanButton id="public" onLabel="Yes" offLabel="No" />
+
             </p:panelGrid>
 
             <p:commandButton value="Save" action="#{settingEditController.doSave}" icon="ui-icon-disk"/>
