@@ -19,4 +19,8 @@ public class SettingService {
         return settingRepository.findAll().get(0);
     }
 
+    public void update(Setting setting) {
+        settingRepository.update(setting);
+    }
+
 }
