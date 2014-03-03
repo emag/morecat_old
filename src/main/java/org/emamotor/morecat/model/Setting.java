@@ -33,6 +33,6 @@ public class Setting {
 
     @Column(nullable = false)
     @NotNull
-    private boolean secret;
+    private boolean publicity;
 
 }
