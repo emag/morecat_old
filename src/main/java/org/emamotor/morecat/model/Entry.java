@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author tanabe
@@ -29,7 +31,7 @@ public class Entry {
     @NotNull
     private String content;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private User author;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -43,7 +45,7 @@ public class Entry {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tags")
     @Column(name = "value")
-    private List<String> tags = new ArrayList<>();
+    private Set<String> tags = new HashSet<>();
 
     @Column(nullable = false)
     @NotNull
