@@ -36,18 +36,15 @@ public abstract class GenericRepository<T> {
         return em.find(entityClass, id);
     }
 
-    @Transactional
     public T create(T newEntity) {
         em.persist(newEntity);
         return newEntity;
     }
 
-    @Transactional
     public T update(T updateContent) {
         return em.merge(updateContent);
     }
 
-    @Transactional
     public void delete(Integer id) {
         em.remove(em.find(entityClass, id));
     }
