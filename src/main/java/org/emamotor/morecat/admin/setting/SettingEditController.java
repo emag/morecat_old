@@ -30,7 +30,6 @@ public class SettingEditController {
     }
 
     public String doSave() {
-        System.out.println(setting);
         settingService.update(this.setting);
         return "view?faces-redirect=true";
     }
