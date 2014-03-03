@@ -23,6 +23,7 @@
         <version.wildfly.bom>8.0.0.Final</version.wildfly.bom>
 
         <version.primefaces>4.0</version.primefaces>
+        <version.primefaces.theme>1.0.10</version.primefaces.theme>
         <version.lombok>1.12.2</version.lombok>
         <version.hibernate.jpamodelgen>4.3.0.Final</version.hibernate.jpamodelgen>
         <version.slf4j.api>1.7.5</version.slf4j.api>
@@ -131,7 +132,7 @@
         <dependency>
             <groupId>org.primefaces.themes</groupId>
             <artifactId>eggplant</artifactId>
-            <version>1.0.10</version>
+            <version>${version.primefaces.theme}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
