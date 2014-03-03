@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:h="http://java.sun.com/jsf/html">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
@@ -15,15 +14,15 @@
 
         <p:panelGrid columns="2">
 
-            <h:outputLabel for="blog_name" value="Blog Name" />
-            <h:outputText id="blog_name" value="#{settingViewController.setting.blogName}"/>
+            <h:outputText value="Blog Name" />
+            <h:outputText value="#{settingViewController.setting.blogName}"/>
 
-            <h:outputLabel for="blog_description" value="Description" />
-            <h:outputText id="blog_description" value="#{settingViewController.setting.blogDescription}"/>
+            <h:outputText value="Description" />
+            <h:outputText value="#{settingViewController.setting.blogDescription}"/>
 
-            <h:outputLabel for="public" value="Public" />
-
-            <h:outputText id="public" value="#{settingViewController.setting.publicity}"/>
+            <h:outputText value="Public" />
+            <h:outputText value="Yes" rendered="#{settingViewController.setting.publicity}"/>
+            <h:outputText value="No" rendered="#{not settingViewController.setting.publicity}"/>
 
         </p:panelGrid>
 
