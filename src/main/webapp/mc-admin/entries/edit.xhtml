@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../../WEB-INF/templates/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{entryEditController.entry.id}"/>
+        <f:viewAction action="#{entryEditController.doFind}"/>
+    </f:metadata>
+
+    <ui:define name="title">Entries: Morecat Admin</ui:define>
+
+    <ui:define name="content">
+
+        <h2>Entries</h2>
+
+        <h:form>
+            <p:panelGrid columns="2">
+
+                <h:outputLabel for="title" value="Title"/>
+                <p:inputText id="title" value="#{entryEditController.entry.title}"/>
+
+            </p:panelGrid>
+
+            <p:commandButton value="Save" action="#{entryEditController.doSave}" icon="ui-icon-disk"/>
+
+        </h:form>
+
+        <h:link outcome="view" value="Cancel"/>
+
+    </ui:define>
+
+</ui:composition>
+</html>

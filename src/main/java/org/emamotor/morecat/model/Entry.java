@@ -38,10 +38,6 @@ public class Entry {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_modified_at", nullable = false)
-    private Date lastModifiedAt;
-
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tags")
     @Column(name = "value")
