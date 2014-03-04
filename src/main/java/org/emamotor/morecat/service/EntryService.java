@@ -3,6 +3,7 @@ package org.emamotor.morecat.service;
 import org.emamotor.morecat.repository.EntryRepository;
 import org.emamotor.morecat.model.Entry;
 
+import javax.ejb.Stateless;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author tanabe
  */
-@Model
+@Stateless
 public class EntryService {
 
     @Inject
