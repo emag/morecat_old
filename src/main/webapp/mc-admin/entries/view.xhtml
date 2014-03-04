@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
     <ui:define name="title">Entries: Morecat Admin</ui:define>
@@ -27,6 +28,11 @@
             </p:column>
             <p:column headerText="Created">
                 <h:outputText value="#{entry.createdAt}"/>
+            </p:column>
+            <p:column headerText="Action">
+                <h:link outcome="edit" value="Edit">
+                    <f:param name="id" value="#{entry.id}"/>
+                </h:link>
             </p:column>
         </p:dataTable>
 
