@@ -24,6 +24,7 @@ public class EntryEditController {
     private Entry entry = new Entry();
 
     public void doFind() {
+        // TODO check if the id exists
         this.entry = entryService.findById(entry.getId());
     }
 
