@@ -8,14 +8,19 @@ import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
 
-import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  * @author Yoshimasa Tanabe
  */
-@Model
-public class EntryEditController {
+@Named
+@ViewScoped
+public class EntryEditController implements Serializable {
 
     @Inject
     private EntryService entryService;
@@ -47,12 +52,22 @@ public class EntryEditController {
     }
 
     public String doPublish() {
-        // TODO
+        this.entry.setState(EntryState.PUBLIC);
+        entryService.update(this.entry);
+        return "view?faces-redirect=true";
+    }
+
+    public String doRevertToDraft() {
+        this.entry.setState(EntryState.DRAFT);
+        entryService.update(this.entry);
         return "view?faces-redirect=true";
     }
 
     public String doSave() {
         entryService.update(this.entry);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Saved!"));
+
         return null;
     }
 
