@@ -24,6 +24,10 @@ public class EntryEditController {
     @Setter
     private Entry entry = new Entry();
 
+    @Getter
+    @Setter
+    private boolean customPermalink;
+
     public void doFind() {
 
         // new entry
@@ -39,7 +43,7 @@ public class EntryEditController {
 
         // existing entry
         this.entry = entryService.findById(entry.getId());
-        
+
     }
 
     public String doPublish() {

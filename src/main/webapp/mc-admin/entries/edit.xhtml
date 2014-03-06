@@ -44,8 +44,19 @@
                     <p:spacer width="5"/>
                     <p:button value="Cancel" outcome="view"/>
                 </div>
-                <div>
-                    <p:inputText id="tags" value="#{entryEditController.entry.tags}" placeholder="Tags" size="25"/>
+                <div id="entry_metadata">
+                    <div>
+                        <p:inputText id="tags" value="#{entryEditController.entry.tags}" placeholder="Tags" size="25"/>
+                        <p:spacer width="20"/>
+                        <p:inputText id="permalink" value="#{entryEditController.entry.permalink}"
+                                     placeholder="Permalink" size="25" disabled="#{not entryEditController.customPermalink}"/>
+                        <p:spacer width="5"/>
+                        <p:selectBooleanCheckbox  value="#{entryEditController.customPermalink}" style="vertical-align: -3px">
+                            <p:ajax update="permalink"/>
+                        </p:selectBooleanCheckbox>
+                        <p:spacer width="5"/>
+                        <h:outputText value="Custom Permalink"/>
+                    </div>
                 </div>
                 <div class="body">
                     <div>
