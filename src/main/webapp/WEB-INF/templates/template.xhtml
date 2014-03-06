@@ -20,7 +20,8 @@
         <p:layoutUnit id="menu" position="west" size="200" resizable="true" collapsible="true" header="Menu">
             <h:form>
                 <p:menu style="width: 90%">
-                    <p:menuitem value="New Entry" icon="ui-icon-pencil" />
+                    <p:menuitem value="New Entry" outcome="/mc-admin/entries/edit"
+                                icon="ui-icon-pencil" style="background: darkorange; color: cornsilk"/>
                     <p:separator/>
                     <p:menuitem value="Overview" outcome="/mc-admin/overview" icon="ui-icon-home"/>
                     <p:menuitem value="Entries" outcome="/mc-admin/entries/view" icon="ui-icon-document"/>

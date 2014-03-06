@@ -4,14 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
-import org.emamotor.morecat.model.Setting;
+import org.emamotor.morecat.model.EntryState;
+import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
@@ -26,9 +24,26 @@ public class EntryEditController {
     @Setter
     private Entry entry = new Entry();
 
+    @Getter
+    @Setter
+    private boolean customPermalink;
+
     public void doFind() {
-        // TODO check if the id exists
+
+        // new entry
+        if (entry.getId() == null
+                || entryService.findById(entry.getId()) == null) {
+
+            entry.setAuthor(new User()); // FIXME
+            entry.setFormat(EntryFormat.MARKDOWN);
+            entry.setState(EntryState.DRAFT);
+
+            return;
+        }
+
+        // existing entry
         this.entry = entryService.findById(entry.getId());
+
     }
 
     public String doPublish() {

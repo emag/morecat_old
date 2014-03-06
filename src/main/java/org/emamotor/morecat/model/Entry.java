@@ -31,6 +31,10 @@ public class Entry {
     @NotNull
     private String content;
 
+    @Column(nullable = false)
+    @NotEmpty
+    private String permalink;
+
     @ManyToOne(optional = false)
     private User author;
 
