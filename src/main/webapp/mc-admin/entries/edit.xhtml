@@ -20,18 +20,53 @@
         <h2>Entries</h2>
 
         <h:form>
-            <p:panelGrid columns="2">
 
-                <h:outputLabel for="title" value="Title"/>
-                <p:inputText id="title" value="#{entryEditController.entry.title}"/>
-
-            </p:panelGrid>
-
-            <p:commandButton value="Save" action="#{entryEditController.doSave}" icon="ui-icon-disk"/>
+            <div id="editor">
+                <div>
+                    <p:inputText id="title" value="#{entryEditController.entry.title}" placeholder="Title" size="120"/>
+                    <p:spacer width="20"/>
+                    <p:selectOneMenu value="#{entryEditController.format_}" style="vertical-align: -10px">
+                        <f:selectItem itemValue="MARKDOWN" itemLabel="Markdown"/>
+                        <f:selectItem itemValue="HTML" itemLabel="HTML"/>
+                    </p:selectOneMenu>
+                    <p:spacer width="20"/>
+                    <p:commandButton value="Publish" action="#{entryEditController.doPublish}"
+                                     rendered="#{entryEditController.entry.state ne 'PUBLIC'}"
+                                     style="background: darkorange; color: cornsilk"/>
+                    <p:commandButton value="Update" action="#{entryEditController.doPublish()}"
+                                     rendered="#{entryEditController.entry.state eq 'PUBLIC'}"
+                                     style="background: darkorange; color: cornsilk"/>
+                    <p:spacer width="5"/>
+                    <p:commandButton value="Save" action="#{entryEditController.doSave}"
+                                     rendered="#{entryEditController.entry.state ne 'PUBLIC'}"/>
+                    <p:commandButton value="Revert to draft" action="#{entryEditController.doSave}"
+                                     rendered="#{entryEditController.entry.state eq 'PUBLIC'}"/>
+                    <p:spacer width="5"/>
+                    <p:button value="Cancel" outcome="view"/>
+                </div>
+                <div>
+                    <p:inputText id="tags" value="#{entryEditController.entry.tags}" placeholder="Tags" size="25"/>
+                </div>
+                <div class="body">
+                    <div>
+                        <p:tabView id="tabView" effect="fade" effectDuration="normal">
+                            <p:tab id="content_tab" title="Content" >
+                                <div class="edit-area">
+                                    <p:inputTextarea id="content" value="#{entryEditController.entry.content}"
+                                                     cols="50" rows="30" autoResize="false" placeholder="Content" style="width: 90%;"/>
+                                </div>
+                            </p:tab>
+                            <p:tab id="preview_tab" title="Preview">
+                                <div class="preview-area">
+                                    <h:outputText value="Preview"/>
+                                </div>
+                            </p:tab>
+                        </p:tabView>
+                    </div>
+                </div>
+            </div>
 
         </h:form>
-
-        <h:link outcome="view" value="Cancel"/>
 
     </ui:define>
 
