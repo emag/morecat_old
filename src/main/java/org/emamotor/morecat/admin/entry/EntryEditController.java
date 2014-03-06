@@ -5,15 +5,11 @@ import lombok.Setter;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
-import org.emamotor.morecat.model.Setting;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
