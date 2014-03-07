@@ -21,6 +21,8 @@
 
         <h:form>
 
+            <p:growl id="growl"/>
+
             <div id="editor">
                 <div>
                     <p:inputText id="title" value="#{entryEditController.entry.title}" placeholder="Title" size="120"/>
@@ -38,15 +40,18 @@
                                      style="background: darkorange; color: cornsilk"/>
                     <p:spacer width="5"/>
                     <p:commandButton value="Save" action="#{entryEditController.doSave}"
+                                     update="growl"
                                      rendered="#{entryEditController.entry.state ne 'PUBLIC'}"/>
-                    <p:commandButton value="Revert to draft" action="#{entryEditController.doSave}"
+                    <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}"
                                      rendered="#{entryEditController.entry.state eq 'PUBLIC'}"/>
                     <p:spacer width="5"/>
-                    <p:button value="Cancel" outcome="view"/>
+                    <p:button value="Back" outcome="view"/>
                 </div>
                 <div id="entry_metadata">
                     <div>
-                        <p:inputText id="tags" value="#{entryEditController.entry.tags}" placeholder="Tags" size="25"/>
+                        <p:inputText id="tags" value="#{entryEditController.entry.tags}"
+                                     converter="tagConverter"
+                                     placeholder="Tags" size="25"/>
                         <p:spacer width="20"/>
                         <p:inputText id="permalink" value="#{entryEditController.entry.permalink}"
                                      placeholder="Permalink" size="25" disabled="#{not entryEditController.customPermalink}"/>

@@ -45,6 +45,7 @@ public class Entry {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tags")
     @Column(name = "value")
+    @OrderBy
     private Set<String> tags = new HashSet<>();
 
     @Column(nullable = false)

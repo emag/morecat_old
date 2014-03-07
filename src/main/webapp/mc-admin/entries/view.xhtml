@@ -21,7 +21,10 @@
                 <h:outputText value="#{entry.title}"/>
             </p:column>
             <p:column headerText="Tags">
-                <h:outputText value="#{entry.tags}"/>
+                <h:outputText value="#{entry.tags}" converter="tagConverter"/>
+            </p:column>
+            <p:column headerText="State">
+                <h:outputText value="#{entry.state}"/>
             </p:column>
             <p:column headerText="Author">
                 <h:outputText value="#{entry.author.name}"/>
