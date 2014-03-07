@@ -6,6 +6,7 @@ import org.emamotor.morecat.service.EntryService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import java.util.List;
 public class EntryViewController {
 
     @Inject
+    private FacesContext facesContext;
+
+    @Inject
     private EntryService entryService;
 
     @Getter
@@ -24,6 +28,10 @@ public class EntryViewController {
     @PostConstruct
     public void init() {
         entries = entryService.findAll();
+
+        String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
+
+        // TODO display previousViewMessage
     }
 
 }
