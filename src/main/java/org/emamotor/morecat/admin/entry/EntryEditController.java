@@ -23,6 +23,9 @@ import java.io.Serializable;
 public class EntryEditController implements Serializable {
 
     @Inject
+    private FacesContext facesContext;
+
+    @Inject
     private EntryService entryService;
 
     @Getter
@@ -54,12 +57,18 @@ public class EntryEditController implements Serializable {
     public String doPublish() {
         this.entry.setState(EntryState.PUBLIC);
         entryService.update(this.entry);
+
+        facesContext.getExternalContext().getFlash().put("message", "Published!");
+
         return "view?faces-redirect=true";
     }
 
     public String doRevertToDraft() {
         this.entry.setState(EntryState.DRAFT);
         entryService.update(this.entry);
+
+        facesContext.getExternalContext().getFlash().put("message", "Revert to draft!");
+
         return "view?faces-redirect=true";
     }
 
