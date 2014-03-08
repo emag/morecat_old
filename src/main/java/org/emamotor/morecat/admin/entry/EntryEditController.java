@@ -7,12 +7,14 @@ import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
+import org.markdown4j.Markdown4jProcessor;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -35,6 +37,9 @@ public class EntryEditController implements Serializable {
     @Getter
     @Setter
     private boolean customPermalink;
+
+    @Getter
+    private String html;
 
     public void doFind() {
 
@@ -78,6 +83,10 @@ public class EntryEditController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Saved!"));
 
         return null;
+    }
+
+    public void markdown2Html() throws IOException {
+        this.html = new Markdown4jProcessor().process(this.entry.getContent());
     }
 
     public String getFormat_() {

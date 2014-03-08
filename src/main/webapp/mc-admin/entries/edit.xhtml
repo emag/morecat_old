@@ -19,7 +19,7 @@
 
         <h2>Entries</h2>
 
-        <h:form>
+        <h:form prependId="false">
 
             <p:growl id="growl"/>
 
@@ -66,6 +66,9 @@
                 <div class="body">
                     <div>
                         <p:tabView id="tabView" effect="fade" effectDuration="normal">
+
+                            <p:ajax event="tabChange" listener="#{entryEditController.markdown2Html}" update="tabView:preview"/>
+
                             <p:tab id="content_tab" title="Content" >
                                 <div class="edit-area">
                                     <p:inputTextarea id="content" value="#{entryEditController.entry.content}"
@@ -74,7 +77,7 @@
                             </p:tab>
                             <p:tab id="preview_tab" title="Preview">
                                 <div class="preview-area">
-                                    <h:outputText value="Preview"/>
+                                    <h:outputText id="preview" escape="false" value="#{entryEditController.html}"/>
                                 </div>
                             </p:tab>
                         </p:tabView>
