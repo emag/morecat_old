@@ -1,8 +1,11 @@
 package org.emamotor.morecat.util;
 
+import am.ik.marked4j.Marked;
+import am.ik.marked4j.MarkedBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -31,6 +34,12 @@ public class Resources {
     @RequestScoped
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
+    }
+
+    @Produces
+    @ApplicationScoped
+    public Marked produceMarked() {
+        return new MarkedBuilder().gfm(true).build();
     }
 
 }

@@ -1,5 +1,6 @@
 package org.emamotor.morecat.admin.entry;
 
+import am.ik.marked4j.Marked;
 import am.ik.marked4j.MarkedBuilder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -26,6 +26,9 @@ public class EntryEditController implements Serializable {
 
     @Inject
     private FacesContext facesContext;
+
+    @Inject
+    private Marked marked;
 
     @Inject
     private EntryService entryService;
@@ -85,8 +88,8 @@ public class EntryEditController implements Serializable {
         return null;
     }
 
-    public void markdown2Html() throws IOException {
-        this.html = new MarkedBuilder().gfm(true).build().marked(this.entry.getContent());
+    public void markdown2Html() {
+        this.html = marked.marked(this.entry.getContent());
     }
 
     public String getFormat_() {
