@@ -1,5 +1,6 @@
 package org.emamotor.morecat.admin.entry;
 
+import am.ik.marked4j.MarkedBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.model.Entry;
@@ -7,7 +8,6 @@ import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
-import org.markdown4j.Markdown4jProcessor;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -86,7 +86,7 @@ public class EntryEditController implements Serializable {
     }
 
     public void markdown2Html() throws IOException {
-        this.html = new Markdown4jProcessor().process(this.entry.getContent());
+        this.html = new MarkedBuilder().gfm(true).build().marked(this.entry.getContent());
     }
 
     public String getFormat_() {

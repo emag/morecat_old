@@ -26,6 +26,7 @@
         <version.primefaces.theme>1.0.10</version.primefaces.theme>
         <version.lombok>1.12.2</version.lombok>
         <version.hibernate.jpamodelgen>4.3.0.Final</version.hibernate.jpamodelgen>
+        <version.marked4j>0.9.0-SNAPSHOT</version.marked4j>
         <version.slf4j.api>1.7.5</version.slf4j.api>
         <version.logback.classic>1.0.7</version.logback.classic>
         <version.arquillian>1.1.2.Final</version.arquillian>
@@ -135,9 +136,9 @@
             <version>${version.primefaces.theme}</version>
         </dependency>
         <dependency>
-            <groupId>org.commonjava.googlecode.markdown4j</groupId>
-            <artifactId>markdown4j</artifactId>
-            <version>2.2-cj-1.0</version>
+            <groupId>am.ik.marked4j</groupId>
+            <artifactId>marked4j</artifactId>
+            <version>${version.marked4j}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
