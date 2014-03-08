@@ -23,7 +23,7 @@ public class Version {
 
     public String getVersion() {
 
-        if (this.version != null) return this.version;
+        if (version != null) return version;
 
         Properties properties = new Properties();
 
@@ -31,12 +31,12 @@ public class Version {
              BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
 
             properties.load(reader);
-            this.version = properties.getProperty("version", "UNKNOWN");
+            version = properties.getProperty("version", "UNKNOWN");
         } catch (IOException ioe) {
             throw new IllegalStateException("version.properties may be invalid", ioe);
         }
 
-        return this.version;
+        return version;
 
     }
 
