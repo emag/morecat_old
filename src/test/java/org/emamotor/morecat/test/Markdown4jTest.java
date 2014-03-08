@@ -25,6 +25,12 @@ public class Markdown4jTest {
                       "}\n" +
                       "~~~\n";
         displayTransition(code);
+
+        code = "* foo\n" +
+               "* fuga\n" +
+               "  * fuga_fuga\n" + // no support nested list
+               "* hoge\n";
+        displayTransition(code);
     }
 
     private void displayTransition(String markdown) throws IOException {
