@@ -33,17 +33,13 @@
                         <f:selectItem itemValue="HTML" itemLabel="HTML"/>
                     </p:selectOneMenu>
                     <p:spacer width="20"/>
-                    <p:commandButton value="Publish" action="#{entryEditController.doPublish}"
-                                     rendered="#{entryEditController.entry.state ne 'PUBLIC'}"
-                                     style="background: darkorange; color: cornsilk"/>
-                    <p:commandButton value="Update" action="#{entryEditController.doPublish()}"
-                                     rendered="#{entryEditController.entry.state eq 'PUBLIC'}"
+                    <p:commandButton value="#{(entryEditController.entry.state eq 'PUBLIC' ? 'Update' : 'Publish')}"
+                                     action="#{entryEditController.doPublishOrUpdate}" update="growl"
                                      style="background: darkorange; color: cornsilk"/>
                     <p:spacer width="5"/>
-                    <p:commandButton value="Save" action="#{entryEditController.doSave}"
-                                     update="growl"
+                    <p:commandButton value="Save" action="#{entryEditController.doSave}" update="growl"
                                      rendered="#{entryEditController.entry.state ne 'PUBLIC'}"/>
-                    <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}"
+                    <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}" update="growl"
                                      rendered="#{entryEditController.entry.state eq 'PUBLIC'}"/>
                     <p:spacer width="5"/>
                     <p:button value="Back" outcome="view"/>
