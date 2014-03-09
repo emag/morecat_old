@@ -1,7 +1,6 @@
 package org.emamotor.morecat.admin.entry;
 
 import am.ik.marked4j.Marked;
-import am.ik.marked4j.MarkedBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.model.Entry;
@@ -100,6 +99,10 @@ public class EntryEditController implements Serializable {
                 throw new IllegalStateException("Invalid format");
         }
 
+    }
+
+    public void doChangeFormat() {
+        doPreview();
     }
 
     public String getFormat_() {

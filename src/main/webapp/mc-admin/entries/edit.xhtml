@@ -28,6 +28,7 @@
                     <p:inputText id="title" value="#{entryEditController.entry.title}" placeholder="Title" size="120"/>
                     <p:spacer width="20"/>
                     <p:selectOneMenu value="#{entryEditController.format_}" style="vertical-align: -10px">
+                        <p:ajax listener="#{entryEditController.doChangeFormat}" update="tabView:preview"/>
                         <f:selectItem itemValue="MARKDOWN" itemLabel="Markdown"/>
                         <f:selectItem itemValue="HTML" itemLabel="HTML"/>
                     </p:selectOneMenu>
