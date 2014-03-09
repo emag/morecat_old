@@ -22,16 +22,19 @@
                 <h:outputLabel for="blog_description" value="Description" />
                 <p:inputText id="blog_description" value="#{settingEditController.setting.blogDescription}"/>
 
+
                 <h:outputLabel for="public" value="Public" />
                 <p:selectBooleanButton id="public" value="#{settingEditController.setting.publicity}" onLabel="Yes" offLabel="No" />
 
+                <f:facet name="footer">
+                    <p:commandButton value="Save" action="#{settingEditController.doSave}" icon="ui-icon-disk"/>
+                    <p:spacer width="20"/>
+                    <p:button outcome="view" value="Cancel"/>
+                </f:facet>
+
             </p:panelGrid>
 
-            <p:commandButton value="Save" action="#{settingEditController.doSave}" icon="ui-icon-disk"/>
-
         </h:form>
-
-        <h:link outcome="view" value="Cancel"/>
 
     </ui:define>
 

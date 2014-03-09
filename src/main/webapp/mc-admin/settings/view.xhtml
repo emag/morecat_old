@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
     <ui:define name="title">Settings: Morecat Admin</ui:define>
@@ -14,19 +15,21 @@
 
         <p:panelGrid columns="2">
 
-            <h:outputText value="Blog Name" />
+            <h:outputText value="Blog Name" style="font-weight: bold;"/>
             <h:outputText value="#{settingViewController.setting.blogName}"/>
 
-            <h:outputText value="Description" />
+            <h:outputText value="Description" style="font-weight: bold;"/>
             <h:outputText value="#{settingViewController.setting.blogDescription}"/>
 
-            <h:outputText value="Public" />
+            <h:outputText value="Public" style="font-weight: bold;"/>
             <h:outputText value="Yes" rendered="#{settingViewController.setting.publicity}"/>
             <h:outputText value="No" rendered="#{not settingViewController.setting.publicity}"/>
 
-        </p:panelGrid>
+            <f:facet name="footer">
+                <p:button outcome="edit" value="Edit"/>
+            </f:facet>
 
-        <h:link outcome="edit" value="Edit"/>
+        </p:panelGrid>
 
     </ui:define>
 
