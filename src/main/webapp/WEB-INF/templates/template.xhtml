@@ -14,7 +14,7 @@
     <p:layout fullPage="true">
 
         <p:layoutUnit id="header" position="north" size="50">
-            MoreCat ${versionController.version}
+            MoreCat #{versionController.version}
         </p:layoutUnit>
 
         <p:layoutUnit id="menu" position="west" size="200" resizable="true" collapsible="true" header="Menu">
@@ -27,6 +27,7 @@
                     <p:menuitem value="Entries" outcome="/mc-admin/entries/view" icon="ui-icon-document"/>
                     <p:menuitem value="Stats" outcome="/mc-admin/stats/view" icon="ui-icon-signal"/>
                     <p:menuitem value="Settings" outcome="/mc-admin/settings/view" icon="ui-icon-wrench"/>
+                    <p:menuitem value="Logout" action="#{authController.logout}" icon="ui-icon-power"/>
                 </p:menu>
             </h:form>
         </p:layoutUnit>

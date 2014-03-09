@@ -22,6 +22,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <version.wildfly.bom>8.0.0.Final</version.wildfly.bom>
 
+        <version.servlet-api>3.1.0</version.servlet-api>
         <version.primefaces>4.0</version.primefaces>
         <version.primefaces.theme>1.0.10</version.primefaces.theme>
         <version.lombok>1.12.2</version.lombok>
@@ -124,6 +125,12 @@
                     <artifactId>slf4j-api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${version.servlet-api}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
