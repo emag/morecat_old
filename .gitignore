@@ -24,3 +24,6 @@ Thumbs.db
 
 # Maven output folder
 target
+
+# JRebel
+rebel.xml
