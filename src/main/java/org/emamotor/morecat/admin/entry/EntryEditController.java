@@ -82,14 +82,24 @@ public class EntryEditController implements Serializable {
 
     public String doSave() {
         entryService.update(this.entry);
-
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Saved!"));
 
         return null;
     }
 
-    public void markdown2Html() {
-        this.html = marked.marked(this.entry.getContent());
+    public void doPreview() {
+
+        switch (this.entry.getFormat()) {
+            case MARKDOWN:
+                this.html = marked.marked(this.entry.getContent());
+                break;
+            case HTML:
+                this.html = this.entry.getContent();
+                break;
+            default:
+                throw new IllegalStateException("Invalid format");
+        }
+
     }
 
     public String getFormat_() {

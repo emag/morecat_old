@@ -67,7 +67,7 @@
                     <div>
                         <p:tabView id="tabView" effect="fade" effectDuration="normal">
 
-                            <p:ajax event="tabChange" listener="#{entryEditController.markdown2Html}" update="tabView:preview"/>
+                            <p:ajax event="tabChange" listener="#{entryEditController.doPreview}" update="tabView:preview"/>
 
                             <p:tab id="content_tab" title="Content" >
                                 <div class="edit-area">
