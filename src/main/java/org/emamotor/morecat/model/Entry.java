@@ -15,7 +15,10 @@ import java.util.Set;
  * @author tanabe
  */
 @Entity
-@Table(name = "entries")
+@Table(
+    name = "entries",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"title", "created_at"})
+)
 @Data
 public class Entry {
 
@@ -38,7 +41,7 @@ public class Entry {
     @ManyToOne(optional = false)
     private User author;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
