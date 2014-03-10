@@ -27,6 +27,7 @@
         <version.primefaces.theme>1.0.10</version.primefaces.theme>
         <version.lombok>1.12.2</version.lombok>
         <version.hibernate.jpamodelgen>4.3.0.Final</version.hibernate.jpamodelgen>
+        <version.commons.lang3>3.3</version.commons.lang3>
         <version.marked4j>0.9.0</version.marked4j>
         <version.slf4j.api>1.7.5</version.slf4j.api>
         <version.logback.classic>1.0.7</version.logback.classic>
@@ -141,6 +142,11 @@
             <groupId>org.primefaces.themes</groupId>
             <artifactId>eggplant</artifactId>
             <version>${version.primefaces.theme}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version.commons.lang3}</version>
         </dependency>
         <dependency>
             <groupId>am.ik.marked4j</groupId>
