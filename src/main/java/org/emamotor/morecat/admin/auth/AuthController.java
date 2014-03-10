@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -37,7 +36,7 @@ public class AuthController {
 
     @Getter
     @Setter
-    @NotEmpty(message = "Please Enter password")
+    @NotEmpty(message = "Please Enter Password")
     private String password;
 
     public void login(ActionEvent actionEvent) {
