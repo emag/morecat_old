@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Table(
     name = "entries",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"title", "permalink"})
+    uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_at"})
 )
 @Data
 public class Entry {
