@@ -8,13 +8,16 @@ import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
+import org.emamotor.morecat.service.UserService;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Yoshimasa Tanabe
@@ -31,6 +34,9 @@ public class EntryEditController implements Serializable {
 
     @Inject
     private EntryService entryService;
+
+    @Inject
+    private UserService userService;
 
     @Getter
     @Setter
@@ -49,9 +55,11 @@ public class EntryEditController implements Serializable {
         if (entry.getId() == null
                 || entryService.findById(entry.getId()) == null) {
 
-            entry.setAuthor(new User()); // FIXME
-            entry.setFormat(EntryFormat.MARKDOWN);
-            entry.setState(EntryState.DRAFT);
+            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+            String loginUserName = request.getUserPrincipal().getName();
+            this.entry.setAuthor(userService.findByName(loginUserName));
+            this.entry.setFormat(EntryFormat.MARKDOWN);
+            this.entry.setState(EntryState.DRAFT);
 
             return;
         }
@@ -91,9 +99,21 @@ public class EntryEditController implements Serializable {
     }
 
     public String doSave() {
-        entryService.update(this.entry);
+
+        // new entry
+        if (this.entry.getId() == null) {
+
+            this.entry.setCreatedAt(new Date());
+            entryService.create(this.entry);
+
+        } else {
+            // existing entry
+            entryService.update(this.entry);
+        }
+
         facesContext.addMessage(null, new FacesMessage("Saved!"));
         return null;
+
     }
 
     public void doPreview() {

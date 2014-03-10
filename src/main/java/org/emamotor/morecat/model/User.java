@@ -33,7 +33,7 @@ public class User {
     @Email
     private String email;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Role> role = new HashSet<>();
 
 }
