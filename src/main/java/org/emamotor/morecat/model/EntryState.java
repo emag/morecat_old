@@ -6,5 +6,4 @@ package org.emamotor.morecat.model;
 public enum  EntryState {
     DRAFT,
     PUBLIC,
-    PRIVATE,
 }

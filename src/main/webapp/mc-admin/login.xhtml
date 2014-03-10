@@ -6,20 +6,38 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
+    <title>Login: Morecat Admin</title>
 </h:head>
 <h:body>
-
     <p:layout fullPage="true">
-
-        <p:layoutUnit id="top" position="north" size="50">
-            MoreCat Admin
+        <p:layoutUnit id="header" position="north" size="50">
+            MoreCat #{versionController.version}
         </p:layoutUnit>
 
-        <p:layoutUnit id="left" position="west" size="200" resizable="true" collapsible="true" header="Menu">
-        </p:layoutUnit>
-
-        <p:layoutUnit id="center" position="center">
+        <p:layoutUnit position="center">
             <h:form>
+
+                <p:growl id="growl"/>
+
+                <p:panelGrid columns="2">
+
+                    <h:outputText value="Username"/>
+                    <p:inputText id="username" value="#{authController.username}" required="true"
+                                 requiredMessage="Please Enter Username!" message="fc">
+                        <f:validateLength minimum="1"/>
+                    </p:inputText>
+                    <h:outputText value="Password"/>
+                    <p:password id="password" value="#{authController.password}" required="true"
+                                requiredMessage="Please Enter password!">
+                        <f:validateLength minimum="1"/>
+                    </p:password>
+                    <f:facet name="footer">
+                        <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
+                                         type="submit" icon="ui-icon-check" style="margin:0"/>
+                    </f:facet>
+
+                </p:panelGrid>
+
             </h:form>
         </p:layoutUnit>
 

@@ -22,10 +22,12 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <version.wildfly.bom>8.0.0.Final</version.wildfly.bom>
 
+        <version.servlet-api>3.1.0</version.servlet-api>
         <version.primefaces>4.0</version.primefaces>
         <version.primefaces.theme>1.0.10</version.primefaces.theme>
         <version.lombok>1.12.2</version.lombok>
         <version.hibernate.jpamodelgen>4.3.0.Final</version.hibernate.jpamodelgen>
+        <version.marked4j>0.9.0-SNAPSHOT</version.marked4j>
         <version.slf4j.api>1.7.5</version.slf4j.api>
         <version.logback.classic>1.0.7</version.logback.classic>
         <version.arquillian>1.1.2.Final</version.arquillian>
@@ -125,6 +127,12 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${version.servlet-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>${version.primefaces}</version>
@@ -135,9 +143,9 @@
             <version>${version.primefaces.theme}</version>
         </dependency>
         <dependency>
-            <groupId>org.commonjava.googlecode.markdown4j</groupId>
-            <artifactId>markdown4j</artifactId>
-            <version>2.2-cj-1.0</version>
+            <groupId>am.ik.marked4j</groupId>
+            <artifactId>marked4j</artifactId>
+            <version>${version.marked4j}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

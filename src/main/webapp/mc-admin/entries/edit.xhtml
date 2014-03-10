@@ -28,21 +28,18 @@
                     <p:inputText id="title" value="#{entryEditController.entry.title}" placeholder="Title" size="120"/>
                     <p:spacer width="20"/>
                     <p:selectOneMenu value="#{entryEditController.format_}" style="vertical-align: -10px">
+                        <p:ajax listener="#{entryEditController.doChangeFormat}" update="tabView:preview"/>
                         <f:selectItem itemValue="MARKDOWN" itemLabel="Markdown"/>
                         <f:selectItem itemValue="HTML" itemLabel="HTML"/>
                     </p:selectOneMenu>
                     <p:spacer width="20"/>
-                    <p:commandButton value="Publish" action="#{entryEditController.doPublish}"
-                                     rendered="#{entryEditController.entry.state ne 'PUBLIC'}"
-                                     style="background: darkorange; color: cornsilk"/>
-                    <p:commandButton value="Update" action="#{entryEditController.doPublish()}"
-                                     rendered="#{entryEditController.entry.state eq 'PUBLIC'}"
+                    <p:commandButton value="#{(entryEditController.entry.state eq 'PUBLIC' ? 'Update' : 'Publish')}"
+                                     action="#{entryEditController.doPublishOrUpdate}" update="growl"
                                      style="background: darkorange; color: cornsilk"/>
                     <p:spacer width="5"/>
-                    <p:commandButton value="Save" action="#{entryEditController.doSave}"
-                                     update="growl"
+                    <p:commandButton value="Save" action="#{entryEditController.doSave}" update="growl"
                                      rendered="#{entryEditController.entry.state ne 'PUBLIC'}"/>
-                    <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}"
+                    <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}" update="growl"
                                      rendered="#{entryEditController.entry.state eq 'PUBLIC'}"/>
                     <p:spacer width="5"/>
                     <p:button value="Back" outcome="view"/>
@@ -66,6 +63,9 @@
                 <div class="body">
                     <div>
                         <p:tabView id="tabView" effect="fade" effectDuration="normal">
+
+                            <p:ajax event="tabChange" listener="#{entryEditController.doPreview}" update="tabView:preview"/>
+
                             <p:tab id="content_tab" title="Content" >
                                 <div class="edit-area">
                                     <p:inputTextarea id="content" value="#{entryEditController.entry.content}"
@@ -74,7 +74,7 @@
                             </p:tab>
                             <p:tab id="preview_tab" title="Preview">
                                 <div class="preview-area">
-                                    <h:outputText value="Preview"/>
+                                    <h:outputText id="preview" escape="false" value="#{entryEditController.html}"/>
                                 </div>
                             </p:tab>
                         </p:tabView>

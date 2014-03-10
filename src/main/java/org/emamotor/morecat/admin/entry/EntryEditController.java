@@ -1,5 +1,6 @@
 package org.emamotor.morecat.admin.entry;
 
+import am.ik.marked4j.Marked;
 import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.model.Entry;
@@ -26,6 +27,9 @@ public class EntryEditController implements Serializable {
     private FacesContext facesContext;
 
     @Inject
+    private Marked marked;
+
+    @Inject
     private EntryService entryService;
 
     @Getter
@@ -35,6 +39,9 @@ public class EntryEditController implements Serializable {
     @Getter
     @Setter
     private boolean customPermalink;
+
+    @Getter
+    private String html;
 
     public void doFind() {
 
@@ -54,30 +61,58 @@ public class EntryEditController implements Serializable {
 
     }
 
-    public String doPublish() {
-        this.entry.setState(EntryState.PUBLIC);
-        entryService.update(this.entry);
+    public String doPublishOrUpdate() {
 
-        facesContext.getExternalContext().getFlash().put("message", "Published!");
+        String message;
+        switch (this.entry.getState()) {
+            case DRAFT:
+                this.entry.setState(EntryState.PUBLIC);
+                message = "Published!";
+                break;
+            case PUBLIC:
+                message = "Update!";
+                break;
+            default:
+                throw new IllegalStateException("Invalid state");
+        }
+
+        entryService.update(this.entry);
+        facesContext.getExternalContext().getFlash().put("message", message);
 
         return "view?faces-redirect=true";
+
     }
 
     public String doRevertToDraft() {
         this.entry.setState(EntryState.DRAFT);
         entryService.update(this.entry);
-
         facesContext.getExternalContext().getFlash().put("message", "Revert to draft!");
-
         return "view?faces-redirect=true";
     }
 
     public String doSave() {
         entryService.update(this.entry);
-
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Saved!"));
-
+        facesContext.addMessage(null, new FacesMessage("Saved!"));
         return null;
+    }
+
+    public void doPreview() {
+
+        switch (this.entry.getFormat()) {
+            case MARKDOWN:
+                this.html = marked.marked(this.entry.getContent());
+                break;
+            case HTML:
+                this.html = this.entry.getContent();
+                break;
+            default:
+                throw new IllegalStateException("Invalid format");
+        }
+
+    }
+
+    public void doChangeFormat() {
+        doPreview();
     }
 
     public String getFormat_() {

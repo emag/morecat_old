@@ -24,7 +24,7 @@ public class Entry {
     private Integer id;
 
     @Column(nullable = false)
-    @NotEmpty
+    @NotEmpty(message = "Title must not be empty")
     private String title;
 
     @Column(nullable = false)
@@ -32,7 +32,7 @@ public class Entry {
     private String content;
 
     @Column(nullable = false)
-    @NotEmpty
+    @NotEmpty(message = "Permalink must not be empty")
     private String permalink;
 
     @ManyToOne(optional = false)
