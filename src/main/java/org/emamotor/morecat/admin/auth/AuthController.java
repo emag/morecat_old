@@ -48,7 +48,7 @@ public class AuthController {
             HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             request.login(username, password);
             principal = request.getUserPrincipal();
-            logger.info("User ({}) loging in #" + DateUtil.getCurrentDateTime(), principal.getName());
+            logger.info("User ({}) loging in #" + DateUtil.getFormattedCurrentDateTime(), principal.getName());
 
             facesContext.getExternalContext().redirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
 
@@ -65,7 +65,7 @@ public class AuthController {
     public String logout() {
 
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        logger.info("User ({}) loging out #" + DateUtil.getCurrentDateTime(), request.getUserPrincipal().getName());
+        logger.info("User ({}) loging out #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
 
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         if (session != null) {
