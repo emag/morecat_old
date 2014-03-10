@@ -6,9 +6,10 @@ import lombok.Setter;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
-import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
 import org.emamotor.morecat.service.UserService;
+import org.emamotor.morecat.util.DateUtil;
+import org.slf4j.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -31,6 +32,9 @@ public class EntryEditController implements Serializable {
 
     @Inject
     private Marked marked;
+
+    @Inject
+    private Logger logger;
 
     @Inject
     private EntryService entryService;
@@ -84,22 +88,23 @@ public class EntryEditController implements Serializable {
                 throw new IllegalStateException("Invalid state");
         }
 
-        entryService.update(this.entry);
-        facesContext.getExternalContext().getFlash().put("message", message);
-
+        createOrUpdate(message);
         return "view?faces-redirect=true";
 
     }
 
     public String doRevertToDraft() {
         this.entry.setState(EntryState.DRAFT);
-        entryService.update(this.entry);
-        facesContext.getExternalContext().getFlash().put("message", "Revert to draft!");
+        createOrUpdate("Revert to draft!");
         return "view?faces-redirect=true";
     }
 
     public String doSave() {
+        createOrUpdate("Saved!");
+        return null;
+    }
 
+    private void createOrUpdate(String message) {
         // new entry
         if (this.entry.getId() == null) {
 
@@ -110,10 +115,10 @@ public class EntryEditController implements Serializable {
             // existing entry
             entryService.update(this.entry);
         }
-
-        facesContext.addMessage(null, new FacesMessage("Saved!"));
-        return null;
-
+        facesContext.addMessage(null, new FacesMessage(message));
+        facesContext.getExternalContext().getFlash().put("message", message);
+        logger.info("[{}]Edit entry {} by {} #" + DateUtil.getFormattedDateTime(this.entry.getCreatedAt()),
+                this.entry.getState(), this.entry.getTitle(), this.entry.getAuthor().getName());
     }
 
     public void doPreview() {
