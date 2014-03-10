@@ -27,7 +27,7 @@
         <version.primefaces.theme>1.0.10</version.primefaces.theme>
         <version.lombok>1.12.2</version.lombok>
         <version.hibernate.jpamodelgen>4.3.0.Final</version.hibernate.jpamodelgen>
-        <version.marked4j>0.9.0-SNAPSHOT</version.marked4j>
+        <version.marked4j>0.9.0</version.marked4j>
         <version.slf4j.api>1.7.5</version.slf4j.api>
         <version.logback.classic>1.0.7</version.logback.classic>
         <version.arquillian>1.1.2.Final</version.arquillian>

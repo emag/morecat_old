@@ -3,6 +3,7 @@ package org.emamotor.morecat.admin.auth;
 import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.util.DateUtil;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 
 import javax.enterprise.inject.Model;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -30,10 +32,12 @@ public class AuthController {
 
     @Getter
     @Setter
+    @NotEmpty(message = "Please Enter Username")
     private String username;
 
     @Getter
     @Setter
+    @NotEmpty(message = "Please Enter password")
     private String password;
 
     public void login(ActionEvent actionEvent) {
@@ -51,7 +55,7 @@ public class AuthController {
 
         } catch (ServletException e) {
             logger.error(e.toString());
-            facesContext.addMessage(null, new FacesMessage("The username or password you provided does not match our records."));
+            facesContext.addMessage(null, new FacesMessage("Username or password was invalid"));
         } catch (IOException e) {
             logger.error("IOException, Login Controller" + "Username : " + principal.getName(), e);
             facesContext.addMessage(null, new FacesMessage("System error!"));

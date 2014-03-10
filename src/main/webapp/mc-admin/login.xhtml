@@ -15,30 +15,28 @@
         </p:layoutUnit>
 
         <p:layoutUnit position="center">
-            <h:form>
 
-                <p:growl id="growl"/>
+            <div align="center" style="margin-top: 20px">
+                <h:form>
 
-                <p:panelGrid columns="2">
+                    <p:growl id="growl"/>
 
-                    <h:outputText value="Username"/>
-                    <p:inputText id="username" value="#{authController.username}" required="true"
-                                 requiredMessage="Please Enter Username!" message="fc">
-                        <f:validateLength minimum="1"/>
-                    </p:inputText>
-                    <h:outputText value="Password"/>
-                    <p:password id="password" value="#{authController.password}" required="true"
-                                requiredMessage="Please Enter password!">
-                        <f:validateLength minimum="1"/>
-                    </p:password>
-                    <f:facet name="footer">
-                        <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
-                                         type="submit" icon="ui-icon-check" style="margin:0"/>
-                    </f:facet>
+                    <p:panelGrid columns="2">
 
-                </p:panelGrid>
+                        <h:outputText value="Username"/>
+                        <p:inputText id="username" value="#{authController.username}" required="true" message="fc"/>
+                        <h:outputText value="Password"/>
+                        <p:password id="password" value="#{authController.password}" required="true"/>
+                        <f:facet name="footer">
+                            <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
+                                             type="submit" icon="ui-icon-check" style="margin:0"/>
+                        </f:facet>
 
-            </h:form>
+                    </p:panelGrid>
+
+                </h:form>
+            </div>
+
         </p:layoutUnit>
 
     </p:layout>
