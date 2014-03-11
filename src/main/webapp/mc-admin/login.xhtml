@@ -24,9 +24,9 @@
                     <p:panelGrid columns="2">
 
                         <h:outputText value="Username"/>
-                        <p:inputText id="username" value="#{authController.username}" required="true" message="fc"/>
+                        <p:inputText id="username" value="#{authController.username}"/>
                         <h:outputText value="Password"/>
-                        <p:password id="password" value="#{authController.password}" required="true"/>
+                        <p:password id="password" value="#{authController.password}"/>
                         <f:facet name="footer">
                             <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
                                              type="submit" icon="ui-icon-check" style="margin:0"/>

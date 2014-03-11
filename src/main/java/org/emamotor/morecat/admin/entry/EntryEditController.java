@@ -3,18 +3,24 @@ package org.emamotor.morecat.admin.entry;
 import am.ik.marked4j.Marked;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
-import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
+import org.emamotor.morecat.service.UserService;
+import org.emamotor.morecat.util.DateUtil;
+import org.slf4j.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Yoshimasa Tanabe
@@ -30,7 +36,13 @@ public class EntryEditController implements Serializable {
     private Marked marked;
 
     @Inject
+    private Logger logger;
+
+    @Inject
     private EntryService entryService;
+
+    @Inject
+    private UserService userService;
 
     @Getter
     @Setter
@@ -49,9 +61,11 @@ public class EntryEditController implements Serializable {
         if (entry.getId() == null
                 || entryService.findById(entry.getId()) == null) {
 
-            entry.setAuthor(new User()); // FIXME
-            entry.setFormat(EntryFormat.MARKDOWN);
-            entry.setState(EntryState.DRAFT);
+            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+            String loginUserName = request.getUserPrincipal().getName();
+            this.entry.setAuthor(userService.findByName(loginUserName));
+            this.entry.setFormat(EntryFormat.MARKDOWN);
+            this.entry.setState(EntryState.DRAFT);
 
             return;
         }
@@ -76,24 +90,54 @@ public class EntryEditController implements Serializable {
                 throw new IllegalStateException("Invalid state");
         }
 
-        entryService.update(this.entry);
-        facesContext.getExternalContext().getFlash().put("message", message);
-
+        createOrUpdate(message);
         return "view?faces-redirect=true";
 
     }
 
     public String doRevertToDraft() {
         this.entry.setState(EntryState.DRAFT);
-        entryService.update(this.entry);
-        facesContext.getExternalContext().getFlash().put("message", "Revert to draft!");
+        createOrUpdate("Revert to draft!");
         return "view?faces-redirect=true";
     }
 
     public String doSave() {
-        entryService.update(this.entry);
-        facesContext.addMessage(null, new FacesMessage("Saved!"));
+        createOrUpdate("Saved!");
         return null;
+    }
+
+    private void createOrUpdate(String message) {
+
+        if (StringUtils.isBlank(this.entry.getPermalink())) {
+            this.entry.setPermalink(RandomStringUtils.randomNumeric(10));
+        }
+
+        boolean success = true;
+        try {
+            // new entry
+            if (this.entry.getId() == null) {
+
+                this.entry.setCreatedAt(new Date());
+                entryService.create(this.entry);
+
+            } else {
+                // existing entry
+                entryService.update(this.entry);
+            }
+        } catch (Exception e) {
+            // TODO proper validation
+            logger.error(e.getMessage());
+            message = "Error!";
+            success = false;
+        } finally {
+            facesContext.addMessage(null, new FacesMessage(message));
+            facesContext.getExternalContext().getFlash().put("message", message);
+            if (success) {
+                logger.info("[{}]Edit entry {} by {} #" + DateUtil.getFormattedDateTime(this.entry.getCreatedAt()),
+                        this.entry.getState(), this.entry.getTitle(), this.entry.getAuthor().getName());
+            }
+        }
+
     }
 
     public void doPreview() {

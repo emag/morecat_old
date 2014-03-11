@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -37,7 +36,7 @@ public class AuthController {
 
     @Getter
     @Setter
-    @NotEmpty(message = "Please Enter password")
+    @NotEmpty(message = "Please Enter Password")
     private String password;
 
     public void login(ActionEvent actionEvent) {
@@ -49,7 +48,7 @@ public class AuthController {
             HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             request.login(username, password);
             principal = request.getUserPrincipal();
-            logger.info("User ({}) loging in #" + DateUtil.getCurrentDateTime(), principal.getName());
+            logger.info("User ({}) loging in #" + DateUtil.getFormattedCurrentDateTime(), principal.getName());
 
             facesContext.getExternalContext().redirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
 
@@ -66,7 +65,7 @@ public class AuthController {
     public String logout() {
 
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        logger.info("User ({}) loging out #" + DateUtil.getCurrentDateTime(), request.getUserPrincipal().getName());
+        logger.info("User ({}) loging out #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
 
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         if (session != null) {

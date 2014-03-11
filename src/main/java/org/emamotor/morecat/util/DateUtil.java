@@ -9,12 +9,15 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    public static String getCurrentDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-        Date date = new Date();
-        return dateFormat.format(date);
+    public static String getFormattedDateTime(Date date) {
+        DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+        return df.format(date);
+    }
+
+    public static String getFormattedCurrentDateTime() {
+        return getFormattedDateTime(new Date());
     }
 
 }
