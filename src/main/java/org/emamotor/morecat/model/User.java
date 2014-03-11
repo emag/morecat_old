@@ -34,6 +34,6 @@ public class User {
     private String email;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<Role> role = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
 }
