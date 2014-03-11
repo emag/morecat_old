@@ -1,4 +1,4 @@
-package org.emamotor.morecat.admin.entry;
+package org.emamotor.morecat.admin.common.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
