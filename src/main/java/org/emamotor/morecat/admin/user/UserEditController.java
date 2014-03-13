@@ -57,7 +57,7 @@ public class UserEditController implements Serializable {
 
         userService.update(this.user);
 
-        String successMessage = newUser ? "Created!" : "Update!";
+        String successMessage = newUser ? "Created!" : "Updated!";
         facesContext.getExternalContext().getFlash().put("message", successMessage);
         return "view?faces-redirect=true";
 
