@@ -37,8 +37,9 @@
                 <p:inputText id="email" value="#{userEditController.user.email}"/>
 
                 <h:outputLabel for="role" value="Role"/>
-                <p:selectOneMenu id="role" value="#{userEditController.user.role}" effect="fade">
-                    <f:selectItems value="#{userEditController.existingRoles}" var="role" itemLabel="#{role.name}" itemValue="#{role}"/>
+                <p:selectOneMenu id="role" value="#{userEditController.role_}" effect="fade">
+                    <f:selectItem itemValue="ADMIN" itemLabel="Admin"/>
+                    <f:selectItem itemValue="AUTHOR" itemLabel="Author"/>
                 </p:selectOneMenu>
 
                 <f:facet name="footer">

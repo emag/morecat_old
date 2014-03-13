@@ -8,13 +8,11 @@ import org.emamotor.morecat.service.RoleService;
 import org.emamotor.morecat.service.UserService;
 import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
@@ -39,14 +37,6 @@ public class UserEditController implements Serializable {
     @Setter
     private User user = new User();
 
-    @Getter
-    private List<Role> existingRoles;
-
-    @PostConstruct
-    public void init() {
-        this.existingRoles = roleService.findAll();
-    }
-
     public void doFind() {
 
         // new user
@@ -63,6 +53,14 @@ public class UserEditController implements Serializable {
     public String doSave() {
         userService.update(this.user);
         return "view?faces-redirect=true";
+    }
+
+    public String getRole_() {
+        return this.user.getRole().name();
+    }
+
+    public void setRole_(String selectedRole) {
+        this.user.setRole(Role.valueOf(selectedRole));
     }
 
 }
