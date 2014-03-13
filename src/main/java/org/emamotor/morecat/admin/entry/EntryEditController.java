@@ -20,7 +20,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
@@ -77,67 +80,101 @@ public class EntryEditController implements Serializable {
 
     public String doPublishOrUpdate() {
 
-        String message;
+        if (doCreateOrUpdate()) return null;
+
+        String successMessage;
         switch (this.entry.getState()) {
             case DRAFT:
                 this.entry.setState(EntryState.PUBLIC);
-                message = "Published!";
+                successMessage = "Published!";
                 break;
             case PUBLIC:
-                message = "Update!";
+                successMessage = "Update!";
                 break;
             default:
                 throw new IllegalStateException("Invalid state");
         }
+        facesContext.getExternalContext().getFlash().put("message", successMessage);
 
-        createOrUpdate(message);
         return "view?faces-redirect=true";
 
     }
 
-    public String doRevertToDraft() {
-        this.entry.setState(EntryState.DRAFT);
-        createOrUpdate("Revert to draft!");
-        return "view?faces-redirect=true";
+    private boolean doCreateOrUpdate() {
+        List<String> errorMessages = createOrUpdate();
+        for (String errorMessage : errorMessages) {
+            addFacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, null);
+            return true;
+        }
+
+        logger.info("[{}]Edit entry {} by {} #" + DateUtil.getFormattedCurrentDateTime(),
+                this.entry.getState(), this.entry.getTitle(), this.entry.getAuthor().getName());
+
+        return false;
     }
 
-    public String doSave() {
-        createOrUpdate("Saved!");
-        return null;
+    private List<String> createOrUpdate() {
+
+        setupEntry();
+
+        List<String> errorMessages = new ArrayList<>();
+        if (validatePermalink()) {
+            entryService.update(this.entry);
+        } else {
+            errorMessages.add("The Permalink is already registered on the date. Please change the Permalink.");
+        }
+        return errorMessages;
+
     }
 
-    private void createOrUpdate(String message) {
+    private void addFacesMessage(FacesMessage.Severity severity, String summary, String detail) {
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    }
 
+    private void setupEntry() {
         if (StringUtils.isBlank(this.entry.getPermalink())) {
             this.entry.setPermalink(RandomStringUtils.randomNumeric(10));
         }
+        if (this.entry.getCreatedAt() == null) {
+            this.entry.setCreatedAt(new Date());
+        }
+    }
 
-        boolean success = true;
-        try {
-            // new entry
-            if (this.entry.getId() == null) {
-
-                this.entry.setCreatedAt(new Date());
-                entryService.create(this.entry);
-
-            } else {
-                // existing entry
-                entryService.update(this.entry);
+    private boolean validatePermalink() {
+        for (Entry existingEntry : entryService.findAll()) {
+            if (! existingEntry.getId().equals(this.entry.getId())
+                    &&this.entry.getPermalink().equals(existingEntry.getPermalink())
+                    && this.entry.getCreatedAt().equals(existingEntry.getCreatedAt())) {
+                return false;
             }
-        } catch (Exception e) {
-            // TODO proper validation
-            logger.error(e.getMessage());
-            message = "Error!";
-            success = false;
-        } finally {
-            facesContext.addMessage(null, new FacesMessage(message));
-            facesContext.getExternalContext().getFlash().put("message", message);
-            if (success) {
-                logger.info("[{}]Edit entry {} by {} #" + DateUtil.getFormattedDateTime(this.entry.getCreatedAt()),
-                        this.entry.getState(), this.entry.getTitle(), this.entry.getAuthor().getName());
+        }
+        return true;
+    }
+
+    public String doRevertToDraft() {
+
+        if (doCreateOrUpdate()) return null;
+
+        this.entry.setState(EntryState.DRAFT);
+        facesContext.getExternalContext().getFlash().put("message", "Revert to draft!");
+
+        return "view?faces-redirect=true";
+
+    }
+
+    public String doSave() {
+
+        List<String> errorMessages = createOrUpdate();
+
+        if (errorMessages.size() == 0) {
+            facesContext.addMessage(null, new FacesMessage("Saved!"));
+        } else {
+            for (String errorMessage : errorMessages) {
+                addFacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, null);
             }
         }
 
+        return null;
     }
 
     public void doPreview() {

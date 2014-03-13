@@ -5,6 +5,7 @@ import org.emamotor.morecat.repository.UserRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
@@ -15,8 +16,20 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User findById(Integer id) {
+        return userRepository.findById(id);
+    }
+
     public User findByName(String username) {
         return userRepository.findByName(username);
+    }
+
+    public User update(User user) {
+        return userRepository.update(user);
     }
 
 }
