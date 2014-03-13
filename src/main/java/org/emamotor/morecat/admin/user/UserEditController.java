@@ -51,8 +51,15 @@ public class UserEditController implements Serializable {
     }
 
     public String doSave() {
+
+        boolean newUser = this.user.getId() == null;
+
         userService.update(this.user);
+
+        String successMessage = newUser ? "Created!" : "Update!";
+        facesContext.getExternalContext().getFlash().put("message", successMessage);
         return "view?faces-redirect=true";
+
     }
 
     public String getRole_() {
