@@ -12,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -29,15 +28,15 @@ public class User {
     private Integer id;
 
     @Column(nullable = false, unique = true)
-    @NotEmpty
+    @NotEmpty(message = "Name must not be empty")
     private String name;
 
     @Basic(optional = false)
-    @NotEmpty
+    @NotEmpty(message = "Password not be empty")
     private String password;
 
     @Column(nullable = false, unique = true)
-    @NotEmpty
+    @NotEmpty(message = "Email must not be empty")
     @Email
     private String email;
 
