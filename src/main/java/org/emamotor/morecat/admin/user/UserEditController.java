@@ -42,6 +42,7 @@ public class UserEditController implements Serializable {
         // new user
         if (user.getId() == null
                 || userService.findById(user.getId()) == null) {
+            this.user.setRole(Role.AUTHOR);
             return;
         }
 
