@@ -6,6 +6,7 @@ import org.emamotor.morecat.model.Role;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.RoleService;
 import org.emamotor.morecat.service.UserService;
+import org.emamotor.morecat.util.PasswordUtil;
 import org.slf4j.Logger;
 
 import javax.faces.context.FacesContext;
@@ -53,6 +54,8 @@ public class UserEditController implements Serializable {
 
     public String doSave() {
 
+        this.user.setPassword(PasswordUtil.hasing(this.user.getPassword()));
+        
         boolean newUser = this.user.getId() == null;
 
         userService.update(this.user);
