@@ -55,7 +55,6 @@ public class UserEditController implements Serializable {
     public String doSave() {
 
         this.user.setPassword(PasswordUtil.hasing(this.user.getPassword()));
-        
         boolean newUser = this.user.getId() == null;
 
         userService.update(this.user);
