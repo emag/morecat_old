@@ -6,15 +6,14 @@ import org.emamotor.morecat.model.Role;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.RoleService;
 import org.emamotor.morecat.service.UserService;
+import org.emamotor.morecat.util.PasswordUtil;
 import org.slf4j.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
@@ -39,19 +38,12 @@ public class UserEditController implements Serializable {
     @Setter
     private User user = new User();
 
-    @Getter
-    private List<Role> existingRoles;
-
-    @PostConstruct
-    public void init() {
-        this.existingRoles = roleService.findAll();
-    }
-
     public void doFind() {
 
         // new user
         if (user.getId() == null
                 || userService.findById(user.getId()) == null) {
+            this.user.setRole(Role.AUTHOR);
             return;
         }
 
@@ -61,8 +53,24 @@ public class UserEditController implements Serializable {
     }
 
     public String doSave() {
+
+        this.user.setPassword(PasswordUtil.hasing(this.user.getPassword()));
+        boolean newUser = this.user.getId() == null;
+
         userService.update(this.user);
+
+        String successMessage = newUser ? "Created!" : "Updated!";
+        facesContext.getExternalContext().getFlash().put("message", successMessage);
         return "view?faces-redirect=true";
+
+    }
+
+    public String getRole_() {
+        return this.user.getRole().name();
+    }
+
+    public void setRole_(String selectedRole) {
+        this.user.setRole(Role.valueOf(selectedRole));
     }
 
 }

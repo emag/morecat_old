@@ -13,8 +13,14 @@
 <h:body>
     <p:layout fullPage="true">
 
-        <p:layoutUnit id="header" position="north" size="50">
-            MoreCat #{versionController.version}
+        <p:layoutUnit id="header" position="north" size="65">
+            <h:form>
+                MoreCat #{versionController.version}
+                <p:menuButton value="// TODO User Name">
+                    <p:menuitem value="Edit Profile"/>
+                    <p:menuitem value="Logout" action="#{authController.logout}"/>
+                </p:menuButton>
+            </h:form>
         </p:layoutUnit>
 
         <p:layoutUnit id="menu" position="west" size="200" resizable="true" collapsible="true" header="Menu">
@@ -28,7 +34,6 @@
                     <p:menuitem value="Stats" outcome="/mc-admin/stats/view" icon="ui-icon-signal"/>
                     <p:menuitem value="Users" outcome="/mc-admin/users/view" icon="ui-icon-person"/>
                     <p:menuitem value="Settings" outcome="/mc-admin/settings/view" icon="ui-icon-wrench"/>
-                    <p:menuitem value="Logout" action="#{authController.logout}" icon="ui-icon-power"/>
                 </p:menu>
             </h:form>
         </p:layoutUnit>
