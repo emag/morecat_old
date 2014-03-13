@@ -34,7 +34,7 @@
             <url-pattern>/mc-admin/overview/*</url-pattern>
             <url-pattern>/mc-admin/settings/*</url-pattern>
             <url-pattern>/mc-admin/stats/*</url-pattern>
-            <url-pattern>/mc-admin/stats/*</url-pattern>
+            <url-pattern>/mc-admin/users/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ADMIN</role-name>
