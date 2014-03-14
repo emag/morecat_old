@@ -2,20 +2,17 @@ package org.emamotor.morecat.admin.auth;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.emamotor.morecat.util.DateUtil;
+import org.emamotor.morecat.service.AuthService;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.security.Principal;
 
 /**
  * @author Yoshimasa Tanabe
@@ -29,6 +26,9 @@ public class AuthController {
     @Inject
     private FacesContext facesContext;
 
+    @Inject
+    private AuthService authService;
+
     @Getter
     @Setter
     @NotEmpty(message = "Please Enter Username")
@@ -39,24 +39,21 @@ public class AuthController {
     @NotEmpty(message = "Please Enter Password")
     private String password;
 
-    public void login(ActionEvent actionEvent) {
+    public void login() {
 
-        Principal principal = null;
+        HttpServletRequest request = null;
 
         try {
 
-            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-            request.login(username, password);
-            principal = request.getUserPrincipal();
-            logger.info("User ({}) loging in #" + DateUtil.getFormattedCurrentDateTime(), principal.getName());
-
+            request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+            authService.login(request, username, password);
             facesContext.getExternalContext().redirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
 
         } catch (ServletException e) {
-            logger.error(e.toString());
+            logger.warn(e.toString());
             facesContext.addMessage(null, new FacesMessage("Username or password was invalid"));
         } catch (IOException e) {
-            logger.error("IOException, Login Controller" + "Username : " + principal.getName(), e);
+            logger.error("IOException occurred, Username : " + request.getUserPrincipal().getName(), e);
             facesContext.addMessage(null, new FacesMessage("System error!"));
         }
 
@@ -65,12 +62,7 @@ public class AuthController {
     public String logout() {
 
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        logger.info("User ({}) loging out #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
-
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+        authService.logout(request, request.getSession(false));
 
         return "/mc-admin/login?faces-redirect=true";
 
