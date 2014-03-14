@@ -21,7 +21,7 @@
                     <p:menuitem value="MoreCat #{versionController.version}"/>
                     <f:facet name="options">
                         <p:menuButton value="Welcome, #{authController.loginUserName}">
-                            <p:menuitem value="Edit Profile"/>
+                            <p:menuitem value="Edit Profile" outcome="/mc-admin/profile/edit"/>
                             <p:menuitem value="Logout" action="#{authController.logout}"/>
                         </p:menuButton>
                     </f:facet>
