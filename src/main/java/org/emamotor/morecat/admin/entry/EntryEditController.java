@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
+import org.emamotor.morecat.model.Role;
+import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.EntryService;
 import org.emamotor.morecat.service.UserService;
 import org.emamotor.morecat.util.DateUtil;
@@ -19,6 +21,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,13 +63,15 @@ public class EntryEditController implements Serializable {
 
     public void doFind() {
 
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        User author = userService.findByName(request.getUserPrincipal().getName());
+
         // new entry
         if (entry.getId() == null
-                || entryService.findById(entry.getId()) == null) {
+                || (this.entry = entryService.findById(entry.getId())) == null) {
 
-            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-            String loginUserName = request.getUserPrincipal().getName();
-            this.entry.setAuthor(userService.findByName(loginUserName));
+            this.entry = new Entry();
+            this.entry.setAuthor(author);
             this.entry.setFormat(EntryFormat.MARKDOWN);
             this.entry.setState(EntryState.DRAFT);
 
@@ -74,7 +79,19 @@ public class EntryEditController implements Serializable {
         }
 
         // existing entry
-        this.entry = entryService.findById(entry.getId());
+        // Authors can edit their own entries
+        if (! request.isUserInRole(String.valueOf(Role.ADMIN))
+                && ! this.entry.getAuthor().equals(author)) {
+
+            try {
+                // TODO Should I redirect the user to Forbidden page?
+                facesContext.getExternalContext().redirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
+            } catch (IOException e) {
+                logger.error("IOException occurred, Username : " + request.getUserPrincipal().getName(), e);
+                facesContext.addMessage(null, new FacesMessage("System error!"));
+            }
+
+        }
 
     }
 
