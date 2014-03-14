@@ -68,4 +68,10 @@ public class AuthController {
 
     }
 
+    public String getLoginUserName() {
+        String loginUserName =
+                ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName();
+        return authService.getLoginUserByName(loginUserName).getName();
+    }
+
 }

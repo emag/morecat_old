@@ -16,7 +16,7 @@
         <p:layoutUnit id="header" position="north" size="65">
             <h:form>
                 MoreCat #{versionController.version}
-                <p:menuButton value="// TODO User Name">
+                <p:menuButton value="Welcome, #{authController.loginUserName}">
                     <p:menuitem value="Edit Profile"/>
                     <p:menuitem value="Logout" action="#{authController.logout}"/>
                 </p:menuButton>
