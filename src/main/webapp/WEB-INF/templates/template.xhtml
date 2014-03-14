@@ -37,9 +37,9 @@
                     <p:separator/>
                     <p:menuitem value="Overview" outcome="/mc-admin/overview/view" icon="ui-icon-home"/>
                     <p:menuitem value="Entries" outcome="/mc-admin/entries/view" icon="ui-icon-document"/>
-                    <p:menuitem value="Stats" outcome="/mc-admin/stats/view" icon="ui-icon-signal"/>
-                    <p:menuitem value="Users" outcome="/mc-admin/users/view" icon="ui-icon-person"/>
-                    <p:menuitem value="Settings" outcome="/mc-admin/settings/view" icon="ui-icon-wrench"/>
+                    <p:menuitem value="Stats" outcome="/mc-admin/stats/view" icon="ui-icon-signal" rendered="#{request.isUserInRole('ADMIN')}"/>
+                    <p:menuitem value="Users" outcome="/mc-admin/users/view" icon="ui-icon-person" rendered="#{request.isUserInRole('ADMIN')}"/>
+                    <p:menuitem value="Settings" outcome="/mc-admin/settings/view" icon="ui-icon-wrench" rendered="#{request.isUserInRole('ADMIN')}"/>
                 </p:menu>
             </h:form>
         </p:layoutUnit>
