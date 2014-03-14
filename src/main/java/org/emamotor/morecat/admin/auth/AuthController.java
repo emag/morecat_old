@@ -47,7 +47,9 @@ public class AuthController {
 
             request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
             authService.login(request, username, password);
-            facesContext.getExternalContext().redirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
+
+            String redirectView = "/mc-admin/overview/view.xhtml";
+            facesContext.getExternalContext().redirect(request.getContextPath() + redirectView);
 
         } catch (ServletException e) {
             logger.warn(e.toString());
