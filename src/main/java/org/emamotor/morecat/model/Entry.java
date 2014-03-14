@@ -20,11 +20,7 @@ import java.util.Set;
     uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_date"})
 )
 @Data
-public class Entry {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Entry extends BaseEntity {
 
     @Column(nullable = false)
     @NotEmpty(message = "Title must not be empty")
