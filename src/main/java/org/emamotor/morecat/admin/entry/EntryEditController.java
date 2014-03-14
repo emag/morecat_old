@@ -154,6 +154,7 @@ public class EntryEditController implements Serializable {
         }
         if (this.entry.getCreatedTime() == null) {
             this.entry.setCreatedTime(new Date());
+            this.entry.setCreatedDate(new Date());
         }
     }
 
