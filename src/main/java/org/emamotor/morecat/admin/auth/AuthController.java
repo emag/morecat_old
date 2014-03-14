@@ -3,6 +3,7 @@ package org.emamotor.morecat.admin.auth;
 import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.service.AuthService;
+import org.emamotor.morecat.util.SecurityUtil;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 
@@ -13,6 +14,10 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Yoshimasa Tanabe
@@ -49,6 +54,17 @@ public class AuthController {
             authService.login(request, username, password);
 
             String redirectView = "/mc-admin/overview/view.xhtml";
+            String referer = request.getHeader("Referer");
+            if (SecurityUtil.validateReferer(request.getScheme(),
+                                             request.getServerName(),
+                                             request.getServerPort(),
+                                             request.getContextPath() + "/mc-admin/",
+                                             referer)) {
+                Pattern pattern = Pattern.compile(request.getContextPath());
+                Matcher matcher = pattern.matcher(new URI(referer).getPath());
+                redirectView = matcher.replaceFirst("");
+            }
+
             facesContext.getExternalContext().redirect(request.getContextPath() + redirectView);
 
         } catch (ServletException e) {
@@ -56,6 +72,9 @@ public class AuthController {
             facesContext.addMessage(null, new FacesMessage("Username or password was invalid"));
         } catch (IOException e) {
             logger.error("IOException occurred, Username : " + request.getUserPrincipal().getName(), e);
+            facesContext.addMessage(null, new FacesMessage("System error!"));
+        } catch (URISyntaxException e) {
+            logger.error("URISyntaxException occurred, Username : " + request.getUserPrincipal().getName(), e);
             facesContext.addMessage(null, new FacesMessage("System error!"));
         }
 
