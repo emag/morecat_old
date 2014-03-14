@@ -7,11 +7,20 @@
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
     <title>Login: Morecat Admin</title>
+    <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <h:body>
     <p:layout fullPage="true">
         <p:layoutUnit id="header" position="north" size="65">
-            MoreCat #{versionController.version}
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="MoreCat #{versionController.version}"/>
+                    <f:facet name="options">
+                        <p:menuButton value="About">
+                        </p:menuButton>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
         </p:layoutUnit>
 
         <p:layoutUnit position="center">
