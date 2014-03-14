@@ -2,6 +2,8 @@ package org.emamotor.morecat.admin.entry;
 
 import lombok.Getter;
 import org.emamotor.morecat.model.Entry;
+import org.emamotor.morecat.model.Role;
+import org.emamotor.morecat.service.AuthService;
 import org.emamotor.morecat.service.EntryService;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +11,7 @@ import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -23,13 +26,22 @@ public class EntryViewController {
     @Inject
     private EntryService entryService;
 
+    @Inject
+    private AuthService authService;
+
     @Getter
     private List<Entry> entries;
 
     @PostConstruct
     public void init() {
 
-        entries = entryService.findAll();
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        if (request.isUserInRole(String.valueOf(Role.ADMIN))) {
+            entries = entryService.findAll();
+        } else {
+            entries = entryService.findAllByAuthor(
+                    authService.getLoginUserByName(request.getUserPrincipal().getName()));
+        }
 
         String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
         if (previousViewMessage == null) {

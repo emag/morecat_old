@@ -1,5 +1,6 @@
 package org.emamotor.morecat.service;
 
+import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.repository.EntryRepository;
 import org.emamotor.morecat.model.Entry;
 
@@ -19,6 +20,10 @@ public class EntryService {
 
     public List<Entry> findAll() {
         return entryRepository.findAll();
+    }
+
+    public List<Entry> findAllByAuthor(User author) {
+        return entryRepository.findAllByAuthor(author);
     }
 
     public Entry findById(Integer id) {
