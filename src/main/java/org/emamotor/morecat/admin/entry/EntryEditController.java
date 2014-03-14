@@ -152,8 +152,8 @@ public class EntryEditController implements Serializable {
         if (StringUtils.isBlank(this.entry.getPermalink())) {
             this.entry.setPermalink(RandomStringUtils.randomNumeric(10));
         }
-        if (this.entry.getCreatedAt() == null) {
-            this.entry.setCreatedAt(new Date());
+        if (this.entry.getCreatedTime() == null) {
+            this.entry.setCreatedTime(new Date());
         }
     }
 
@@ -161,7 +161,7 @@ public class EntryEditController implements Serializable {
         for (Entry existingEntry : entryService.findAll()) {
             if (! existingEntry.getId().equals(this.entry.getId())
                     &&this.entry.getPermalink().equals(existingEntry.getPermalink())
-                    && this.entry.getCreatedAt().equals(existingEntry.getCreatedAt())) {
+                    && this.entry.getCreatedTime().equals(existingEntry.getCreatedTime())) {
                 return false;
             }
         }

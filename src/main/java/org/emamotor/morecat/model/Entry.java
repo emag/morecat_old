@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Table(
     name = "entries",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_at"})
+    uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_date"})
 )
 @Data
 public class Entry {
@@ -42,8 +42,12 @@ public class Entry {
     private User author;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    @Column(name = "created_date", nullable = false)
+    private Date createdDate;
+
+    @Temporal(TemporalType.TIME)
+    @Column(name = "created_time", nullable = false)
+    private Date createdTime;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tags")
