@@ -22,12 +22,6 @@ public class SecurityUtil {
 
             URI refererURI = new URI(referer);
 
-            System.out.println(refererURI.toString());
-            System.out.println(refererURI.getScheme());
-            System.out.println(refererURI.getHost());
-            System.out.println(refererURI.getPort());
-            System.out.println(refererURI.getPath() + "\n");
-
             if (! refererURI.getScheme().equals(scheme)) return false;
             if (! refererURI.getHost().equals(domain)) return false;
             if (! (refererURI.getPort() == port)) return false;
