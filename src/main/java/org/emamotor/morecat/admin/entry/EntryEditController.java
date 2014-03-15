@@ -97,8 +97,6 @@ public class EntryEditController implements Serializable {
 
     public String doPublishOrUpdate() {
 
-        if (doCreateOrUpdate()) return null;
-
         String successMessage;
         switch (this.entry.getState()) {
             case DRAFT:
@@ -111,6 +109,9 @@ public class EntryEditController implements Serializable {
             default:
                 throw new IllegalStateException("Invalid state");
         }
+
+        if (doCreateOrUpdate()) return null;
+
         facesContext.getExternalContext().getFlash().put("message", successMessage);
 
         return "view?faces-redirect=true";
@@ -171,9 +172,10 @@ public class EntryEditController implements Serializable {
 
     public String doRevertToDraft() {
 
+        this.entry.setState(EntryState.DRAFT);
+
         if (doCreateOrUpdate()) return null;
 
-        this.entry.setState(EntryState.DRAFT);
         facesContext.getExternalContext().getFlash().put("message", "Revert to draft!");
 
         return "view?faces-redirect=true";
