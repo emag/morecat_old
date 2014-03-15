@@ -14,68 +14,29 @@ import java.util.List;
  * @author tanabe
  */
 @Path("/entries")
-public class EntryResource {
-
-    @Inject
-    private EntryService entryService;
+public interface EntryResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Entry> findAll() {
-        return entryService.findAll();
-    }
+    List<Entry> findAll();
 
     @GET
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSingleInstance(@PathParam("id") Integer id) {
-
-        Entry aEntry = entryService.findById(id);
-
-        if (aEntry == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(null).build();
-        }
-
-        return Response.ok(aEntry, MediaType.APPLICATION_JSON).build();
-
-    }
+    Response getSingleInstance(@PathParam("id") Integer id);
 
     @POST
-    @Path("/post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(Entry newEntry) {
-
-        Entry registeredEntry = entryService.create(newEntry);
-
-        return Response.created(URI.create("/entries/" + registeredEntry.getId())).build();
-
-    }
+    public Response create(Entry newEntry);
 
     @PUT
     @Path("/{id:[0-9][0-9]*}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") Integer id, Entry updateContent) {
-
-        Entry updatedEntry = entryService.update(updateContent);
-
-        return Response
-                .ok()
-                .entity(updatedEntry)
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .build();
-
-    }
+    public Response update(@PathParam("id") Integer id, Entry updateContent);
 
     @DELETE
     @Path("/{id:[0-9][0-9]*}")
-    public Response delete(@PathParam("id") Integer id) {
-
-        entryService.delete(id);
-
-        return Response.noContent().build();
-
-    }
-
+    public Response delete(@PathParam("id") Integer id);
 
 }
