@@ -5,7 +5,6 @@ import org.emamotor.morecat.repository.EntryRepository;
 import org.emamotor.morecat.model.Entry;
 
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -17,6 +16,22 @@ public class EntryService {
 
     @Inject
     private EntryRepository entryRepository;
+
+    public List<Entry> findPublishedByYear(int year) {
+        return entryRepository.findPublishedByYear(year);
+    }
+
+    public List<Entry> findPublishedByYearMonth(int year, int month) {
+        return entryRepository.findPublishedByYearMonth(year, month);
+    }
+
+    public List<Entry> findPublishedByYearMonthDay(int year, int month, int day) {
+        return entryRepository.findPublishedByYearMonthDay(year, month, day);
+    }
+
+    public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+        return entryRepository.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
+    }
 
     public List<Entry> findAll() {
         return entryRepository.findAll();

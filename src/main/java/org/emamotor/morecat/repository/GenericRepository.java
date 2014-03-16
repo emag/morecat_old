@@ -1,5 +1,7 @@
 package org.emamotor.morecat.repository;
 
+import org.emamotor.morecat.model.Entry;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
