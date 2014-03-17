@@ -162,8 +162,9 @@ public class EntryEditController implements Serializable {
     private boolean validatePermalink() {
         for (Entry existingEntry : entryService.findAll()) {
             if (! existingEntry.getId().equals(this.entry.getId())
-                    &&this.entry.getPermalink().equals(existingEntry.getPermalink())
-                    && this.entry.getCreatedTime().equals(existingEntry.getCreatedTime())) {
+                    && this.entry.getPermalink().equals(existingEntry.getPermalink())
+                    // FIXME
+                    && this.entry.getCreatedDate().equals(existingEntry.getCreatedDate())) {
                 return false;
             }
         }
