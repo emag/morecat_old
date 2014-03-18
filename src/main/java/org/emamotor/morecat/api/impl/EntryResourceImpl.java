@@ -4,7 +4,6 @@ import am.ik.marked4j.Marked;
 import org.emamotor.morecat.api.EntryResource;
 import org.emamotor.morecat.api.PublishedEntryResponse;
 import org.emamotor.morecat.model.Entry;
-import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.service.EntryService;
 
 import javax.inject.Inject;
@@ -27,23 +26,23 @@ public class EntryResourceImpl implements EntryResource {
     private EntryService entryService;
 
     @Override
-    public Response findPublishedByYear(int year) {
+    public Response findAllPublishedByYear(int year) {
         return Response.ok(
-                entityList2Response(entryService.findPublishedByYear(year)))
+                entityList2Response(entryService.findAllPublishedByYear(year)))
                 .build();
     }
 
     @Override
-    public Response findPublishedByYearMonth(int year, int month) {
+    public Response findAllPublishedByYearMonth(int year, int month) {
         return Response.ok(
-                entityList2Response(entryService.findPublishedByYearMonth(year, month)))
+                entityList2Response(entryService.findAllPublishedByYearMonth(year, month)))
                 .build();
     }
 
     @Override
-    public Response findPublishedByYearMonthDay(int year, int month, int day) {
+    public Response findAllPublishedByYearMonthDay(int year, int month, int day) {
         return Response.ok(
-                entityList2Response(entryService.findPublishedByYearMonthDay(year, month, day)))
+                entityList2Response(entryService.findAllPublishedByYearMonthDay(year, month, day)))
                 .build();
     }
 

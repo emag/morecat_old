@@ -17,16 +17,16 @@ public class EntryService {
     @Inject
     private EntryRepository entryRepository;
 
-    public List<Entry> findPublishedByYear(int year) {
-        return entryRepository.findPublishedByYear(year);
+    public List<Entry> findAllPublishedByYear(int year) {
+        return entryRepository.findAllPublishedByYear(year);
     }
 
-    public List<Entry> findPublishedByYearMonth(int year, int month) {
-        return entryRepository.findPublishedByYearMonth(year, month);
+    public List<Entry> findAllPublishedByYearMonth(int year, int month) {
+        return entryRepository.findAllPublishedByYearMonth(year, month);
     }
 
-    public List<Entry> findPublishedByYearMonthDay(int year, int month, int day) {
-        return entryRepository.findPublishedByYearMonthDay(year, month, day);
+    public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
+        return entryRepository.findAllPublishedByYearMonthDay(year, month, day);
     }
 
     public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {

@@ -22,7 +22,7 @@ public class EntryRepository extends GenericRepository<Entry> {
         super(Entry.class);
     }
 
-    public List<Entry> findPublishedByYear(int year) {
+    public List<Entry> findAllPublishedByYear(int year) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
         Root<Entry> entry = cq.from(Entry.class);
@@ -34,7 +34,7 @@ public class EntryRepository extends GenericRepository<Entry> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public List<Entry> findPublishedByYearMonth(int year, int month) {
+    public List<Entry> findAllPublishedByYearMonth(int year, int month) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
         Root<Entry> entry = cq.from(Entry.class);
@@ -47,7 +47,7 @@ public class EntryRepository extends GenericRepository<Entry> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public List<Entry> findPublishedByYearMonthDay(int year, int month, int day) {
+    public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
         Root<Entry> entry = cq.from(Entry.class);

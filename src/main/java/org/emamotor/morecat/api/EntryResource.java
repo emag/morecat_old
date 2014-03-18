@@ -19,20 +19,20 @@ public interface EntryResource {
     @GET
     @Path("/{year}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response findPublishedByYear(@PathParam("year") int year);
+    Response findAllPublishedByYear(@PathParam("year") int year);
 
     @GET
     @Path("/{year}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response findPublishedByYearMonth(@PathParam("year") int year,
-                                      @PathParam("month") int month);
+    Response findAllPublishedByYearMonth(@PathParam("year") int year,
+                                         @PathParam("month") int month);
 
     @GET
     @Path("/{year}/{month}/{day}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response findPublishedByYearMonthDay(@PathParam("year") int year,
-                                         @PathParam("month") int month,
-                                         @PathParam("day") int day);
+    Response findAllPublishedByYearMonthDay(@PathParam("year") int year,
+                                            @PathParam("month") int month,
+                                            @PathParam("day") int day);
 
     @GET
     @Path("/{year}/{month}/{day}/{permalink}")
