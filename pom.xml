@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.emamotor.morecat</groupId>
-  <artifactId>morecat-api</artifactId>
+  <artifactId>morecat</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>morecat-api</name>
+  <name>morecat</name>
 
   <scm>
-    <url>https://github.com/emag/morecat-api</url>
-    <connection>scm:git:git@github.com:emag/morecat-api.git</connection>
+    <url>https://github.com/emag/morecat</url>
+    <connection>scm:git:git@github.com:emag/morecat.git</connection>
     <tag>HEAD</tag>
   </scm>
 
