@@ -17,6 +17,10 @@ public class EntryService {
     @Inject
     private EntryRepository entryRepository;
 
+    public List<Entry> findAllPublished(int start, int size) {
+        return entryRepository.findAllPublished(start, size);
+    }
+
     public List<Entry> findAllPublishedByYear(int year) {
         return entryRepository.findAllPublishedByYear(year);
     }
