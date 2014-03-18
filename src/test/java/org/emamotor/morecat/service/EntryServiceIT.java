@@ -18,20 +18,20 @@ import static org.junit.Assert.*;
 @RunWith(Arquillian.class)
 public class EntryServiceIT {
 
-    @Deployment
-    public static WebArchive deployment() {
-        return MoreCatDeployment.deployment();
-    }
+  @Deployment
+  public static WebArchive deployment() {
+    return MoreCatDeployment.deployment();
+  }
 
-    @Inject
-    private EntryService sut;
-    
-    @Test
-    public void test() throws Exception {
-        // Setup
-        // Exercise
-        // Verify
-        assertThat(sut.findAll().size(), is(1));
-    }
+  @Inject
+  private EntryService sut;
+
+  @Test
+  public void test() throws Exception {
+    // Setup
+    // Exercise
+    // Verify
+    assertThat(sut.findAll().size(), is(1));
+  }
 
 }

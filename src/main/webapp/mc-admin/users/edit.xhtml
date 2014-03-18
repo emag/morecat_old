@@ -8,51 +8,52 @@
 
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
-    <f:metadata>
-        <f:viewParam name="id" value="#{userEditController.user.id}"/>
-        <f:viewAction action="#{userEditController.doFind}"/>
-    </f:metadata>
+  <f:metadata>
+    <f:viewParam name="id" value="#{userEditController.user.id}"/>
+    <f:viewAction action="#{userEditController.doFind}"/>
+  </f:metadata>
 
-    <ui:define name="title">Users: Morecat Admin</ui:define>
+  <ui:define name="title">Users: Morecat Admin</ui:define>
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <h2>Users</h2>
+    <h2>Users</h2>
 
-        <h:form>
+    <h:form>
 
-            <p:growl id="growl" showDetail="true" autoUpdate="true"/>
+      <p:growl id="growl" showDetail="true" autoUpdate="true"/>
 
-            <p:panelGrid columns="2">
+      <p:panelGrid columns="2">
 
-                <h:outputLabel for="name" value="Name"/>
-                <p:inputText id="name" value="#{userEditController.user.name}"/>
+        <h:outputLabel for="name" value="Name"/>
+        <p:inputText id="name" value="#{userEditController.user.name}"/>
 
-                <h:outputLabel for="password" value="Password"/>
-                <p:password id="password" value="#{userEditController.user.password}" match="password_again" label="Password"/>
-                <h:outputLabel for="password_again" value="Confirm Password"/>
-                <p:password id="password_again" value="#{userEditController.user.password}" label="Confirm Password"/>
+        <h:outputLabel for="password" value="Password"/>
+        <p:password id="password" value="#{userEditController.user.password}" match="password_again"
+                    label="Password"/>
+        <h:outputLabel for="password_again" value="Confirm Password"/>
+        <p:password id="password_again" value="#{userEditController.user.password}" label="Confirm Password"/>
 
-                <h:outputLabel for="email" value="Email"/>
-                <p:inputText id="email" value="#{userEditController.user.email}"/>
+        <h:outputLabel for="email" value="Email"/>
+        <p:inputText id="email" value="#{userEditController.user.email}"/>
 
-                <h:outputLabel for="role" value="Role"/>
-                <p:selectOneMenu id="role" value="#{userEditController.role_}" effect="fade">
-                    <f:selectItem itemValue="ADMIN" itemLabel="Admin"/>
-                    <f:selectItem itemValue="AUTHOR" itemLabel="Author"/>
-                </p:selectOneMenu>
+        <h:outputLabel for="role" value="Role"/>
+        <p:selectOneMenu id="role" value="#{userEditController.role_}" effect="fade">
+          <f:selectItem itemValue="ADMIN" itemLabel="Admin"/>
+          <f:selectItem itemValue="AUTHOR" itemLabel="Author"/>
+        </p:selectOneMenu>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Save" action="#{userEditController.doSave}" icon="ui-icon-disk"/>
-                    <p:spacer width="20"/>
-                    <p:button outcome="view" value="Cancel"/>
-                </f:facet>
+        <f:facet name="footer">
+          <p:commandButton value="Save" action="#{userEditController.doSave}" icon="ui-icon-disk"/>
+          <p:spacer width="20"/>
+          <p:button outcome="view" value="Cancel"/>
+        </f:facet>
 
-            </p:panelGrid>
+      </p:panelGrid>
 
-        </h:form>
+    </h:form>
 
-    </ui:define>
+  </ui:define>
 
 </ui:composition>
 </html>

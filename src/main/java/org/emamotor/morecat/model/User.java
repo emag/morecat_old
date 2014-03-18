@@ -20,22 +20,22 @@ import javax.validation.constraints.NotNull;
 @Data
 public class User extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
-    @NotEmpty(message = "Name must not be empty")
-    private String name;
+  @Column(nullable = false, unique = true)
+  @NotEmpty(message = "Name must not be empty")
+  private String name;
 
-    @Basic(optional = false)
-    @NotEmpty(message = "Password not be empty")
-    private String password;
+  @Basic(optional = false)
+  @NotEmpty(message = "Password not be empty")
+  private String password;
 
-    @Column(nullable = false, unique = true)
-    @NotEmpty(message = "Email must not be empty")
-    @Email
-    private String email;
+  @Column(nullable = false, unique = true)
+  @NotEmpty(message = "Email must not be empty")
+  @Email
+  private String email;
 
-    @Basic(optional = false)
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Role role;
+  @Basic(optional = false)
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
 }

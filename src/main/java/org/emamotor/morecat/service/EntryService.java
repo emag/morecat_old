@@ -14,51 +14,51 @@ import java.util.List;
 @Stateless
 public class EntryService {
 
-    @Inject
-    private EntryRepository entryRepository;
+  @Inject
+  private EntryRepository entryRepository;
 
-    public List<Entry> findAllPublished(int start, int size) {
-        return entryRepository.findAllPublished(start, size);
-    }
+  public List<Entry> findAllPublished(int start, int size) {
+    return entryRepository.findAllPublished(start, size);
+  }
 
-    public List<Entry> findAllPublishedByYear(int year) {
-        return entryRepository.findAllPublishedByYear(year);
-    }
+  public List<Entry> findAllPublishedByYear(int year) {
+    return entryRepository.findAllPublishedByYear(year);
+  }
 
-    public List<Entry> findAllPublishedByYearMonth(int year, int month) {
-        return entryRepository.findAllPublishedByYearMonth(year, month);
-    }
+  public List<Entry> findAllPublishedByYearMonth(int year, int month) {
+    return entryRepository.findAllPublishedByYearMonth(year, month);
+  }
 
-    public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
-        return entryRepository.findAllPublishedByYearMonthDay(year, month, day);
-    }
+  public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
+    return entryRepository.findAllPublishedByYearMonthDay(year, month, day);
+  }
 
-    public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
-        return entryRepository.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
-    }
+  public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+    return entryRepository.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
+  }
 
-    public List<Entry> findAll() {
-        return entryRepository.findAll();
-    }
+  public List<Entry> findAll() {
+    return entryRepository.findAll();
+  }
 
-    public List<Entry> findAllByAuthor(User author) {
-        return entryRepository.findAllByAuthor(author);
-    }
+  public List<Entry> findAllByAuthor(User author) {
+    return entryRepository.findAllByAuthor(author);
+  }
 
-    public Entry findById(Integer id) {
-        return entryRepository.findById(id);
-    }
+  public Entry findById(Integer id) {
+    return entryRepository.findById(id);
+  }
 
-    public Entry create(Entry newEntry) {
-        return entryRepository.create(newEntry);
-    }
+  public Entry create(Entry newEntry) {
+    return entryRepository.create(newEntry);
+  }
 
-    public Entry update(Entry updateContent) {
-        return entryRepository.update(updateContent);
-    }
+  public Entry update(Entry updateContent) {
+    return entryRepository.update(updateContent);
+  }
 
-    public void delete(Integer id) {
-        entryRepository.delete(id);
-    }
+  public void delete(Integer id) {
+    entryRepository.delete(id);
+  }
 
 }

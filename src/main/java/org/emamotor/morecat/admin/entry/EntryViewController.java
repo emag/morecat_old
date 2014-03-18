@@ -20,35 +20,35 @@ import java.util.List;
 @Model
 public class EntryViewController {
 
-    @Inject
-    private FacesContext facesContext;
+  @Inject
+  private FacesContext facesContext;
 
-    @Inject
-    private EntryService entryService;
+  @Inject
+  private EntryService entryService;
 
-    @Inject
-    private AuthService authService;
+  @Inject
+  private AuthService authService;
 
-    @Getter
-    private List<Entry> entries;
+  @Getter
+  private List<Entry> entries;
 
-    @PostConstruct
-    public void init() {
+  @PostConstruct
+  public void init() {
 
-        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-        if (request.isUserInRole(String.valueOf(Role.ADMIN))) {
-            entries = entryService.findAll();
-        } else {
-            entries = entryService.findAllByAuthor(
-                    authService.getLoginUserByName(request.getUserPrincipal().getName()));
-        }
-
-        String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
-        if (previousViewMessage == null) {
-            return;
-        }
-        facesContext.addMessage(null, new FacesMessage(previousViewMessage));
-
+    HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+    if (request.isUserInRole(String.valueOf(Role.ADMIN))) {
+      entries = entryService.findAll();
+    } else {
+      entries = entryService.findAllByAuthor(
+        authService.getLoginUserByName(request.getUserPrincipal().getName()));
     }
+
+    String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
+    if (previousViewMessage == null) {
+      return;
+    }
+    facesContext.addMessage(null, new FacesMessage(previousViewMessage));
+
+  }
 
 }

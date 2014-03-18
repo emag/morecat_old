@@ -13,42 +13,43 @@ import java.util.List;
  */
 public abstract class GenericRepository<T> {
 
-    @Inject
-    private EntityManager em;
+  @Inject
+  private EntityManager em;
 
-    private Class<T> entityClass;
+  private Class<T> entityClass;
 
-    public GenericRepository() {}
+  public GenericRepository() {
+  }
 
-    public GenericRepository(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
+  public GenericRepository(Class<T> entityClass) {
+    this.entityClass = entityClass;
+  }
 
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
+  public EntityManager getEntityManager() {
+    return this.em;
+  }
 
-    public List<T> findAll() {
-        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return em.createQuery(cq).getResultList();
-    }
+  public List<T> findAll() {
+    CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+    cq.select(cq.from(entityClass));
+    return em.createQuery(cq).getResultList();
+  }
 
-    public T findById(Integer id) {
-        return em.find(entityClass, id);
-    }
+  public T findById(Integer id) {
+    return em.find(entityClass, id);
+  }
 
-    public T create(T newEntity) {
-        em.persist(newEntity);
-        return newEntity;
-    }
+  public T create(T newEntity) {
+    em.persist(newEntity);
+    return newEntity;
+  }
 
-    public T update(T updateContent) {
-        return em.merge(updateContent);
-    }
+  public T update(T updateContent) {
+    return em.merge(updateContent);
+  }
 
-    public void delete(Integer id) {
-        em.remove(em.find(entityClass, id));
-    }
+  public void delete(Integer id) {
+    em.remove(em.find(entityClass, id));
+  }
 
 }

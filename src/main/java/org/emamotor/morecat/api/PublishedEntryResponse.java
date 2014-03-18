@@ -12,18 +12,18 @@ import java.util.Set;
 @Data
 public class PublishedEntryResponse {
 
-    private String title;
+  private String title;
 
-    private String content;
+  private String content;
 
-    private String permalink;
+  private String permalink;
 
-    private String authorName;
+  private String authorName;
 
-    private Date createdDate;
+  private Date createdDate;
 
-    private Date createdTime;
+  private Date createdTime;
 
-    private Set<String> tags = new HashSet<>();
+  private Set<String> tags = new HashSet<>();
 
 }

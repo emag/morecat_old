@@ -10,11 +10,11 @@ import static org.junit.Assert.*;
  */
 public class EntryServiceTest {
 
-    @Test
-    public void shouldReturnEmptyList() throws Exception {
-        // Setup
-        // Exercise
-        // Verify
-    }
+  @Test
+  public void shouldReturnEmptyList() throws Exception {
+    // Setup
+    // Exercise
+    // Verify
+  }
 
 }

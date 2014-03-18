@@ -10,8 +10,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class RoleRepository extends GenericRepository<Role> {
 
-    public RoleRepository() {
-        super(Role.class);
-    }
+  public RoleRepository() {
+    super(Role.class);
+  }
 
 }

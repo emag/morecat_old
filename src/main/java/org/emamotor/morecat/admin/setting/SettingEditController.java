@@ -17,21 +17,21 @@ import javax.inject.Named;
 @Model
 public class SettingEditController {
 
-    @Inject
-    private SettingService settingService;
+  @Inject
+  private SettingService settingService;
 
-    @Getter
-    @Setter
-    private Setting setting;
+  @Getter
+  @Setter
+  private Setting setting;
 
-    @PostConstruct
-    public void init() {
-        setting = settingService.find();
-    }
+  @PostConstruct
+  public void init() {
+    setting = settingService.find();
+  }
 
-    public String doSave() {
-        settingService.update(this.setting);
-        return "view?faces-redirect=true";
-    }
+  public String doSave() {
+    settingService.update(this.setting);
+    return "view?faces-redirect=true";
+  }
 
 }

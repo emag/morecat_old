@@ -10,12 +10,12 @@ import static org.junit.Assert.assertThat;
  */
 public class VersionTest {
 
-    @Test
-    public void check_version() throws Exception {
+  @Test
+  public void check_version() throws Exception {
 
-        String version = Version.getInstance().getVersion();
-        assertThat(version, is("test"));
+    String version = Version.getInstance().getVersion();
+    assertThat(version, is("test"));
 
-    }
+  }
 
 }

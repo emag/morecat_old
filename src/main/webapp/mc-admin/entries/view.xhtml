@@ -7,41 +7,41 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
-    <ui:define name="title">Entries: Morecat Admin</ui:define>
+  <ui:define name="title">Entries: Morecat Admin</ui:define>
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <h2>Entries</h2>
+    <h2>Entries</h2>
 
-        <p:dataTable var="entry" value="#{entryViewController.entries}"
-                     paginator="true" rows="10"
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="5,10,15">
-            <p:column headerText="Title">
-                <h:outputText value="#{entry.title}"/>
-            </p:column>
-            <p:column headerText="Tags">
-                <h:outputText value="#{entry.tags}" converter="tagConverter"/>
-            </p:column>
-            <p:column headerText="State">
-                <h:outputText value="#{entry.state}"/>
-            </p:column>
-            <p:column headerText="Author">
-                <h:outputText value="#{entry.author.name}"/>
-            </p:column>
-            <p:column headerText="Created">
-                <h:outputText value="#{entry.createdDate}"/>
-            </p:column>
-            <p:column headerText="Action">
-                <h:link outcome="edit" value="Edit">
-                    <f:param name="id" value="#{entry.id}"/>
-                </h:link>
-            </p:column>
-        </p:dataTable>
+    <p:dataTable var="entry" value="#{entryViewController.entries}"
+                 paginator="true" rows="10"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+      <p:column headerText="Title">
+        <h:outputText value="#{entry.title}"/>
+      </p:column>
+      <p:column headerText="Tags">
+        <h:outputText value="#{entry.tags}" converter="tagConverter"/>
+      </p:column>
+      <p:column headerText="State">
+        <h:outputText value="#{entry.state}"/>
+      </p:column>
+      <p:column headerText="Author">
+        <h:outputText value="#{entry.author.name}"/>
+      </p:column>
+      <p:column headerText="Created">
+        <h:outputText value="#{entry.createdDate}"/>
+      </p:column>
+      <p:column headerText="Action">
+        <h:link outcome="edit" value="Edit">
+          <f:param name="id" value="#{entry.id}"/>
+        </h:link>
+      </p:column>
+    </p:dataTable>
 
-        <p:growl id="growl" globalOnly="true"/>
+    <p:growl id="growl" globalOnly="true"/>
 
-    </ui:define>
+  </ui:define>
 
 </ui:composition>
 </html>
