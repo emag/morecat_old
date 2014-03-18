@@ -13,10 +13,10 @@ import javax.ws.rs.core.MediaType;
 @Path("/version")
 public class VersionResource {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getVersion() {
-        return Version.getInstance().getVersion();
-    }
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public String getVersion() {
+    return Version.getInstance().getVersion();
+  }
 
 }

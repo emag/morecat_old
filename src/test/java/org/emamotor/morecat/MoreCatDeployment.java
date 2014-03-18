@@ -13,16 +13,16 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  */
 public class MoreCatDeployment {
 
-    public static WebArchive deployment() {
-        return ShrinkWrap
-                .create(WebArchive.class, "test.war")
-                .addPackage(Resources.class.getPackage())
-                .addPackage(EntryService.class.getPackage())
-                .addPackage(EntryRepository.class.getPackage())
-                .addPackage(Entry.class.getPackage())
-                .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
-                .addAsResource("import.sql")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addAsWebInfResource("test-ds.xml");
-    }
+  public static WebArchive deployment() {
+    return ShrinkWrap
+      .create(WebArchive.class, "test.war")
+      .addPackage(Resources.class.getPackage())
+      .addPackage(EntryService.class.getPackage())
+      .addPackage(EntryRepository.class.getPackage())
+      .addPackage(Entry.class.getPackage())
+      .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
+      .addAsResource("import.sql")
+      .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+      .addAsWebInfResource("test-ds.xml");
+  }
 }

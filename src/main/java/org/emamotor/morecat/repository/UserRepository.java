@@ -14,18 +14,18 @@ import javax.persistence.criteria.Root;
 @Stateless
 public class UserRepository extends GenericRepository<User> {
 
-    public UserRepository() {
-        super(User.class);
-    }
+  public UserRepository() {
+    super(User.class);
+  }
 
-    public User findByName(String username) {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<User> cq = cb.createQuery(User.class);
+  public User findByName(String username) {
+    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+    CriteriaQuery<User> cq = cb.createQuery(User.class);
 
-        Root<User> user = cq.from(User.class);
-        cq.select(user).where(cb.equal(user.get(User_.name), username));
+    Root<User> user = cq.from(User.class);
+    cq.select(user).where(cb.equal(user.get(User_.name), username));
 
-        return getEntityManager().createQuery(cq).getSingleResult();
-    }
+    return getEntityManager().createQuery(cq).getSingleResult();
+  }
 
 }

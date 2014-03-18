@@ -30,67 +30,67 @@ import java.util.Set;
  */
 @Entity
 @Table(
-    name = "entries",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_date"})
+  name = "entries",
+  uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_date"})
 )
 @Data
 public class Entry extends BaseEntity {
 
-    @Column(nullable = false)
-    @NotEmpty(message = "Title must not be empty")
-    private String title;
+  @Column(nullable = false)
+  @NotEmpty(message = "Title must not be empty")
+  private String title;
 
-    @Column(nullable = false)
-    @NotNull
-    private String content;
+  @Column(nullable = false)
+  @NotNull
+  private String content;
 
-    @Column(nullable = false)
-    @NotEmpty(message = "Permalink must not be empty")
-    private String permalink;
+  @Column(nullable = false)
+  @NotEmpty(message = "Permalink must not be empty")
+  private String permalink;
 
-    @ManyToOne(optional = false)
-    private User author;
+  @ManyToOne(optional = false)
+  private User author;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+  @Temporal(TemporalType.DATE)
+  @Column(name = "created_date", nullable = false)
+  private Date createdDate;
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "created_time", nullable = false)
-    private Date createdTime;
+  @Temporal(TemporalType.TIME)
+  @Column(name = "created_time", nullable = false)
+  private Date createdTime;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tags")
-    @Column(name = "value")
-    @OrderBy
-    private Set<String> tags = new HashSet<>();
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "tags")
+  @Column(name = "value")
+  @OrderBy
+  private Set<String> tags = new HashSet<>();
 
-    @Column(nullable = false)
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private EntryState state;
+  @Column(nullable = false)
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private EntryState state;
 
-    @Column(nullable = false)
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private EntryFormat format;
+  @Column(nullable = false)
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private EntryFormat format;
 
-    @PrePersist
-    private void prePersist() {
-        setRandomPermalinkIfNotSet();
-        setCreatedDate(new Date());
-        setCreatedTime(new Date());
+  @PrePersist
+  private void prePersist() {
+    setRandomPermalinkIfNotSet();
+    setCreatedDate(new Date());
+    setCreatedTime(new Date());
+  }
+
+  @PreUpdate
+  private void preUpdate() {
+    setRandomPermalinkIfNotSet();
+  }
+
+  private void setRandomPermalinkIfNotSet() {
+    if (StringUtils.isBlank(getPermalink())) {
+      setPermalink(RandomStringUtils.randomNumeric(10));
     }
-
-    @PreUpdate
-    private void preUpdate() {
-        setRandomPermalinkIfNotSet();
-    }
-
-    private void setRandomPermalinkIfNotSet() {
-        if (StringUtils.isBlank(getPermalink())) {
-            setPermalink(RandomStringUtils.randomNumeric(10));
-        }
-    }
+  }
 
 }

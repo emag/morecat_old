@@ -6,49 +6,49 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-    <title>Login: Morecat Admin</title>
-    <h:outputStylesheet library="css" name="style.css"/>
+  <title>Login: Morecat Admin</title>
+  <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <h:body>
-    <p:layout fullPage="true">
-        <p:layoutUnit id="header" position="north" size="65">
-            <h:form>
-                <p:menubar>
-                    <p:menuitem value="MoreCat #{versionController.version}"/>
-                    <f:facet name="options">
-                        <p:menuButton value="About">
-                        </p:menuButton>
-                    </f:facet>
-                </p:menubar>
-            </h:form>
-        </p:layoutUnit>
+  <p:layout fullPage="true">
+    <p:layoutUnit id="header" position="north" size="65">
+      <h:form>
+        <p:menubar>
+          <p:menuitem value="MoreCat #{versionController.version}"/>
+          <f:facet name="options">
+            <p:menuButton value="About">
+            </p:menuButton>
+          </f:facet>
+        </p:menubar>
+      </h:form>
+    </p:layoutUnit>
 
-        <p:layoutUnit position="center">
+    <p:layoutUnit position="center">
 
-            <div align="center" style="margin-top: 20px">
-                <h:form>
+      <div align="center" style="margin-top: 20px">
+        <h:form>
 
-                    <p:growl id="growl"/>
+          <p:growl id="growl"/>
 
-                    <p:panelGrid columns="2">
+          <p:panelGrid columns="2">
 
-                        <h:outputText value="Username"/>
-                        <p:inputText id="username" value="#{authController.username}"/>
-                        <h:outputText value="Password"/>
-                        <p:password id="password" value="#{authController.password}"/>
-                        <f:facet name="footer">
-                            <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
-                                             type="submit" icon="ui-icon-check" style="margin:0"/>
-                        </f:facet>
+            <h:outputText value="Username"/>
+            <p:inputText id="username" value="#{authController.username}"/>
+            <h:outputText value="Password"/>
+            <p:password id="password" value="#{authController.password}"/>
+            <f:facet name="footer">
+              <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
+                               type="submit" icon="ui-icon-check" style="margin:0"/>
+            </f:facet>
 
-                    </p:panelGrid>
+          </p:panelGrid>
 
-                </h:form>
-            </div>
+        </h:form>
+      </div>
 
-        </p:layoutUnit>
+    </p:layoutUnit>
 
-    </p:layout>
+  </p:layout>
 
 </h:body>
 </html>

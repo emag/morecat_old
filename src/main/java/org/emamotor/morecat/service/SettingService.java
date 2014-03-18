@@ -12,15 +12,15 @@ import javax.inject.Inject;
 @Stateless
 public class SettingService {
 
-    @Inject
-    private SettingRepository settingRepository;
+  @Inject
+  private SettingRepository settingRepository;
 
-    public Setting find() {
-        return settingRepository.findAll().get(0);
-    }
+  public Setting find() {
+    return settingRepository.findAll().get(0);
+  }
 
-    public void update(Setting setting) {
-        settingRepository.update(setting);
-    }
+  public void update(Setting setting) {
+    settingRepository.update(setting);
+  }
 
 }

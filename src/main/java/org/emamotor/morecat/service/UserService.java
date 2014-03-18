@@ -13,23 +13,23 @@ import java.util.List;
 @Stateless
 public class UserService {
 
-    @Inject
-    private UserRepository userRepository;
+  @Inject
+  private UserRepository userRepository;
 
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+  public List<User> findAll() {
+    return userRepository.findAll();
+  }
 
-    public User findById(Integer id) {
-        return userRepository.findById(id);
-    }
+  public User findById(Integer id) {
+    return userRepository.findById(id);
+  }
 
-    public User findByName(String username) {
-        return userRepository.findByName(username);
-    }
+  public User findByName(String username) {
+    return userRepository.findByName(username);
+  }
 
-    public User update(User user) {
-        return userRepository.update(user);
-    }
+  public User update(User user) {
+    return userRepository.update(user);
+  }
 
 }

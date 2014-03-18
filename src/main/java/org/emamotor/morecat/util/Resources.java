@@ -18,28 +18,28 @@ import javax.persistence.PersistenceContext;
  */
 public class Resources {
 
-    @Produces
-    @PersistenceContext
-    private EntityManager em;
+  @Produces
+  @PersistenceContext
+  private EntityManager em;
 
-    @Produces
-    public Logger produceLog(InjectionPoint injectionPoint) {
-        return LoggerFactory.getLogger(injectionPoint
-                            .getMember()
-                            .getDeclaringClass()
-                            .getName());
-    }
+  @Produces
+  public Logger produceLog(InjectionPoint injectionPoint) {
+    return LoggerFactory.getLogger(injectionPoint
+      .getMember()
+      .getDeclaringClass()
+      .getName());
+  }
 
-    @Produces
-    @RequestScoped
-    public FacesContext produceFacesContext() {
-        return FacesContext.getCurrentInstance();
-    }
+  @Produces
+  @RequestScoped
+  public FacesContext produceFacesContext() {
+    return FacesContext.getCurrentInstance();
+  }
 
-    @Produces
-    @ApplicationScoped
-    public Marked produceMarked() {
-        return new MarkedBuilder().gfm(true).sanitize(true).build();
-    }
+  @Produces
+  @ApplicationScoped
+  public Marked produceMarked() {
+    return new MarkedBuilder().gfm(true).sanitize(true).build();
+  }
 
 }

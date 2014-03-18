@@ -23,31 +23,31 @@ import java.io.Serializable;
 @ViewScoped
 public class ProfileEditController implements Serializable {
 
-    @Inject
-    private FacesContext facesContext;
+  @Inject
+  private FacesContext facesContext;
 
-    @Inject
-    private AuthService authService;
+  @Inject
+  private AuthService authService;
 
-    @Inject
-    private UserService userService;
+  @Inject
+  private UserService userService;
 
-    @Getter
-    @Setter
-    private User profile = new User();
+  @Getter
+  @Setter
+  private User profile = new User();
 
-    @PostConstruct
-    public void init() {
-        String loginUserName = authService.getLoginUserByName(
-                ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName())
-                .getName();
-        this.profile = userService.findByName(loginUserName);
-    }
+  @PostConstruct
+  public void init() {
+    String loginUserName = authService.getLoginUserByName(
+      ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName())
+      .getName();
+    this.profile = userService.findByName(loginUserName);
+  }
 
-    public void doSave() {
-        this.profile.setPassword(PasswordUtil.hasing(this.profile.getPassword()));
-        userService.update(this.profile);
-        facesContext.addMessage(null, new FacesMessage("Saved!"));
-    }
+  public void doSave() {
+    this.profile.setPassword(PasswordUtil.hasing(this.profile.getPassword()));
+    userService.update(this.profile);
+    facesContext.addMessage(null, new FacesMessage("Saved!"));
+  }
 
 }

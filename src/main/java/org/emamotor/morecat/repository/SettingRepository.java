@@ -10,8 +10,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class SettingRepository extends GenericRepository<Setting> {
 
-    public SettingRepository() {
-        super(Setting.class);
-    }
+  public SettingRepository() {
+    super(Setting.class);
+  }
 
 }

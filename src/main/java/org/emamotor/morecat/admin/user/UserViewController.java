@@ -17,26 +17,26 @@ import java.util.List;
 @Model
 public class UserViewController {
 
-    @Inject
-    private FacesContext facesContext;
+  @Inject
+  private FacesContext facesContext;
 
-    @Inject
-    private UserService userService;
+  @Inject
+  private UserService userService;
 
-    @Getter
-    private List<User> users;
+  @Getter
+  private List<User> users;
 
-    @PostConstruct
-    public void init() {
+  @PostConstruct
+  public void init() {
 
-        users = userService.findAll();
+    users = userService.findAll();
 
-        String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
-        if (previousViewMessage == null) {
-            return;
-        }
-        facesContext.addMessage(null, new FacesMessage(previousViewMessage));
-
+    String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
+    if (previousViewMessage == null) {
+      return;
     }
+    facesContext.addMessage(null, new FacesMessage(previousViewMessage));
+
+  }
 
 }

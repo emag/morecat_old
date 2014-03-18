@@ -12,10 +12,10 @@ import javax.inject.Named;
 @Named
 public class VersionController {
 
-    private static final String VERSION = Version.getInstance().getVersion();
+  private static final String VERSION = Version.getInstance().getVersion();
 
-    public String getVersion() {
-        return VERSION;
-    }
+  public String getVersion() {
+    return VERSION;
+  }
 
 }

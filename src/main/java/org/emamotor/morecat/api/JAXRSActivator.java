@@ -7,4 +7,5 @@ import javax.ws.rs.core.Application;
  * @author Yoshimasa Tanabe
  */
 @ApplicationPath("/api")
-public class JAXRSActivator extends Application {}
+public class JAXRSActivator extends Application {
+}

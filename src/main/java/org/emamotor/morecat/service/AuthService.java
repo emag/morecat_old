@@ -16,26 +16,26 @@ import javax.servlet.http.HttpSession;
 @Stateless
 public class AuthService {
 
-    @Inject
-    private Logger logger;
+  @Inject
+  private Logger logger;
 
-    @Inject
-    private UserService userService;
+  @Inject
+  private UserService userService;
 
-    public void login(HttpServletRequest request, String username, String password) throws ServletException {
-        request.login(username, password);
-        logger.info("User ({}) loging in #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
+  public void login(HttpServletRequest request, String username, String password) throws ServletException {
+    request.login(username, password);
+    logger.info("User ({}) loging in #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
+  }
+
+  public void logout(HttpServletRequest request, HttpSession session) {
+    logger.info("User ({}) loging out #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
+    if (session != null) {
+      session.invalidate();
     }
+  }
 
-    public void logout(HttpServletRequest request, HttpSession session) {
-        logger.info("User ({}) loging out #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
-        if (session != null) {
-            session.invalidate();
-        }
-    }
-
-    public User getLoginUserByName(String loginUserName) {
-        return userService.findByName(loginUserName);
-    }
+  public User getLoginUserByName(String loginUserName) {
+    return userService.findByName(loginUserName);
+  }
 
 }
