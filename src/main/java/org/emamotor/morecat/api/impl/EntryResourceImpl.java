@@ -1,8 +1,10 @@
 package org.emamotor.morecat.api.impl;
 
+import am.ik.marked4j.Marked;
 import org.emamotor.morecat.api.EntryResource;
 import org.emamotor.morecat.api.PublishedEntryResponse;
 import org.emamotor.morecat.model.Entry;
+import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.service.EntryService;
 
 import javax.inject.Inject;
@@ -17,6 +19,9 @@ import java.util.stream.Collectors;
  * @author tanabe
  */
 public class EntryResourceImpl implements EntryResource {
+
+    @Inject
+    private Marked marked;
 
     @Inject
     private EntryService entryService;
@@ -87,10 +92,19 @@ public class EntryResourceImpl implements EntryResource {
         return Response.noContent().build();
     }
 
-    private static PublishedEntryResponse entity2Response(Entry entity) {
+    private PublishedEntryResponse entity2Response(Entry entity) {
         PublishedEntryResponse response = new PublishedEntryResponse();
         response.setAuthorName(entity.getAuthor().getName());
-        response.setContent(entity.getContent());
+        switch (entity.getFormat()) {
+            case MARKDOWN:
+                response.setContent(marked.marked(entity.getContent()));
+                break;
+            case HTML:
+                response.setContent(entity.getContent());
+                break;
+            default:
+                throw new IllegalStateException("Invalid format");
+        }
         response.setCreatedDate(entity.getCreatedDate());
         response.setCreatedTime(entity.getCreatedTime());
         response.setPermalink(entity.getPermalink());
@@ -99,10 +113,10 @@ public class EntryResourceImpl implements EntryResource {
         return response;
     }
 
-    private static List<PublishedEntryResponse> entityList2Response(List<Entry> entities) {
+    private List<PublishedEntryResponse> entityList2Response(List<Entry> entities) {
         return entities
                 .parallelStream()
-                .map(EntryResourceImpl::entity2Response)
+                .map(this::entity2Response)
                 .collect(Collectors.toList());
     }
 
