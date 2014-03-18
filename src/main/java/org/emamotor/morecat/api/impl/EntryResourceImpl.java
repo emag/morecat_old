@@ -54,42 +54,6 @@ public class EntryResourceImpl implements EntryResource {
         return Response.ok(entity2Response(anEntry), MediaType.APPLICATION_JSON).build();
     }
 
-    @Override
-    public List<Entry> findAll() {
-        return entryService.findAll();
-    }
-
-    @Override
-    public Response getSingleInstance(@PathParam("id") Integer id) {
-        Entry aEntry = entryService.findById(id);
-        if (aEntry == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(null).build();
-        }
-        return Response.ok(aEntry, MediaType.APPLICATION_JSON).build();
-    }
-
-    @Override
-    public Response create(Entry newEntry) {
-        Entry registeredEntry = entryService.create(newEntry);
-        return Response.created(URI.create("/entries/" + registeredEntry.getId())).build();
-    }
-
-    @Override
-    public Response update(@PathParam("id") Integer id, Entry updateContent) {
-        Entry updatedEntry = entryService.update(updateContent);
-        return Response
-                .ok()
-                .entity(updatedEntry)
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .build();
-    }
-
-    @Override
-    public Response delete(@PathParam("id") Integer id) {
-        entryService.delete(id);
-        return Response.noContent().build();
-    }
-
     private PublishedEntryResponse entity2Response(Entry entity) {
         PublishedEntryResponse response = new PublishedEntryResponse();
         response.setAuthorName(entity.getAuthor().getName());

@@ -46,32 +46,4 @@ public interface EntryResource {
                                                   @PathParam("day") int day,
                                                   @PathParam("permalink") String permalink);
 
-    ////////////////////
-    // for management //
-    ////////////////////
-    @GET
-    @Path("/management")
-    @Produces(MediaType.APPLICATION_JSON)
-    List<Entry> findAll();
-
-    @GET
-    @Path("/management/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
-    Response getSingleInstance(@PathParam("id") Integer id);
-
-    @POST
-    @Path("/management")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(Entry newEntry);
-
-    @PUT
-    @Path("/management/{id:[0-9][0-9]*}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") Integer id, Entry updateContent);
-
-    @DELETE
-    @Path("/management/{id:[0-9][0-9]*}")
-    public Response delete(@PathParam("id") Integer id);
-
 }
