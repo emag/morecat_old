@@ -7,36 +7,37 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
-    <ui:define name="title">Settings: Morecat Admin</ui:define>
+  <ui:define name="title">Settings: Morecat Admin</ui:define>
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <h2>Settings</h2>
+    <h2>Settings</h2>
 
-        <h:form>
-            <p:panelGrid columns="2">
+    <h:form>
+      <p:panelGrid columns="2">
 
-                <h:outputLabel for="blog_name" value="Blog Name"/>
-                <p:inputText id="blog_name" value="#{settingEditController.setting.blogName}"/>
+        <h:outputLabel for="blog_name" value="Blog Name"/>
+        <p:inputText id="blog_name" value="#{settingEditController.setting.blogName}"/>
 
-                <h:outputLabel for="blog_description" value="Description" />
-                <p:inputText id="blog_description" value="#{settingEditController.setting.blogDescription}"/>
+        <h:outputLabel for="blog_description" value="Description"/>
+        <p:inputText id="blog_description" value="#{settingEditController.setting.blogDescription}"/>
 
 
-                <h:outputLabel for="public" value="Public" />
-                <p:selectBooleanButton id="public" value="#{settingEditController.setting.publicity}" onLabel="Yes" offLabel="No" />
+        <h:outputLabel for="public" value="Public"/>
+        <p:selectBooleanButton id="public" value="#{settingEditController.setting.publicity}" onLabel="Yes"
+                               offLabel="No"/>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Save" action="#{settingEditController.doSave}" icon="ui-icon-disk"/>
-                    <p:spacer width="20"/>
-                    <p:button outcome="view" value="Cancel"/>
-                </f:facet>
+        <f:facet name="footer">
+          <p:commandButton value="Save" action="#{settingEditController.doSave}" icon="ui-icon-disk"/>
+          <p:spacer width="20"/>
+          <p:button outcome="view" value="Cancel"/>
+        </f:facet>
 
-            </p:panelGrid>
+      </p:panelGrid>
 
-        </h:form>
+    </h:form>
 
-    </ui:define>
+  </ui:define>
 
 </ui:composition>
 </html>

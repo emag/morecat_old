@@ -7,31 +7,31 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
-    <ui:define name="title">Settings: Morecat Admin</ui:define>
+  <ui:define name="title">Settings: Morecat Admin</ui:define>
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <h2>Settings</h2>
+    <h2>Settings</h2>
 
-        <p:panelGrid columns="2">
+    <p:panelGrid columns="2">
 
-            <h:outputText value="Blog Name" style="font-weight: bold;"/>
-            <h:outputText value="#{settingViewController.setting.blogName}"/>
+      <h:outputText value="Blog Name" style="font-weight: bold;"/>
+      <h:outputText value="#{settingViewController.setting.blogName}"/>
 
-            <h:outputText value="Description" style="font-weight: bold;"/>
-            <h:outputText value="#{settingViewController.setting.blogDescription}"/>
+      <h:outputText value="Description" style="font-weight: bold;"/>
+      <h:outputText value="#{settingViewController.setting.blogDescription}"/>
 
-            <h:outputText value="Public" style="font-weight: bold;"/>
-            <h:outputText value="Yes" rendered="#{settingViewController.setting.publicity}"/>
-            <h:outputText value="No" rendered="#{not settingViewController.setting.publicity}"/>
+      <h:outputText value="Public" style="font-weight: bold;"/>
+      <h:outputText value="Yes" rendered="#{settingViewController.setting.publicity}"/>
+      <h:outputText value="No" rendered="#{not settingViewController.setting.publicity}"/>
 
-            <f:facet name="footer">
-                <p:button outcome="edit" value="Edit"/>
-            </f:facet>
+      <f:facet name="footer">
+        <p:button outcome="edit" value="Edit"/>
+      </f:facet>
 
-        </p:panelGrid>
+    </p:panelGrid>
 
-    </ui:define>
+  </ui:define>
 
 </ui:composition>
 </html>

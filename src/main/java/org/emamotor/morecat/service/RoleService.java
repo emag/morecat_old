@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class RoleService {
 
-    @Inject
-    private RoleRepository roleRepository;
+  @Inject
+  private RoleRepository roleRepository;
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
-    }
+  public List<Role> findAll() {
+    return roleRepository.findAll();
+  }
 
 }

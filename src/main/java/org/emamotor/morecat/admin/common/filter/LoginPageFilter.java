@@ -13,29 +13,32 @@ import java.io.IOException;
 
 /**
  * To prevent user from going back to Login page if the user already logged in
+ *
  * @author tanabe
  */
 @WebFilter(urlPatterns = "/mc-admin/login.xhtml")
 public class LoginPageFilter implements Filter {
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+  @Override
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    HttpServletRequest request = (HttpServletRequest) servletRequest;
+    HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if(request.getUserPrincipal() != null){
-            response.sendRedirect(request.getContextPath()+ "/mc-admin/overview/view.xhtml");
-        } else{
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
-
+    if (request.getUserPrincipal() != null) {
+      response.sendRedirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
+    } else {
+      filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+  }
 
-    @Override
-    public void destroy() {}
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+  }
+
+  @Override
+  public void destroy() {
+  }
 
 }

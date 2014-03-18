@@ -10,29 +10,29 @@ import java.net.URISyntaxException;
  */
 public class SecurityUtil {
 
-    public static boolean validateReferer(String scheme,
-                                          String domain,
-                                          int port,
-                                          String path,
-                                          String referer) {
+  public static boolean validateReferer(String scheme,
+                                        String domain,
+                                        int port,
+                                        String path,
+                                        String referer) {
 
-        if (StringUtils.isBlank(referer)) return false;
+    if (StringUtils.isBlank(referer)) return false;
 
-        try {
+    try {
 
-            URI refererURI = new URI(referer);
+      URI refererURI = new URI(referer);
 
-            if (! refererURI.getScheme().equals(scheme)) return false;
-            if (! refererURI.getHost().equals(domain)) return false;
-            if (! (refererURI.getPort() == port)) return false;
-            if (! refererURI.getPath().startsWith(path)) return false;
+      if (!refererURI.getScheme().equals(scheme)) return false;
+      if (!refererURI.getHost().equals(domain)) return false;
+      if (!(refererURI.getPort() == port)) return false;
+      if (!refererURI.getPath().startsWith(path)) return false;
 
-        } catch (URISyntaxException e) {
-            return false;
-        }
-
-        return true;
-
+    } catch (URISyntaxException e) {
+      return false;
     }
+
+    return true;
+
+  }
 
 }

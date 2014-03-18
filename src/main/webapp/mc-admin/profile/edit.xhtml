@@ -7,38 +7,40 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
-    <ui:define name="title">Profile: Morecat Admin</ui:define>
+  <ui:define name="title">Profile: Morecat Admin</ui:define>
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <h2>Profile</h2>
+    <h2>Profile</h2>
 
-        <h:form>
+    <h:form>
 
-            <p:growl id="growl" autoUpdate="true"/>
+      <p:growl id="growl" autoUpdate="true"/>
 
-            <p:panelGrid columns="2">
+      <p:panelGrid columns="2">
 
-                <h:outputLabel for="name" value="Name"/>
-                <p:inputText id="name" value="#{profileEditController.profile.name}"/>
+        <h:outputLabel for="name" value="Name"/>
+        <p:inputText id="name" value="#{profileEditController.profile.name}"/>
 
-                <h:outputLabel for="password" value="Password"/>
-                <p:password id="password" value="#{profileEditController.profile.password}" match="password_again" label="Password"/>
-                <h:outputLabel for="password_again" value="Confirm Password"/>
-                <p:password id="password_again" value="#{profileEditController.profile.password}" label="Confirm Password"/>
+        <h:outputLabel for="password" value="Password"/>
+        <p:password id="password" value="#{profileEditController.profile.password}" match="password_again"
+                    label="Password"/>
+        <h:outputLabel for="password_again" value="Confirm Password"/>
+        <p:password id="password_again" value="#{profileEditController.profile.password}"
+                    label="Confirm Password"/>
 
-                <h:outputLabel for="email" value="Email"/>
-                <p:inputText id="email" value="#{profileEditController.profile.email}"/>
+        <h:outputLabel for="email" value="Email"/>
+        <p:inputText id="email" value="#{profileEditController.profile.email}"/>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Save" action="#{profileEditController.doSave}" icon="ui-icon-disk"/>
-                </f:facet>
+        <f:facet name="footer">
+          <p:commandButton value="Save" action="#{profileEditController.doSave}" icon="ui-icon-disk"/>
+        </f:facet>
 
-            </p:panelGrid>
+      </p:panelGrid>
 
-        </h:form>
+    </h:form>
 
-    </ui:define>
+  </ui:define>
 
 </ui:composition>
 </html>

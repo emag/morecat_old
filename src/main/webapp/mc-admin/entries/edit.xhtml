@@ -8,83 +8,88 @@
 
 <ui:composition template="../../WEB-INF/templates/template.xhtml">
 
-    <f:metadata>
-        <f:viewParam name="id" value="#{entryEditController.entry.id}"/>
-        <f:viewAction action="#{entryEditController.doFind}"/>
-    </f:metadata>
+  <f:metadata>
+    <f:viewParam name="id" value="#{entryEditController.entry.id}"/>
+    <f:viewAction action="#{entryEditController.doFind}"/>
+  </f:metadata>
 
-    <ui:define name="title">Entries: Morecat Admin</ui:define>
+  <ui:define name="title">Entries: Morecat Admin</ui:define>
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <h2>Entries</h2>
+    <h2>Entries</h2>
 
-        <h:form>
+    <h:form>
 
-            <p:growl id="growl"/>
+      <p:growl id="growl"/>
 
-            <div id="editor">
-                <div>
-                    <p:inputText id="title" value="#{entryEditController.entry.title}" placeholder="Title" size="120"/>
-                    <p:spacer width="20"/>
-                    <p:selectOneMenu value="#{entryEditController.format_}" style="vertical-align: -10px">
-                        <p:ajax listener="#{entryEditController.doChangeFormat}" update="tabView:preview"/>
-                        <f:selectItem itemValue="MARKDOWN" itemLabel="Markdown"/>
-                        <f:selectItem itemValue="HTML" itemLabel="HTML"/>
-                    </p:selectOneMenu>
-                    <p:spacer width="20"/>
-                    <p:commandButton value="#{(entryEditController.entry.state eq 'PUBLIC' ? 'Update' : 'Publish')}"
-                                     action="#{entryEditController.doPublishOrUpdate}" update="growl"
-                                     style="background: darkorange; color: cornsilk"/>
-                    <p:spacer width="5"/>
-                    <p:commandButton value="Save" action="#{entryEditController.doSave}" update="growl"
-                                     rendered="#{entryEditController.entry.state ne 'PUBLIC'}"/>
-                    <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}" update="growl"
-                                     rendered="#{entryEditController.entry.state eq 'PUBLIC'}"/>
-                    <p:spacer width="5"/>
-                    <p:button value="Back" outcome="view"/>
+      <div id="editor">
+        <div>
+          <p:inputText id="title" value="#{entryEditController.entry.title}" placeholder="Title" size="120"/>
+          <p:spacer width="20"/>
+          <p:selectOneMenu value="#{entryEditController.format_}" style="vertical-align: -10px">
+            <p:ajax listener="#{entryEditController.doChangeFormat}" update="tabView:preview"/>
+            <f:selectItem itemValue="MARKDOWN" itemLabel="Markdown"/>
+            <f:selectItem itemValue="HTML" itemLabel="HTML"/>
+          </p:selectOneMenu>
+          <p:spacer width="20"/>
+          <p:commandButton value="#{(entryEditController.entry.state eq 'PUBLIC' ? 'Update' : 'Publish')}"
+                           action="#{entryEditController.doPublishOrUpdate}" update="growl"
+                           style="background: darkorange; color: cornsilk"/>
+          <p:spacer width="5"/>
+          <p:commandButton value="Save" action="#{entryEditController.doSave}" update="growl"
+                           rendered="#{entryEditController.entry.state ne 'PUBLIC'}"/>
+          <p:commandButton value="Revert to draft" action="#{entryEditController.doRevertToDraft()}"
+                           update="growl"
+                           rendered="#{entryEditController.entry.state eq 'PUBLIC'}"/>
+          <p:spacer width="5"/>
+          <p:button value="Back" outcome="view"/>
+        </div>
+        <div id="entry_metadata">
+          <div>
+            <p:inputText id="tags" value="#{entryEditController.entry.tags}"
+                         converter="tagConverter"
+                         placeholder="Tags" size="25"/>
+            <p:spacer width="20"/>
+            <p:inputText id="permalink" value="#{entryEditController.entry.permalink}"
+                         placeholder="Permalink" size="25"
+                         disabled="#{not entryEditController.customPermalink}"/>
+            <p:spacer width="5"/>
+            <p:selectBooleanCheckbox value="#{entryEditController.customPermalink}"
+                                     style="vertical-align: -3px">
+              <p:ajax update="permalink"/>
+            </p:selectBooleanCheckbox>
+            <p:spacer width="5"/>
+            <h:outputText value="Custom Permalink"/>
+          </div>
+        </div>
+        <div class="body">
+          <div>
+            <p:tabView id="tabView" effect="fade" effectDuration="normal">
+
+              <p:ajax event="tabChange" listener="#{entryEditController.doPreview}"
+                      update="tabView:preview"/>
+
+              <p:tab id="content_tab" title="Content">
+                <div class="edit-area">
+                  <p:inputTextarea id="content" value="#{entryEditController.entry.content}"
+                                   cols="50" rows="30" autoResize="false" placeholder="Content"
+                                   style="width: 90%;"/>
                 </div>
-                <div id="entry_metadata">
-                    <div>
-                        <p:inputText id="tags" value="#{entryEditController.entry.tags}"
-                                     converter="tagConverter"
-                                     placeholder="Tags" size="25"/>
-                        <p:spacer width="20"/>
-                        <p:inputText id="permalink" value="#{entryEditController.entry.permalink}"
-                                     placeholder="Permalink" size="25" disabled="#{not entryEditController.customPermalink}"/>
-                        <p:spacer width="5"/>
-                        <p:selectBooleanCheckbox  value="#{entryEditController.customPermalink}" style="vertical-align: -3px">
-                            <p:ajax update="permalink"/>
-                        </p:selectBooleanCheckbox>
-                        <p:spacer width="5"/>
-                        <h:outputText value="Custom Permalink"/>
-                    </div>
+              </p:tab>
+              <p:tab id="preview_tab" title="Preview">
+                <div class="preview-area">
+                  <h:outputText id="preview" escape="false" value="#{entryEditController.html}"/>
                 </div>
-                <div class="body">
-                    <div>
-                        <p:tabView id="tabView" effect="fade" effectDuration="normal">
+              </p:tab>
+            </p:tabView>
+          </div>
+        </div>
+      </div>
 
-                            <p:ajax event="tabChange" listener="#{entryEditController.doPreview}" update="tabView:preview"/>
+    </h:form>
 
-                            <p:tab id="content_tab" title="Content" >
-                                <div class="edit-area">
-                                    <p:inputTextarea id="content" value="#{entryEditController.entry.content}"
-                                                     cols="50" rows="30" autoResize="false" placeholder="Content" style="width: 90%;"/>
-                                </div>
-                            </p:tab>
-                            <p:tab id="preview_tab" title="Preview">
-                                <div class="preview-area">
-                                    <h:outputText id="preview" escape="false" value="#{entryEditController.html}"/>
-                                </div>
-                            </p:tab>
-                        </p:tabView>
-                    </div>
-                </div>
-            </div>
-
-        </h:form>
-
-    </ui:define>
+  </ui:define>
 
 </ui:composition>
 </html>
