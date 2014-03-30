@@ -50,6 +50,7 @@
     <version.maven.jxr.plugin>2.3</version.maven.jxr.plugin>
     <version.maven.pmd.plugin>3.0.1</version.maven.pmd.plugin>
     <version.wildfly.maven.plugin>1.0.1.Final</version.wildfly.maven.plugin>
+    <version.shrinkwrap.resolvers>2.1.0</version.shrinkwrap.resolvers>
 
     <!-- test -->
     <skipTests>false</skipTests>
@@ -186,6 +187,13 @@
       <artifactId>arquillian-protocol-servlet</artifactId>
       <version>${version.arquillian}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-depchain</artifactId>
+      <version>${version.shrinkwrap.resolvers}</version>
+      <scope>test</scope>
+      <type>pom</type>
     </dependency>
   </dependencies>
 
