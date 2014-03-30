@@ -7,10 +7,12 @@ import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.service.EntryService;
 
 import javax.inject.Inject;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.core.CacheControl;
+import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,12 +48,28 @@ public class EntryResourceImpl implements EntryResource {
   }
 
   @Override
-  public Response findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+  public Response findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink,
+                                                       String sent, Request request) {
     Entry anEntry = entryService.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
     if (anEntry == null) {
       return Response.status(Response.Status.NOT_FOUND).entity(null).build();
     }
-    return Response.ok(entity2Response(anEntry), MediaType.APPLICATION_JSON).build();
+
+    EntityTag eTag = new EntityTag(Integer.toString(anEntry.hashCode()));
+    CacheControl cc = new CacheControl();
+    cc.setMaxAge(5);
+
+    Response.ResponseBuilder builder = request.evaluatePreconditions(eTag);
+    if (builder != null) {
+      builder.cacheControl(cc);
+      return builder.build();
+    }
+
+    return Response
+      .ok(entity2Response(anEntry), MediaType.APPLICATION_JSON)
+      .cacheControl(cc)
+      .tag(eTag)
+      .build();
   }
 
   private PublishedEntryResponse entity2Response(Entry entity) {
@@ -67,8 +85,8 @@ public class EntryResourceImpl implements EntryResource {
       default:
         throw new IllegalStateException("Invalid format");
     }
-    response.setCreatedDate(entity.getCreatedDate());
-    response.setCreatedTime(entity.getCreatedTime());
+    response.setCreatedDate(new SimpleDateFormat("yyyy-MM-dd").format(entity.getCreatedDate()));
+    response.setCreatedTime(new SimpleDateFormat("HH:mm:ss").format(entity.getCreatedTime()));
     response.setPermalink(entity.getPermalink());
     response.setTags(entity.getTags());
     response.setTitle(entity.getTitle());

@@ -20,9 +20,9 @@ public class PublishedEntryResponse {
 
   private String authorName;
 
-  private Date createdDate;
+  private String createdDate;
 
-  private Date createdTime;
+  private String createdTime;
 
   private Set<String> tags = new HashSet<>();
 

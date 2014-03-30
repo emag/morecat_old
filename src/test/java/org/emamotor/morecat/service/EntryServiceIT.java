@@ -31,7 +31,7 @@ public class EntryServiceIT {
     // Setup
     // Exercise
     // Verify
-    assertThat(sut.findAll().size(), is(1));
+    assertThat(sut.findAll().size(), is(3));
   }
 
 }
