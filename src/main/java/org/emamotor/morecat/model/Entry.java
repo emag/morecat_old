@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
@@ -40,6 +41,7 @@ public class Entry extends BaseEntity {
   @NotEmpty(message = "Title must not be empty")
   private String title;
 
+  @Lob
   @Column(nullable = false)
   @NotNull
   private String content;
