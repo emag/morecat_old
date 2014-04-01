@@ -1,5 +1,6 @@
 package org.emamotor.morecat.api;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
@@ -19,7 +20,8 @@ public interface EntryResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  Response findAllPublished(@QueryParam("start") int start, @QueryParam("size") int size);
+  Response findAllPublished(@QueryParam("start") int start,
+                            @QueryParam("size") @DefaultValue("5") int size);
 
   @GET
   @Path("/{year}")
