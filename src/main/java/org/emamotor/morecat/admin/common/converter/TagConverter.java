@@ -1,5 +1,7 @@
 package org.emamotor.morecat.admin.common.converter;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -15,6 +17,8 @@ public class TagConverter implements Converter {
 
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
+
+    if (StringUtils.isBlank(value)) return null;
 
     Set<String> tags = new HashSet<>();
     for (String each : value.split(",")) {

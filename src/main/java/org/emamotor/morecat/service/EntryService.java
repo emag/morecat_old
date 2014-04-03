@@ -1,12 +1,13 @@
 package org.emamotor.morecat.service;
 
+import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.repository.EntryRepository;
-import org.emamotor.morecat.model.Entry;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author tanabe
@@ -59,6 +60,10 @@ public class EntryService {
 
   public void delete(Integer id) {
     entryRepository.delete(id);
+  }
+
+  public Set<String> findAllTags() {
+    return entryRepository.findAllTags();
   }
 
 }

@@ -51,4 +51,9 @@ public interface EntryResource {
                                                 @HeaderParam("If-None-Match") String sent,
                                                 @Context Request request);
 
+  @GET
+  @Path("/tags")
+  @Produces(MediaType.APPLICATION_JSON)
+  Response findAllTags();
+
 }
