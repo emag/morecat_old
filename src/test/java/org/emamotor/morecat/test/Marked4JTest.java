@@ -44,7 +44,7 @@ public class Marked4JTest {
   }
 
   private void displayTransition(String markdown) throws IOException {
-    Marked marked = new MarkedBuilder().gfm(true).sanitize(true).build();
+    Marked marked = new MarkedBuilder().gfm(true).sanitize(true).langPrefix("").build();
 
     System.out.println("[Markdown]");
     System.out.println(markdown);

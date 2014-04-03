@@ -39,7 +39,7 @@ public class Resources {
   @Produces
   @ApplicationScoped
   public Marked produceMarked() {
-    return new MarkedBuilder().gfm(true).sanitize(true).build();
+    return new MarkedBuilder().gfm(true).sanitize(true).langPrefix("").build();
   }
 
 }
