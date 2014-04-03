@@ -1,11 +1,10 @@
 package org.emamotor.morecat.repository;
 
-import org.emamotor.morecat.model.Entry;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -17,6 +16,10 @@ public abstract class GenericRepository<T> {
   private EntityManager em;
 
   private Class<T> entityClass;
+
+  protected CriteriaBuilder cb;
+  protected CriteriaQuery<T> cq;
+  protected Root<T> entry;
 
   public GenericRepository() {
   }
@@ -50,6 +53,12 @@ public abstract class GenericRepository<T> {
 
   public void delete(Integer id) {
     em.remove(em.find(entityClass, id));
+  }
+
+  protected void setUpCriteria() {
+    cb = getEntityManager().getCriteriaBuilder();
+    cq = cb.createQuery(entityClass);
+    entry = cq.from(entityClass);
   }
 
 }

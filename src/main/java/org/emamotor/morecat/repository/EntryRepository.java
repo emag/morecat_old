@@ -7,9 +7,6 @@ import org.emamotor.morecat.model.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,9 +22,7 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public List<Entry> findAllPublished() {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
     cq.select(entry)
       .where(cb.equal(entry.get(Entry_.state), EntryState.PUBLIC))
@@ -37,9 +32,7 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public List<Entry> findAllPublished(int start, int size) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
     cq.select(entry)
       .where(cb.equal(entry.get(Entry_.state), EntryState.PUBLIC))
@@ -49,9 +42,7 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public List<Entry> findAllPublishedByYear(int year) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
     cq.select(entry)
       .where(
@@ -63,9 +54,7 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public List<Entry> findAllPublishedByYearMonth(int year, int month) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
     cq.select(entry)
       .where(
@@ -78,11 +67,8 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
-    cb.function("year", Integer.class, cb.currentDate());
     cq.select(entry)
       .where(
         cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
@@ -95,11 +81,8 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
-    cb.function("year", Integer.class, cb.currentDate());
     cq.select(entry).where(
       cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
       cb.equal(cb.function("year", Integer.class, entry.get(Entry_.createdDate)), year),
@@ -117,9 +100,7 @@ public class EntryRepository extends GenericRepository<Entry> {
   }
 
   public List<Entry> findAllByAuthor(User author) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<Entry> cq = cb.createQuery(Entry.class);
-    Root<Entry> entry = cq.from(Entry.class);
+    setUpCriteria();
 
     cq.select(entry).where(cb.equal(entry.get(Entry_.author), author));
 
