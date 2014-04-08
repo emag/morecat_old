@@ -116,4 +116,14 @@ public class EntryRepository extends GenericRepository<Entry> {
     return tags;
   }
 
+  public List<Entry> findAllPublishedByTag(String tag) {
+    setUpCriteria();
+
+    cq.select(entry)
+      .where(cb.isMember(tag, entry.get(Entry_.tags)))
+      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
+
+    return getEntityManager().createQuery(cq).getResultList();
+  }
+
 }

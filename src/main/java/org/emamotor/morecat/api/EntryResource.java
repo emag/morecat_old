@@ -56,4 +56,9 @@ public interface EntryResource {
   @Produces(MediaType.APPLICATION_JSON)
   Response findAllTags();
 
+  @GET
+  @Path("/tags/{tag}")
+  @Produces(MediaType.APPLICATION_JSON)
+  Response findAllPublishedByTag(@PathParam("tag") String tag);
+
 }

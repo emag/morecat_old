@@ -66,4 +66,7 @@ public class EntryService {
     return entryRepository.findAllTags();
   }
 
+  public List<Entry> findAllPublishedByTag(String tag) {
+    return entryRepository.findAllPublishedByTag(tag);
+  }
 }

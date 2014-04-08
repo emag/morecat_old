@@ -77,6 +77,11 @@ public class EntryResourceImpl implements EntryResource {
     return Response.ok(entryService.findAllTags()).build();
   }
 
+  @Override
+  public Response findAllPublishedByTag(String tag) {
+    return Response.ok(entityList2Response(entryService.findAllPublishedByTag(tag))).build();
+  }
+
   private PublishedEntryResponse entity2Response(Entry entity) {
     PublishedEntryResponse response = new PublishedEntryResponse();
     response.setAuthorName(entity.getAuthor().getName());
