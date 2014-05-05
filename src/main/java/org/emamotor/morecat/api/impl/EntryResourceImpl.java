@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,10 +105,11 @@ public class EntryResourceImpl implements EntryResource {
   }
 
   private List<PublishedEntryResponse> entityList2Response(List<Entry> entities) {
-    return entities
-      .parallelStream()
-      .map(this::entity2Response)
-      .collect(Collectors.toList());
+    List<PublishedEntryResponse> publishedEntryResponses = new ArrayList<>();
+    for (Entry entry : entities) {
+      publishedEntryResponses.add(entity2Response(entry));
+    }
+    return publishedEntryResponses;
   }
 
 }
