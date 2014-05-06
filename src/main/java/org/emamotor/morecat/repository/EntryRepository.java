@@ -120,7 +120,9 @@ public class EntryRepository extends GenericRepository<Entry> {
     setUpCriteria();
 
     cq.select(entry)
-      .where(cb.isMember(tag, entry.get(Entry_.tags)))
+      .where(
+        cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
+        cb.isMember(tag, entry.get(Entry_.tags)))
       .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
     return getEntityManager().createQuery(cq).getResultList();
