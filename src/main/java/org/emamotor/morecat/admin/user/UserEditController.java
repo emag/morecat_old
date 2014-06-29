@@ -31,9 +31,6 @@ public class UserEditController implements Serializable {
   @Inject
   private UserService userService;
 
-  @Inject
-  private RoleService roleService;
-
   @Getter
   @Setter
   private User user = new User();
