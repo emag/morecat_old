@@ -99,10 +99,21 @@ public class EntryRepository extends GenericRepository<Entry> {
     return anEntry;
   }
 
+  public List<Entry> findAllByAdmin() {
+    setUpCriteria();
+
+    cq.select(entry)
+      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
+
+    return getEntityManager().createQuery(cq).getResultList();
+  }
+
   public List<Entry> findAllByAuthor(User author) {
     setUpCriteria();
 
-    cq.select(entry).where(cb.equal(entry.get(Entry_.author), author));
+    cq.select(entry)
+      .where(cb.equal(entry.get(Entry_.author), author))
+      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));;
 
     return getEntityManager().createQuery(cq).getResultList();
   }

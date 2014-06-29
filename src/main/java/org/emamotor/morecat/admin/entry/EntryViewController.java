@@ -37,7 +37,7 @@ public class EntryViewController {
 
     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
     if (request.isUserInRole(String.valueOf(Role.ADMIN))) {
-      entries = entryService.findAll();
+      entries = entryService.findAllByAdmin();
     } else {
       entries = entryService.findAllByAuthor(
         authService.getLoginUserByName(request.getUserPrincipal().getName()));

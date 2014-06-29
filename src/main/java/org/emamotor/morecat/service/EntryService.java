@@ -42,6 +42,10 @@ public class EntryService {
     return entryRepository.findAll();
   }
 
+  public List<Entry> findAllByAdmin() {
+    return entryRepository.findAllByAdmin();
+  }
+
   public List<Entry> findAllByAuthor(User author) {
     return entryRepository.findAllByAuthor(author);
   }
