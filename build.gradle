@@ -1,9 +1,20 @@
 apply plugin: "java"
 apply plugin: "war"
 
-war.baseName = "morecat"
+group = 'org.emamotor.morecat'
+version = '0.1.0-SNAPSHOT'
+project.ext {
+  artifactId = 'morecat'
+}
+war.archiveName = "morecat.war"
 
 sourceCompatibility = targetCompatibility = 1.7
+
+ext {
+  wildflyVersion = "8.1.0.Final"
+  arquillianVersion = "1.1.5.Final"
+  expectedGradleVersion = "1.12"
+}
 
 tasks.withType(AbstractCompile) each {
   it.options.encoding = "UTF-8"
@@ -17,17 +28,11 @@ repositories {
   mavenCentral()
 }
 
-ext {
-  wildflyVersion = "8.1.0.Final"
-  arquillianVersion = "1.1.5.Final"
-  expectedGradleVersion = "1.12"
-}
-
 dependencies {
   providedCompile "org.wildfly:wildfly-spec-api:$wildflyVersion"
   providedCompile "org.hibernate:hibernate-jpamodelgen:4.3.5.Final"
-  providedCompile "org.projectlombok:lombok:1.14.2"
   providedCompile "org.hibernate:hibernate-validator:5.1.1.Final"
+  providedCompile "org.projectlombok:lombok:1.14.2"
   compile "org.apache.commons:commons-lang3:3.3.2"
   compile "am.ik.marked4j:marked4j:0.9.1"
   compile "org.slf4j:slf4j-api:1.7.7"
