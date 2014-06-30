@@ -6,8 +6,8 @@ import org.emamotor.morecat.service.EntryService;
 import org.emamotor.morecat.util.Resources;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.gradle.archive.importer.embedded.EmbeddedGradleImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 /**
  * @author Yoshimasa Tanabe
@@ -22,17 +22,25 @@ public class MoreCatDeployment {
       .addPackage(EntryService.class.getPackage())
       .addPackage(EntryRepository.class.getPackage())
       .addPackage(Entry.class.getPackage())
-      .addAsLibraries(
-        Maven.resolver()
-          .loadPomFromFile("pom.xml")
-          .importRuntimeDependencies()
-          .resolve()
-          .withTransitivity()
-          .asFile())
+//      .addAsLibraries(
+//        Maven.resolver()
+//          .loadPomFromFile("pom.xml")
+//          .importRuntimeDependencies()
+//          .resolve()
+//          .withTransitivity()
+//          .asFile())
       .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
       .addAsResource("import.sql")
       .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
       .addAsWebInfResource("test-ds.xml");
+//    return ShrinkWrap
+//      .create(EmbeddedGradleImporter.class, "test.war")
+//      .forThisProjectDirectory()
+//      .importBuildOutput().as(WebArchive.class)
+//      .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
+//      .addAsResource("import.sql")
+//      .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+//      .addAsWebInfResource("test-ds.xml");
   }
 
 }

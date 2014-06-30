@@ -1,10 +1,10 @@
 apply plugin: "java"
 apply plugin: "war"
 
-group = 'org.emamotor.morecat'
-version = '0.1.0-SNAPSHOT'
+group = "org.emamotor.morecat"
+version = "0.1.0-SNAPSHOT"
 project.ext {
-  artifactId = 'morecat'
+  artifactId = "morecat"
 }
 war.archiveName = "morecat.war"
 
@@ -25,6 +25,9 @@ repositories {
   maven { url "https://repository.jboss.org/nexus/content/repositories" }
   maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
   maven { url "http://repository.primefaces.org" }
+  maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
+  maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
+  maven { url 'http://repo.jfrog.org/artifactory/repo' }
   mavenCentral()
 }
 
@@ -40,11 +43,11 @@ dependencies {
   compile "org.primefaces:primefaces:4.0"
   compile "org.primefaces.themes:eggplant:1.0.10"
   testCompile "junit:junit:4.+"
+  testCompile "org.jboss.resteasy:resteasy-client:3.0.8.Final"
   testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
   testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:$arquillianVersion"
-  testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain:2.1.1"
-  testCompile "org.jboss.resteasy:resteasy-client:3.0.8.Final"
   testRuntime "org.wildfly:wildfly-arquillian-container-remote:$wildflyVersion"
+  testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-gradle-depchain', version: '2.2.0-alpha-1'
 }
 
 task wrapper(type: Wrapper) {
