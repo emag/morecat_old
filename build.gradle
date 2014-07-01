@@ -53,6 +53,14 @@ dependencies {
   testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-gradle-depchain', version: '2.2.0-alpha-2'
 }
 
+task("release", type: War) {
+  archiveName = "morecat.war"
+
+  exclude("WEB-INF/morecat-ds.xml")
+  rootSpec.exclude("**/import.sql")
+
+}
+
 processResources {
   filter(ReplaceTokens, tokens: ['version': project.version])
 }
