@@ -47,7 +47,7 @@ dependencies {
   testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
   testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:$arquillianVersion"
   testRuntime "org.wildfly:wildfly-arquillian-container-remote:$wildflyVersion"
-  testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-gradle-depchain', version: '2.2.0-alpha-1'
+  testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-gradle-depchain', version: '2.2.0-alpha-2'
 }
 
 task wrapper(type: Wrapper) {
