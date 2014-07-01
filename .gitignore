@@ -25,5 +25,11 @@ Thumbs.db
 # Maven output folder
 target
 
+# Gradle
+.gradle
+build
+gradle-app.setting
+out
+
 # JRebel
 rebel.xml
