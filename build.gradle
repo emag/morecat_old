@@ -56,8 +56,7 @@ dependencies {
 task("release", type: War) {
   archiveName = "morecat.war"
 
-  exclude("WEB-INF/morecat-ds.xml")
-  rootSpec.exclude("**/import.sql")
+  rootSpec.exclude("WEB-INF/morecat-ds.xml", "**/import.sql")
 
 }
 
