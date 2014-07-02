@@ -17,6 +17,8 @@ ext {
   wildflyVersion = "8.1.0.Final"
   arquillianVersion = "1.1.5.Final"
   expectedGradleVersion = "1.12"
+  defaultEnvironment = "development"
+  environment = defaultEnvironment
 }
 
 tasks.withType(AbstractCompile) each {
@@ -27,10 +29,10 @@ repositories {
   maven { url "https://repository.jboss.org/nexus/content/groups/public-jboss" }
   maven { url "https://repository.jboss.org/nexus/content/repositories" }
   maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
+  maven { url "http://repository.jboss.org/nexus/content/groups/public" }
+  maven { url "http://repository.jboss.org/nexus/content/repositories/deprecated" }
   maven { url "http://repository.primefaces.org" }
-  maven { url 'http://repository.jboss.org/nexus/content/groups/public' }
-  maven { url 'http://repository.jboss.org/nexus/content/repositories/deprecated' }
-  maven { url 'http://repo.jfrog.org/artifactory/repo' }
+  maven { url "http://repo.jfrog.org/artifactory/repo" }
   mavenCentral()
 }
 
@@ -50,11 +52,38 @@ dependencies {
   testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
   testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:$arquillianVersion"
   testRuntime "org.wildfly:wildfly-arquillian-container-remote:$wildflyVersion"
-  testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-gradle-depchain', version: '2.2.0-alpha-2'
+  testCompile group: "org.jboss.shrinkwrap.resolver", name: "shrinkwrap-resolver-gradle-depchain", version: "2.2.0-alpha-2"
+}
+
+task("release", type: War) {
+  archiveName = "morecat.war"
+
+  rootSpec.exclude("WEB-INF/morecat-ds.xml", "**/import.sql")
+
 }
 
 processResources {
-  filter(ReplaceTokens, tokens: ['version': project.version])
+
+  filter(ReplaceTokens, tokens: ["version": project.version])
+
+  if (project.hasProperty("production")) {
+    environment = "production"
+  }
+
+  def config = new ConfigSlurper().parse(file("environments/${environment}.groovy").toURI().toURL())
+  logger.info("Processing resources for '$project.name' using the following configuration: $config")
+
+  exclude "**/persistence.xml"
+
+  expand(
+    hbm2ddl: "$config.hbm2ddl.auto",
+    showSQL: "$config.showSQL",
+    formatSQL: "$config.formatSQL",
+    dialect: "$config.dialect",
+  )
+
+  rename "persistence.gradle.xml", "persistence.xml"
+
 }
 
 task wrapper(type: Wrapper) {
