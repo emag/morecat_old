@@ -1,0 +1,27 @@
+apply plugin: io.github.divinespear.JpaSchemaGeneratePlugin
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "io.github.divinespear:jpa-schema-gradle-plugin:0.1.10"
+    classpath "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.3"
+  }
+}
+
+generateSchema {
+
+  namingStrategy = "org.hibernate.cfg.ImprovedNamingStrategy"
+  targets {
+    postgresscript {
+      scriptAction = "drop-and-create"
+      databaseProductName = "PostgreSQL"
+      databaseMajorVersion = 9
+      databaseMinorVersion = 3
+      createOutputFileName = "93-create.sql"
+      dropOutputFileName = "93-drop.sql"
+    }
+  }
+
+}
