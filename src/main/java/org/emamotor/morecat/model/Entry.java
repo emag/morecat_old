@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
@@ -50,7 +51,8 @@ public class Entry extends BaseEntity {
   @NotEmpty(message = "Permalink must not be empty")
   private String permalink;
 
-  @ManyToOne(optional = false)
+  @ManyToOne
+  @JoinColumn(name = "author_id", nullable = false)
   private User author;
 
   @Temporal(TemporalType.DATE)
