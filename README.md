@@ -2,6 +2,12 @@
 
 ## Tasks
 
+### release
+
+~~~
+./gradlew -PprofileName=postgresql clean release
+~~~
+
 ### generate-schema
 
 ~~~
