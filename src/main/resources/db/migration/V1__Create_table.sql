@@ -8,7 +8,7 @@ CREATE TABLE entries (
   permalink varchar(255) NOT NULL,
   state varchar(255) NOT NULL,
   title varchar(255) NOT NULL,
-  author int4 NOT NULL,
+  author_id int4 NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -39,5 +39,5 @@ CREATE TABLE users (
 ALTER TABLE entries ADD CONSTRAINT UK_tb3g11m5y7xcicx8j00dbcw00  UNIQUE (permalink, created_date);
 ALTER TABLE users ADD CONSTRAINT UK_6dotkott2kjsp8vw4d0m25fb7  UNIQUE (email);
 ALTER TABLE users ADD CONSTRAINT UK_3g1j96g94xpk3lpxl2qbl985x  UNIQUE (name);
-ALTER TABLE entries ADD CONSTRAINT FK_jlvbj3mie5nva1a9vt7qs3gv9 FOREIGN KEY (author) REFERENCES users;
+ALTER TABLE entries ADD CONSTRAINT FK_jlvbj3mie5nva1a9vt7qs3gv9 FOREIGN KEY (author_id) REFERENCES users;
 ALTER TABLE tags ADD CONSTRAINT FK_ap7xdwu7utpd2iysc1ots6wes FOREIGN KEY (entry) REFERENCES entries;
