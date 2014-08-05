@@ -1,0 +1,19 @@
+batch
+
+/subsystem=datasources/data-source=morecatDS/:add(connection-url=jdbc:postgresql://192.168.10.10:5432/morecat,jndi-name=java:jboss/datasources/morecatDS,driver-name=postgresql-9.3-1102.jdbc41.jar)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=user-name,value=morecat)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=password,value=morecat)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=use-java-context,value=true)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=jta,value=true)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=max-pool-size,value=20)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=min-pool-size,value=20)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=pool-prefill,value=true)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=idle-timeout-minutes,value=0)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=check-valid-connection-sql,value="select 1")
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=validate-on-match,value=true)
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=new-connection-sql,value="select 1")
+/subsystem=datasources/data-source=morecatDS/:write-attribute(name=prepared-statements-cache-size,value=50)
+/subsystem=datasources/data-source=morecatDS/connection-properties=tcpKeepAlive/:add(value=true)
+/subsystem=datasources/data-source=morecatDS/connection-properties=socketTimeout/:add(value=0)
+
+run-batch
