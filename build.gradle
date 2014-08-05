@@ -4,6 +4,7 @@ apply plugin: "java"
 apply plugin: "war"
 
 apply from: "generate-schema.gradle"
+apply from: "flyway.gradle"
 
 group = "org.emamotor.morecat"
 project.ext {
