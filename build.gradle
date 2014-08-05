@@ -3,6 +3,9 @@ import org.apache.tools.ant.filters.ReplaceTokens
 apply plugin: "java"
 apply plugin: "war"
 
+apply from: "generate-schema.gradle"
+apply from: "flyway.gradle"
+
 group = "org.emamotor.morecat"
 project.ext {
   artifactId = "morecat"
@@ -55,35 +58,30 @@ dependencies {
   testCompile group: "org.jboss.shrinkwrap.resolver", name: "shrinkwrap-resolver-gradle-depchain", version: "2.2.0-alpha-2"
 }
 
+sourceSets {
+  def userProfileName
+
+  if (project.hasProperty("profileName")) {
+    userProfileName = "$profileName"
+  } else {
+    useProfileName = "main"
+  }
+
+  main {
+    resources {
+      srcDir file("src/$userProfileName/resources")
+    }
+    output.resourcesDir output.classesDir
+  }
+}
+
 task("release", type: War) {
   archiveName = "morecat.war"
-
   rootSpec.exclude("WEB-INF/morecat-ds.xml", "**/import.sql")
-
 }
 
 processResources {
-
   filter(ReplaceTokens, tokens: ["version": project.version])
-
-  if (project.hasProperty("production")) {
-    environment = "production"
-  }
-
-  def config = new ConfigSlurper().parse(file("environments/${environment}.groovy").toURI().toURL())
-  logger.info("Processing resources for '$project.name' using the following configuration: $config")
-
-  exclude "**/persistence.xml"
-
-  expand(
-    hbm2ddl: "$config.hbm2ddl.auto",
-    showSQL: "$config.showSQL",
-    formatSQL: "$config.formatSQL",
-    dialect: "$config.dialect",
-  )
-
-  rename "persistence.gradle.xml", "persistence.xml"
-
 }
 
 task wrapper(type: Wrapper) {
