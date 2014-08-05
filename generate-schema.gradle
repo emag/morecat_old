@@ -6,7 +6,7 @@ buildscript {
   }
   dependencies {
     classpath "io.github.divinespear:jpa-schema-gradle-plugin:0.1.10"
-    classpath "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.3"
+    classpath "org.postgresql:postgresql:9.3-1102-jdbc41"
   }
 }
 
