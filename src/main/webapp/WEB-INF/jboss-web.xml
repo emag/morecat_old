@@ -2,4 +2,5 @@
 <jboss-web>
   <security-domain>java:jboss/jaas/morecat-security</security-domain>
   <disable-audit>true</disable-audit>
+  <context-root>/</context-root>
 </jboss-web>

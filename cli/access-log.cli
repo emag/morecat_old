@@ -1,0 +1,6 @@
+batch
+
+/subsystem=undertow/server=default­server/http­listener=default:write­attribute(name=record­request­start­time,value=true)
+/subsystem=undertow/server=default­server/host=default­host/setting=access­log:add(prefix=access,pattern="%t,%a,%m,%U,%s,%D")
+
+run-batch
