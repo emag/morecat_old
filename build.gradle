@@ -64,7 +64,7 @@ sourceSets {
   if (project.hasProperty("profileName")) {
     userProfileName = "$profileName"
   } else {
-    useProfileName = "main"
+    userProfileName = "main"
   }
 
   main {
