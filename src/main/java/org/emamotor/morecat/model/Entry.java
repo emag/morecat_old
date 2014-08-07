@@ -64,7 +64,7 @@ public class Entry extends BaseEntity {
   private Date createdTime;
 
   @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(name = "tags")
+  @CollectionTable(name = "tags", joinColumns = @JoinColumn(name = "entry_id"))
   @Column(name = "value")
   @OrderBy
   private Set<String> tags = new HashSet<>();

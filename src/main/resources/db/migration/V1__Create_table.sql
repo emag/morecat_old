@@ -22,7 +22,7 @@ CREATE TABLE settings (
 );
 
 CREATE TABLE tags (
-  entry int4 NOT NULL,
+  entry_id int4 NOT NULL,
   value varchar(255)
 );
 
@@ -40,4 +40,4 @@ ALTER TABLE entries ADD CONSTRAINT UK_tb3g11m5y7xcicx8j00dbcw00  UNIQUE (permali
 ALTER TABLE users ADD CONSTRAINT UK_6dotkott2kjsp8vw4d0m25fb7  UNIQUE (email);
 ALTER TABLE users ADD CONSTRAINT UK_3g1j96g94xpk3lpxl2qbl985x  UNIQUE (name);
 ALTER TABLE entries ADD CONSTRAINT FK_jlvbj3mie5nva1a9vt7qs3gv9 FOREIGN KEY (author_id) REFERENCES users;
-ALTER TABLE tags ADD CONSTRAINT FK_ap7xdwu7utpd2iysc1ots6wes FOREIGN KEY (entry) REFERENCES entries;
+ALTER TABLE tags ADD CONSTRAINT FK_ap7xdwu7utpd2iysc1ots6wes FOREIGN KEY (entry_id) REFERENCES entries;
