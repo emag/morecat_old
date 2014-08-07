@@ -1,0 +1,1 @@
+/subsystem=jca/cached-connection-manager=cached-connection-manager:write-attribute(name=debug,value=true)
