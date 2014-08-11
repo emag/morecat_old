@@ -3,6 +3,7 @@ package org.emamotor.morecat.admin.entry;
 import am.ik.marked4j.Marked;
 import lombok.Getter;
 import lombok.Setter;
+import org.emamotor.morecat.admin.common.stereotype.View;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
@@ -15,10 +16,7 @@ import org.slf4j.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,8 +26,7 @@ import java.util.List;
 /**
  * @author Yoshimasa Tanabe
  */
-@Named
-@ViewScoped
+@View
 public class EntryEditController implements Serializable {
 
   @Inject
