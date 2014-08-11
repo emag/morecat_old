@@ -2,24 +2,21 @@ package org.emamotor.morecat.admin.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.emamotor.morecat.admin.common.stereotype.View;
 import org.emamotor.morecat.model.Role;
 import org.emamotor.morecat.model.User;
-import org.emamotor.morecat.service.RoleService;
 import org.emamotor.morecat.service.UserService;
 import org.emamotor.morecat.util.PasswordUtil;
 import org.slf4j.Logger;
 
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
 
 /**
  * @author Yoshimasa Tanabe
  */
-@Named
-@ViewScoped
+@View
 public class UserEditController implements Serializable {
 
   @Inject

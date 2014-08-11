@@ -2,6 +2,7 @@ package org.emamotor.morecat.admin.profile;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.emamotor.morecat.admin.common.stereotype.View;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.service.AuthService;
 import org.emamotor.morecat.service.UserService;
@@ -10,17 +11,14 @@ import org.emamotor.morecat.util.PasswordUtil;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
  * @author tanabe
  */
-@Named
-@ViewScoped
+@View
 public class ProfileEditController implements Serializable {
 
   @Inject
