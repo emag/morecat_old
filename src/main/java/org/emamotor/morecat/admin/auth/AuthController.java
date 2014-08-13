@@ -36,8 +36,8 @@ public class AuthController {
 
   @Getter
   @Setter
-  @NotEmpty(message = "Please Enter Username")
-  private String username;
+  @NotEmpty(message = "Please Enter Mail Address")
+  private String email;
 
   @Getter
   @Setter
@@ -51,7 +51,7 @@ public class AuthController {
     try {
 
       request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-      authService.login(request, username, password);
+      authService.login(request, email, password);
 
       String redirectView = "/mc-admin/overview/view.xhtml";
       String referer = request.getHeader("Referer");
@@ -69,12 +69,12 @@ public class AuthController {
 
     } catch (ServletException e) {
       logger.warn(e.toString());
-      facesContext.addMessage(null, new FacesMessage("Username or password was invalid"));
+      facesContext.addMessage(null, new FacesMessage("Mail Address or Password was invalid"));
     } catch (IOException e) {
-      logger.error("IOException occurred, Username : " + request.getUserPrincipal().getName(), e);
+      logger.error("IOException occurred, Mail Address : " + request.getUserPrincipal().getName(), e);
       facesContext.addMessage(null, new FacesMessage("System error!"));
     } catch (URISyntaxException e) {
-      logger.error("URISyntaxException occurred, Username : " + request.getUserPrincipal().getName(), e);
+      logger.error("URISyntaxException occurred, Mail Address : " + request.getUserPrincipal().getName(), e);
       facesContext.addMessage(null, new FacesMessage("System error!"));
     }
 
@@ -90,9 +90,9 @@ public class AuthController {
   }
 
   public String getLoginUserName() {
-    String loginUserName =
+    String email =
       ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName();
-    return authService.getLoginUserByName(loginUserName).getName();
+    return authService.getLoginUserByEmail(email).getName();
   }
 
 }

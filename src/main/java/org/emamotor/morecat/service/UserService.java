@@ -24,8 +24,8 @@ public class UserService {
     return userRepository.findById(id);
   }
 
-  public User findByName(String username) {
-    return userRepository.findByName(username);
+  public User findByEmail(String email) {
+    return userRepository.findByEmail(email);
   }
 
   public User update(User user) {
