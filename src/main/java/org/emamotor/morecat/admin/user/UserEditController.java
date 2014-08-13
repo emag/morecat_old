@@ -32,12 +32,16 @@ public class UserEditController implements Serializable {
   @Setter
   private User user = new User();
 
+  @Getter
+  private boolean newUser;
+
   public void doFind() {
 
     // new user
     if (user.getId() == null
       || userService.findById(user.getId()) == null) {
       this.user.setRole(Role.AUTHOR);
+      this.newUser = true;
       return;
     }
 
