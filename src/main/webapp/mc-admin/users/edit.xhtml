@@ -35,7 +35,7 @@
         <p:password id="password_again" value="#{userEditController.user.password}" label="Confirm Password"/>
 
         <h:outputLabel for="email" value="Email"/>
-        <p:inputText id="email" value="#{userEditController.user.email}" disabled="#{userEditController.newUser}"/>
+        <p:inputText id="email" value="#{userEditController.user.email}" disabled="#{! userEditController.newUser}"/>
 
         <h:outputLabel for="role" value="Role"/>
         <p:selectOneMenu id="role" value="#{userEditController.role_}" effect="fade">
