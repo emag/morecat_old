@@ -36,10 +36,8 @@ public class ProfileEditController implements Serializable {
 
   @PostConstruct
   public void init() {
-    String loginUserName = authService.getLoginUserByName(
-      ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName())
-      .getName();
-    this.profile = userService.findByName(loginUserName);
+    this.profile = authService.getLoginUserByEmail(
+      ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName());
   }
 
   public void doSave() {

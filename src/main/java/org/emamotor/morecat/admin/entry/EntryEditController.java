@@ -58,7 +58,7 @@ public class EntryEditController implements Serializable {
   public void doFind() {
 
     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-    User author = userService.findByName(request.getUserPrincipal().getName());
+    User author = userService.findByEmail(request.getUserPrincipal().getName());
 
     // new entry
     if (entry.getId() == null

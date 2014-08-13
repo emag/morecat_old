@@ -22,8 +22,8 @@ public class AuthService {
   @Inject
   private UserService userService;
 
-  public void login(HttpServletRequest request, String username, String password) throws ServletException {
-    request.login(username, password);
+  public void login(HttpServletRequest request, String email, String password) throws ServletException {
+    request.login(email, password);
     logger.info("User ({}) loging in #" + DateUtil.getFormattedCurrentDateTime(), request.getUserPrincipal().getName());
   }
 
@@ -34,8 +34,8 @@ public class AuthService {
     }
   }
 
-  public User getLoginUserByName(String loginUserName) {
-    return userService.findByName(loginUserName);
+  public User getLoginUserByEmail(String email) {
+    return userService.findByEmail(email);
   }
 
 }
