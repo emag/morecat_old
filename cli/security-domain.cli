@@ -3,7 +3,7 @@ batch
 
 # Configure the security domain
 /subsystem=security/security-domain=morecat-security/:add(cache-type=default)
-/subsystem=security/security-domain=morecat-security/authentication=classic:add(login-modules=[{"code"=>"Database", "flag"=>"required", "module-options"=>[("dsJndiName"=>"java:jboss/datasources/morecatDS"),("principalsQuery"=>"SELECT password FROM users WHERE name = ?"), ("rolesQuery"=>"SELECT role, 'Roles' FROM users WHERE name = ?"), ("hashAlgorithm" => "SHA-512"), ("hashEncoding" => "hex")]}])
+/subsystem=security/security-domain=morecat-security/authentication=classic:add(login-modules=[{"code"=>"Database", "flag"=>"required", "module-options"=>[("dsJndiName"=>"java:jboss/datasources/morecatDS"),("principalsQuery"=>"SELECT password FROM users WHERE email = ?"), ("rolesQuery"=>"SELECT role, 'Roles' FROM users WHERE email = ?"), ("hashAlgorithm" => "SHA-512"), ("hashEncoding" => "hex")]}])
 
 # Run the batch commands
 run-batch

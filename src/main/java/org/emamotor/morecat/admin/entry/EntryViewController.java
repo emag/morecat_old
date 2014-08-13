@@ -40,7 +40,7 @@ public class EntryViewController {
       entries = entryService.findAllByAdmin();
     } else {
       entries = entryService.findAllByAuthor(
-        authService.getLoginUserByName(request.getUserPrincipal().getName()));
+        authService.getLoginUserByEmail(request.getUserPrincipal().getName()));
     }
 
     String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");

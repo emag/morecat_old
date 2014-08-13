@@ -30,7 +30,7 @@
                     label="Confirm Password"/>
 
         <h:outputLabel for="email" value="Email"/>
-        <p:inputText id="email" value="#{profileEditController.profile.email}"/>
+        <p:inputText id="email" value="#{profileEditController.profile.email}" disabled="true"/>
 
         <f:facet name="footer">
           <p:commandButton value="Save" action="#{profileEditController.doSave}" icon="ui-icon-disk"/>
