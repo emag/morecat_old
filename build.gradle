@@ -10,7 +10,7 @@ group = "org.emamotor.morecat"
 project.ext {
   artifactId = "morecat"
 }
-version = "0.1.1"
+version = "0.2.0"
 
 war.archiveName = "morecat.war"
 
