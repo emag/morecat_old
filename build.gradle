@@ -10,7 +10,7 @@ group = "org.emamotor.morecat"
 project.ext {
   artifactId = "morecat"
 }
-version = "0.1.2"
+version = "0.1.3"
 
 war.archiveName = "morecat.war"
 
@@ -39,9 +39,15 @@ repositories {
   mavenCentral()
 }
 
+configurations {
+  apt {
+    description "for annotation processors"
+  }
+}
+
 dependencies {
   providedCompile "org.wildfly:wildfly-spec-api:$wildflyVersion"
-  providedCompile "org.hibernate:hibernate-jpamodelgen:4.3.5.Final"
+  apt "org.hibernate:hibernate-jpamodelgen:4.3.5.Final"
   providedCompile "org.hibernate:hibernate-validator:5.1.1.Final"
   providedCompile "org.projectlombok:lombok:1.14.2"
   compile "org.apache.commons:commons-lang3:3.3.2"
@@ -79,6 +85,22 @@ task("release", type: War) {
   archiveName = "morecat.war"
   rootSpec.exclude("WEB-INF/morecat-ds.xml", "**/import.sql")
 }
+
+def generatedJavaSrcDir = "build/generated-sources/main/java"
+sourceSets.main.java.srcDirs += [generatedJavaSrcDir]
+
+task procJava(type: JavaCompile, group: "build", description: "Annotation processing") {
+  def aptDestDir = new File(project.projectDir, generatedJavaSrcDir)
+  source = project.sourceSets.main.java.srcDirs.findAll {
+    !it.equals(aptDestDir)
+  }
+
+  classpath = project.configurations.compile
+  options.compilerArgs.addAll "-proc:only", "-implicit:none",
+    "-processorpath", project.configurations.apt.asPath
+  destinationDir = aptDestDir
+}
+compileJava.dependsOn procJava
 
 processResources {
   filter(ReplaceTokens, tokens: ["version": project.version])
