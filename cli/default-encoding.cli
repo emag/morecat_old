@@ -1,0 +1,1 @@
+/subsystem=undertow/servlet-container=default:write-attribute(name=default-encoding,value=UTF-8)
