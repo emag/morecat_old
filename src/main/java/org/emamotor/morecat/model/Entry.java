@@ -3,6 +3,7 @@ package org.emamotor.morecat.model;
 import lombok.Data;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.CollectionTable;
@@ -43,6 +44,7 @@ public class Entry extends BaseEntity {
   private String title;
 
   @Lob
+  @Type(type="org.hibernate.type.TextType")
   @Column(nullable = false)
   @NotNull
   private String content;

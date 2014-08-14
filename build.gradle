@@ -18,6 +18,7 @@ sourceCompatibility = targetCompatibility = 1.8
 
 ext {
   wildflyVersion = "8.1.0.Final"
+  hibernateVersion = "4.3.5.Final"
   arquillianVersion = "1.1.5.Final"
   expectedGradleVersion = "1.12"
   defaultEnvironment = "development"
@@ -47,7 +48,8 @@ configurations {
 
 dependencies {
   providedCompile "org.wildfly:wildfly-spec-api:$wildflyVersion"
-  apt "org.hibernate:hibernate-jpamodelgen:4.3.5.Final"
+  providedCompile "org.hibernate:hibernate-core:$hibernateVersion"
+  apt "org.hibernate:hibernate-jpamodelgen:$hibernateVersion"
   providedCompile "org.hibernate:hibernate-validator:5.1.1.Final"
   providedCompile "org.projectlombok:lombok:1.14.2"
   compile "org.apache.commons:commons-lang3:3.3.2"
