@@ -11,7 +11,7 @@ buildscript {
 }
 
 flyway {
-  url = "jdbc:postgresql://192.168.10.10:5432/morecat"
+  url = "jdbc:postgresql://emamotor.org:5432/morecat"
   user = "morecat"
   password = "morecat"
 }
