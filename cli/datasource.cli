@@ -1,6 +1,6 @@
 batch
 
-/subsystem=datasources/data-source=morecatDS/:add(connection-url=jdbc:postgresql://192.168.10.10:5432/morecat,jndi-name=java:jboss/datasources/morecatDS,driver-name=postgresql-9.3-1102.jdbc41.jar)
+/subsystem=datasources/data-source=morecatDS/:add(connection-url=jdbc:postgresql://emamotor.org:5432/morecat,jndi-name=java:jboss/datasources/morecatDS,driver-name=postgresql-9.3-1102.jdbc41.jar)
 /subsystem=datasources/data-source=morecatDS/:write-attribute(name=user-name,value=morecat)
 /subsystem=datasources/data-source=morecatDS/:write-attribute(name=password,value=morecat)
 /subsystem=datasources/data-source=morecatDS/:write-attribute(name=use-java-context,value=true)
