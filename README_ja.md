@@ -73,7 +73,7 @@ DB に PostgreSQL を利用する場合は以下のデータベースを予め�
 * `morecat` ユーザ(パスワードも morecat)
 * `morecat` データベース(オーナーは上記 `morecat` ユーザ)
 
-### JDK 8 インスト‐ル
+### JDK 8 インストール
 
 #### OpenJDK
 
