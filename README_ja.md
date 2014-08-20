@@ -4,6 +4,9 @@ Java EE で実装されたブログシステムです。ブログに関わる AP
 
 ## 利用環境
 
+* OS
+ * CentOS 6.5
+ * Fedora 20
 * JDK 8 以降
 * WildFly 8.1.0.Final
 * PostgreSQL 9.3 or H2
@@ -125,7 +128,7 @@ $WILDFLY_HOME/bin/jboss-cli.sh -c file=cli/security-domain.cli
 
 ~~~ sh
 wget http://jdbc.postgresql.org/download/postgresql-9.3-1102.jdbc41.jar
-$WILDFLY_HOME/bin/jboss-cli.sh -c command="deploy /path/to/postgresql-9.3-1102.jdbc41.jar"
+$WILDFLY_HOME/bin/jboss-cli.sh -c command="deploy postgresql-9.3-1102.jdbc41.jar"
 $WILDFLY_HOME/bin/jboss-cli.sh -c file=/cli/datasource.cli
 ~~~
 
