@@ -124,7 +124,7 @@ $WILDFLY_HOME/bin/jboss-cli.sh -c file=cli/security-domain.cli
 
 #### データソース設定(PostgreSQL を利用する場合のみ)
 
-あらかじめ [cli/datasource.cli の connection-url](https://github.com/emag/morecat/blob/0.1.6/cli/datasource.cli#L3) をご自分の環境に合わせて修正する必要があります。
+あらかじめ [cli/datasource.cli の connection-url](https://github.com/emag/morecat/blob/0.1.7/cli/datasource.cli#L3) をご自分の環境に合わせて修正する必要があります。
 
 ~~~ sh
 wget http://jdbc.postgresql.org/download/postgresql-9.3-1102.jdbc41.jar
@@ -134,7 +134,7 @@ $WILDFLY_HOME/bin/jboss-cli.sh -c file=/cli/datasource.cli
 
 #### DB マイグレーション(PostgreSQL を利用する場合のみ)
 
-あらかじめ [flyway.gradle の url](https://github.com/emag/morecat/blob/0.1.6/flyway.gradle#L14) をご自分の環境に合わせて修正する必要があります。
+あらかじめ [flyway.gradle の url](https://github.com/emag/morecat/blob/0.1.7/flyway.gradle#L14) をご自分の環境に合わせて修正する必要があります。
 
 ~~~ sh
 ./gradlew flywayMigrate
