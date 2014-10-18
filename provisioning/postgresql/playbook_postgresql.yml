@@ -1,0 +1,73 @@
+- hosts: postgresql
+  sudo: <changeme>
+  user: <changeme>
+  tasks :
+    - name: Install PostgreSQL and some extra packages
+      yum: name={{item}} state=present
+      with_items:
+       - http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm
+       - postgresql93
+       - postgresql93-libs
+       - postgresql93-server
+       - postgresql93-contrib
+       - postgresql93-docs
+       - uuid
+       - python-psycopg2
+
+    - name: Copy .bash_profile
+      copy: src=.bash_profile dest=/var/lib/pgsql/.bash_profile
+
+    - name: Make PostgreSQL Directory
+      file: path=/dbfp/ owner=postgres group=postgres recurse=yes state=directory
+
+    - name: Make Cluster Directory
+      file: path=/dbfp/pgdata/ owner=postgres group=postgres recurse=yes state=directory
+
+    - name: Make WAL Directory
+      file: path=/dbfp/pgxlog/ owner=postgres group=postgres recurse=yes state=directory
+
+    - name: Init Cluster
+      command: /usr/pgsql-9.3/bin/initdb -D /dbfp/pgdata/data -X /dbfp/pgxlog/pg_xlog --encoding=UTF-8 --no-locale creates=/dbfp/pgdata/data
+      sudo: true
+      sudo_user: postgres
+
+    - name: Make Archive log Directory
+      command: mkdir -p /dbfp/pgarch/arc1 creates=/dbfp/pgarch/arc1
+      sudo: true
+      sudo_user: postgres
+
+    - name: Copy pg_hba.conf
+      copy: src=pg_hba.conf dest=/dbfp/pgdata/data/pg_hba.conf owner=postgres group=postgres
+
+    - name: Copy postgresql.conf
+      copy: src=postgresql.conf dest=/dbfp/pgdata/data/postgresql.conf owner=postgres group=postgres
+
+    - name: Make log dir
+      file: path=/var/log/pg_log owner=postgres group=postgres recurse=yes state=directory
+
+    - name: Copy limits.conf
+      copy: src=limits.conf dest=/etc/security/limits.conf
+
+    - name: Copy sysconfig file
+      copy: src=etc/sysconfig/pgsql/postgresql-9.3 dest=/etc/sysconfig/pgsql/postgresql-9.3
+
+    - name: Enable PostgreSQL service
+      service: name=postgresql-9.3 enabled=yes
+
+    - name: Start PostgreSQL service
+      service: name=postgresql-9.3 state=started
+
+    - name: Create morecat user
+      postgresql_user: name=morecat password=morecat role_attr_flags=CREATEDB,NOSUPERUSER,NOCREATEROLE
+
+    - name: Create morecat DB
+      postgresql_db: name=morecat owner=morecat
+
+    - name: Make Backup Store Direcotry
+      file: path=/var/backups/pg_dump_files/ owner=postgres group=postgres recurse=yes state=directory
+
+    - name: Copy pg_dump script
+      copy: src=pg_dump.sh dest=/var/lib/pgsql/pg_dump.sh
+
+    - name: Schedule backup(0 o'clock every day)
+      cron: name="backup db" user=postgres job="/bin/sh /var/lib/pgsql/pg_dump.sh > /dev/null" minute=0 hour=0

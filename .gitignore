@@ -33,3 +33,6 @@ out
 
 # JRebel
 rebel.xml
+
+# Ansible
+hosts
