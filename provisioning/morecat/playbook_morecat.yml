@@ -1,0 +1,48 @@
+- hosts: wildfly
+  sudo: true
+  user: <changeme>
+  vars:
+    work_dir: /root
+    repo_dir: "{{ work_dir }}/morecat"
+    jdbc_driver: postgresql-9.3-1102.jdbc41.jar
+  tasks:
+    - name: Install necessary package
+      yum: name={{item}} state=present
+      with_items:
+       - git
+
+    - name: Clone MoreCat
+      git: repo=https://github.com/emag/morecat.git version=master dest={{ repo_dir }} accept_hostkey=yes
+
+    - name: Ensure Stopped WildFly
+      service: name=wildfly state=stopped
+
+    - name: Start WildFly
+      command: /etc/init.d/wildfly
+
+    - name: Download PG JDBC Driver
+      get_url: url="http://jdbc.postgresql.org/download/{{ jdbc_driver }}" dest={{ work_dir }}/{{ jdbc_driver }}
+
+    - name: Deploy PG JDBC Driver
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c command="deploy {{ work_dir }}/{{ jdbc_driver }}"
+
+    - name: Enable Access Log
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c file={{ repo_dir }}/cli/access-log.cli
+
+    - name: Add MoreCat DataSource
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c file={{ repo_dir }}/cli/datasource.cli
+
+    - name: Enable Connection Close Leak Error Alert
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c file={{ repo_dir }}/cli/jca.cli
+
+    - name: Add MoreCat Security Domain
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c file={{ repo_dir }}/cli/security-domain.cli
+
+    - name: Set Default Encoding
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c file={{ repo_dir }}/cli/default-encoding.cli
+
+    - name: Build App
+      command: chdir={{ repo_dir }} ./gradlew -PprofileName=postgresql clean release
+
+    - name: Deploy MoreCat
+      command: /opt/wildfly/current/bin/jboss-cli.sh -c command="deploy {{ repo_dir }}/build/libs/morecat.war"

@@ -1,0 +1,36 @@
+- hosts: web
+  sudo: true
+  user: <changeme>
+  vars:
+    work_dir: /root
+    repo_dir: "{{ work_dir }}/morecat-web"
+  tasks:
+    - name: Install necessary package
+      yum: name={{item}} state=present
+      with_items:
+       - npm
+       - git
+
+    - name: Clone MoreCat Web
+      git: repo=https://github.com/emag/morecat-web.git version=master dest={{ repo_dir }} accept_hostkey=yes
+
+    - name: Install bower
+      command: npm install -g bower
+
+    - name: Install gulp
+      command: npm install -g gulp
+
+    - name: Install forever
+      command: npm install -g forever
+
+    - name: Do npm install
+      command: chdir={{ repo_dir }} npm install
+
+    - name: Do bower install
+      command: chdir={{ repo_dir }} bower install --allow-root
+
+    - name: Build App
+      command: chdir={{ repo_dir }} gulp release --release
+
+    - name: Run server
+      command: chdir={{ repo_dir }} forever start server.js

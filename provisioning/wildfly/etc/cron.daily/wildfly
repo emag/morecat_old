@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME=wildfly
+DESC="WildFly"
+WILDFLY_BASE=/opt/$NAME
+WILDFLY_HOME=$WILDFLY_BASE/current
+DEFAULT=/etc/default/$NAME
+
+# The following variables can be overwritten in $DEFAULT
+
+# WILDFLY server configuration name
+SERVER_NAME="myserver"
+
+# WILDFLY log directory.
+LOGFILE_DIR=/var/log/${NAME}
+
+# Default for number of days to keep old log files in log directory.
+LOGFILE_DAYS=13
+
+# Log file extention in $LOGFILE_DIR
+LOGFILE_EXTS="server.log access.log"
+
+# End of variables that can be overwritten in $DEFAULT
+
+# overwrite settings from default file
+if [ -f "$DEFAULT" ]; then
+  . "$DEFAULT"
+fi
+
+for LOGFILE_EXT in $LOGFILE_EXTS ; do
+  find $LOGFILE_DIR -name \*$LOGFILE_EXT\* -mtime +$LOGFILE_DAYS -print0 \
+    | xargs --no-run-if-empty -0 rm
+done

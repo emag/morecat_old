@@ -1,0 +1,67 @@
+- hosts: wildfly
+  sudo: true
+  user: <changeme>
+  tasks:
+    - name: Install wget and uznip
+      yum: name={{item}} state=present
+      with_items:
+       - wget
+       - unzip
+
+    - name: Download JDK
+      command: 'wget -O /tmp/jdk.rpm --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.rpm creates=/tmp/jdk.rpm'
+
+    - name: Install JDK
+      yum: name=/tmp/jdk.rpm state=present
+
+    - name: Add user "wildfly"
+      user: name=wildfly home=/opt/wildfly shell=/sbin/nologin
+
+    - name: Download WildFly
+      get_url: url="http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip" dest=/opt/wildfly/wildfly-8.1.0.Final.zip
+
+    - name: Install WildFly
+      command: chdir=/opt/wildfly unzip -q /opt/wildfly/wildfly-8.1.0.Final.zip creates=/opt/wildfly/wildfly-8.1.0.Final
+
+    - name: Create current WildFly symlink
+      file: src=/opt/wildfly/wildfly-8.1.0.Final dest=/opt/wildfly/current state=link
+
+    - name: Create myserver profile
+      command: chdir=/opt/wildfly/current cp -rp standalone myserver creates=/opt/wildfly/current/myserver
+
+    - name: Make log dir
+      file: path=/var/log/wildfly owner=wildfly group=wildfly recurse=yes state=directory
+
+    - name: Create log symlink
+      file: src=/var/log/wildfly dest=/opt/wildfly/current/myserver/log owner=wildfly group=wildfly state=link
+
+    - name: Copy properties file
+      copy: src=myserver.properties dest=/opt/wildfly/current/bin
+
+    - name: Change wildfly dir owner
+      file: path=/opt/wildfly owner=wildfly group=wildfly recurse=yes
+
+    - name: Copy service script
+      copy: src=etc/init.d/wildfly dest=/etc/init.d/wildfly mode=0755
+
+    - name: Copy default file
+      copy: src=etc/default/wildfly.conf dest=/etc/default/wildfly.conf
+
+    - name: Copy cron script
+      copy: src=etc/cron.daily/wildfly dest=/etc/cron.daily/wildfly mode=0755
+
+    - name: Copy logrotate file
+      copy: src=etc/logrotate.d/wildfly dest=/etc/logrotate.d/wildfly
+
+    - name: Add WildFly service
+      command: chkconfig --add wildfly
+
+    - name: Enable WildFly service
+      command: chkconfig wildfly on
+
+    - name: Install HeapStats
+      yum: name=http://icedtea.wildebeest.org/download/heapstats/heapstats-1.1.1/bin/agent/el6/x86_64/heapstats_agent-1.1.1-1.el6.x86_64.rpm state=present
+
+    - name: Copy heapstats config file
+      copy: src=etc/heapstats/wildfly.conf dest=/etc/heapstats/wildfly.conf
+
