@@ -44,6 +44,11 @@ configurations {
   apt {
     description "for annotation processors"
   }
+
+  provided
+  integrationTestCompile.extendsFrom testCompile
+  integrationTestRuntime.extendsFrom testRuntime
+
 }
 
 dependencies {
@@ -52,18 +57,20 @@ dependencies {
   apt "org.hibernate:hibernate-jpamodelgen:$hibernateVersion"
   providedCompile "org.hibernate:hibernate-validator:5.1.1.Final"
   providedCompile "org.projectlombok:lombok:1.14.2"
+
   compile "org.apache.commons:commons-lang3:3.3.2"
   compile "am.ik.marked4j:marked4j:0.9.1"
   compile "org.slf4j:slf4j-api:1.7.7"
   compile "ch.qos.logback:logback-classic:1.1.2"
   compile "org.primefaces:primefaces:4.0"
   compile "org.primefaces.themes:eggplant:1.0.10"
+
   testCompile "junit:junit:4.+"
   testCompile "org.jboss.resteasy:resteasy-client:3.0.8.Final"
   testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
   testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:$arquillianVersion"
-  testRuntime "org.wildfly:wildfly-arquillian-container-remote:$wildflyVersion"
   testCompile group: "org.jboss.shrinkwrap.resolver", name: "shrinkwrap-resolver-gradle-depchain", version: "2.2.0-alpha-2"
+  testRuntime "org.wildfly:wildfly-arquillian-container-remote:$wildflyVersion"
 }
 
 sourceSets {
@@ -80,6 +87,17 @@ sourceSets {
       srcDir file("src/$userProfileName/resources")
     }
     output.resourcesDir output.classesDir
+  }
+
+  integrationTest {
+    java {
+      srcDir 'src/integrationTest/java'
+    }
+    resources {
+      srcDir 'src/integrationTest/resources'
+    }
+    compileClasspath += main.output + configurations.provided
+    runtimeClasspath += main.output + configurations.provided
   }
 }
 
@@ -103,6 +121,14 @@ task procJava(type: JavaCompile, group: "build", description: "Annotation proces
   destinationDir = aptDestDir
 }
 compileJava.dependsOn procJava
+
+task integrationTest(type: Test)
+tasks.withType(Test).matching({ t-> t.name.endsWith('Test') } as Spec).each { t ->
+  t.testClassesDir = project.sourceSets.integrationTest.output.classesDir
+  t.classpath = project.configurations.getByName(t.name + 'Runtime') +
+    project.sourceSets.main.output +
+    project.sourceSets.integrationTest.output
+}
 
 processResources {
   filter(ReplaceTokens, tokens: ["version": project.version])
