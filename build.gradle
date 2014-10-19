@@ -20,7 +20,7 @@ ext {
   wildflyVersion = "8.1.0.Final"
   hibernateVersion = "4.3.5.Final"
   arquillianVersion = "1.1.5.Final"
-  expectedGradleVersion = "1.12"
+  expectedGradleVersion = "2.1"
   defaultEnvironment = "development"
   environment = defaultEnvironment
 }
