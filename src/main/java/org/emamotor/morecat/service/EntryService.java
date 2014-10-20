@@ -3,6 +3,7 @@ package org.emamotor.morecat.service;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.repository.EntryRepository;
+import org.emamotor.morecat.util.Pageable;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,8 +19,12 @@ public class EntryService {
   @Inject
   private EntryRepository entryRepository;
 
-  public List<Entry> findAllPublished(int start, int size) {
-    return entryRepository.findAllPublished(start, size);
+  public List<Entry> findAllPublished(int page, int size) {
+    return entryRepository.findAllPublished(page, size);
+  }
+
+  public Pageable<Entry> findPageableAllPublished(int page, int size) {
+    return entryRepository.findPageableAllPublished(page, size);
   }
 
   public List<Entry> findAllPublishedByYear(int year) {

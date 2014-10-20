@@ -25,7 +25,7 @@ public interface EntryResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  Response findAllPublished(@QueryParam("start") int start,
+  Response findAllPublished(@QueryParam("page") int start,
                             @QueryParam("size") @DefaultValue("5") int size);
 
   @GET

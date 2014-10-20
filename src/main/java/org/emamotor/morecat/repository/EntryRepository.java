@@ -4,9 +4,11 @@ import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.Entry_;
 import org.emamotor.morecat.model.User;
+import org.emamotor.morecat.util.Pageable;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -38,7 +40,30 @@ public class EntryRepository extends GenericRepository<Entry> {
       .where(cb.equal(entry.get(Entry_.state), EntryState.PUBLIC))
       .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
-    return getEntityManager().createQuery(cq).setFirstResult(start).setMaxResults(size).getResultList();
+    return getEntityManager().createQuery(cq).setFirstResult(start * size).setMaxResults(size).getResultList();
+  }
+
+  public Pageable<Entry> findPageableAllPublished(int page, int size) {
+    setUpCriteria();
+
+    List<Entry> entries = findAllPublished(page, size);
+    CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+    countQuery.select(cb.count(countQuery.from(Entry.class)));
+    Long count = getEntityManager().createQuery(countQuery).getSingleResult();
+    Long totalNumberOfPages = (long) ((count / size) + ((count % size) == 0 ? 0 : 1));
+    boolean lastPage = page + 1 == totalNumberOfPages;
+
+    Pageable<Entry> entryPage = new Pageable<>();
+    entryPage.setElements(entries);
+    entryPage.setTotalNumberOfElements(count);
+    entryPage.setTotalNumberOfPages(totalNumberOfPages);
+    entryPage.setSize(size);
+    entryPage.setNumber(page);
+    entryPage.setCurrentPageSize(entries.size());
+    entryPage.setFirstPage(page == 0);
+    entryPage.setLastPage(lastPage);
+
+    return entryPage;
   }
 
   public List<Entry> findAllPublishedByYear(int year) {
