@@ -1,6 +1,7 @@
 package org.emamotor.morecat.api;
 
 import org.emamotor.morecat.MoreCatDeployment;
+import org.emamotor.morecat.util.Pageable;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -20,7 +21,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URL;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -60,7 +60,7 @@ public class EntryResourceIT {
   @Test
   public void should_cache_anEntry() throws Exception {
     // Setup
-    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/2013/1/1/permalink1");
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/2014/1/1/permalink1");
     response = target.request().get();
     assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
 
@@ -84,7 +84,94 @@ public class EntryResourceIT {
 
     // Verify
     assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
-    assertThat(response.readEntity(new GenericType<List<PublishedEntryResponse>>(){}).size(), is(5));
+    assertThat(response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){}).getElements().size(), is(5));
+  }
+
+  @Test
+  public void pagination_page_0_size_5_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries")
+                          .queryParam("page", "0").queryParam("size", "5");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+            response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(true));
+    assertThat(responseEntity.isLastPage(), is(false));
+    assertThat(responseEntity.getTotalNumberOfPages(), is(2L));
+    assertThat(responseEntity.getCurrentPageSize(), is(5L));
+  }
+
+  @Test
+  public void pagination_page_1_size_5_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries")
+                        .queryParam("page", "1").queryParam("size", "5");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(false));
+    assertThat(responseEntity.isLastPage(), is(true));
+    assertThat(responseEntity.getCurrentPageSize(), is(5L));
+  }
+
+  @Test
+  public void pagination_page_0_size_4_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries")
+                          .queryParam("page", "0").queryParam("size", "4");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(true));
+    assertThat(responseEntity.isLastPage(), is(false));
+    assertThat(responseEntity.getTotalNumberOfPages(), is(3L));
+    assertThat(responseEntity.getCurrentPageSize(), is(4L));
+  }
+
+  @Test
+  public void pagination_page_1_size_4_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries")
+                          .queryParam("page", "1").queryParam("size", "4");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(false));
+    assertThat(responseEntity.isLastPage(), is(false));
+    assertThat(responseEntity.getCurrentPageSize(), is(4L));
+  }
+
+  @Test
+  public void pagination_page_2_size_4_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries")
+                          .queryParam("page", "2").queryParam("size", "4");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(false));
+    assertThat(responseEntity.isLastPage(), is(true));
+    assertThat(responseEntity.getCurrentPageSize(), is(2L));
   }
 
 }

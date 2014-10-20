@@ -5,6 +5,7 @@ import org.emamotor.morecat.api.EntryResource;
 import org.emamotor.morecat.api.PublishedEntryResponse;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.service.EntryService;
+import org.emamotor.morecat.util.Pageable;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.CacheControl;
@@ -33,8 +34,20 @@ public class EntryResourceImpl implements EntryResource {
   }
 
   @Override
-  public Response findAllPublished(int start, int size) {
-    return Response.ok(entityList2Response(entryService.findAllPublished(start, size))).build();
+  public Response findAllPublished(int page, int size) {
+    Pageable<Entry> internalPage = entryService.findPageableAllPublished(page, size);
+
+    Pageable<PublishedEntryResponse> publishedPage = new Pageable<>();
+    publishedPage.setElements(entityList2Response(internalPage.getElements()));
+    publishedPage.setCurrentPageSize(internalPage.getCurrentPageSize());
+    publishedPage.setFirstPage(internalPage.isFirstPage());
+    publishedPage.setLastPage(internalPage.isLastPage());
+    publishedPage.setNumber(internalPage.getNumber());
+    publishedPage.setSize(internalPage.getSize());
+    publishedPage.setTotalNumberOfElements(internalPage.getTotalNumberOfElements());
+    publishedPage.setTotalNumberOfPages(internalPage.getTotalNumberOfPages());
+
+    return Response.ok(publishedPage).build();
   }
 
   @Override
