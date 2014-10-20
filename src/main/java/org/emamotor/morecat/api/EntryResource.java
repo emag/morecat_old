@@ -19,6 +19,11 @@ import javax.ws.rs.core.Response;
 public interface EntryResource {
 
   @GET
+  @Path("/recent")
+  @Produces(MediaType.APPLICATION_JSON)
+  Response findRecentOnes(@QueryParam("size") @DefaultValue("5") int size);
+
+  @GET
   @Produces(MediaType.APPLICATION_JSON)
   Response findAllPublished(@QueryParam("start") int start,
                             @QueryParam("size") @DefaultValue("5") int size);

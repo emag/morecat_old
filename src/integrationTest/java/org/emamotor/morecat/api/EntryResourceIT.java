@@ -16,8 +16,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.EntityTag;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URL;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -69,6 +72,19 @@ public class EntryResourceIT {
     // Verify
     assertThat(response.getStatus(), is(Response.Status.NOT_MODIFIED.getStatusCode()));
     response.close();
+  }
+
+  @Test
+  public void should_get_recent_entreis() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/recent");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+
+    // Verify
+    assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
+    assertThat(response.readEntity(new GenericType<List<PublishedEntryResponse>>(){}).size(), is(5));
   }
 
 }
