@@ -57,6 +57,7 @@ dependencies {
   apt "org.hibernate:hibernate-jpamodelgen:$hibernateVersion"
   providedCompile "org.hibernate:hibernate-validator:5.1.1.Final"
   providedCompile "org.projectlombok:lombok:1.14.2"
+  providedCompile "org.jboss.resteasy:resteasy-jackson-provider:3.0.8.Final"
 
   compile "org.apache.commons:commons-lang3:3.3.2"
   compile "am.ik.marked4j:marked4j:0.9.1"

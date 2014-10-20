@@ -28,6 +28,11 @@ public class EntryResourceImpl implements EntryResource {
   private EntryService entryService;
 
   @Override
+  public Response findRecentOnes(int size) {
+    return findAllPublished(0, size);
+  }
+
+  @Override
   public Response findAllPublished(int start, int size) {
     return Response.ok(entityList2Response(entryService.findAllPublished(start, size))).build();
   }
