@@ -8,6 +8,7 @@
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="none"/>
       <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.use_sql_comments" value="true"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
     </properties>
   </persistence-unit>
