@@ -6,7 +6,7 @@
   <datasource jndi-name="java:jboss/datasources/morecatDS"
               pool-name="morecatDS" enabled="true"
               use-java-context="true">
-    <connection-url>jdbc:h2:tcp://localhost/~/morecat;DB_CLOSE_ON_EXIT=FALSE</connection-url>
+    <connection-url>jdbc:h2:mem:morecat;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
     <driver>h2</driver>
     <security>
       <user-name>sa</user-name>
