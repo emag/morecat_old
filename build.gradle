@@ -63,7 +63,7 @@ dependencies {
   compile "am.ik.marked4j:marked4j:0.9.1"
   compile "org.slf4j:slf4j-api:1.7.7"
   compile "ch.qos.logback:logback-classic:1.1.2"
-  compile "org.primefaces:primefaces:4.0"
+  compile "org.primefaces:primefaces:5.1"
   compile "org.primefaces.themes:eggplant:1.0.10"
 
   testCompile "junit:junit:4.+"
