@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="../../WEB-INF/templates/template.xhtml">
+
+  <ui:define name="title">Media: Morecat Admin</ui:define>
+
+  <ui:define name="content">
+
+    <h2>Media</h2>
+
+    <h:form enctype="multipart/form-data">
+      <h:inputFile id="file" value="#{mediaViewController.file}"/>
+      <h:commandButton value="Upload" action="#{mediaViewController.upload}"/>
+    </h:form>
+
+    <p:dataTable id="media_list" var="media" value="#{mediaViewController.mediaList}"
+                 paginator="true" rows="10"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+      <p:column headerText="Preview">
+        <h:outputText value="Preview"/>
+      </p:column>
+      <p:column headerText="Name">
+        <h:outputText value="#{media.name}"/>
+      </p:column>
+      <p:column headerText="Author">
+        <h:outputText value="#{media.author.name}"/>
+      </p:column>
+      <p:column headerText="Action">
+        <h:outputLink value="../../api/media/#{media.uuid}/#{media.name}">
+          <f:verbatim>Download</f:verbatim>
+        </h:outputLink>
+      </p:column>
+    </p:dataTable>
+
+    <p:growl id="growl" globalOnly="true"/>
+
+  </ui:define>
+
+</ui:composition>
+</html>
