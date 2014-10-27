@@ -25,6 +25,10 @@ public class MediaService {
   @Inject
   private MediaRepository mediaRepository;
 
+  public Media find(String uuid, String fileName) {
+    return mediaRepository.find(uuid, fileName);
+  }
+
   public List<Media> findAll() {
     return mediaRepository.findAll();
   }
@@ -36,4 +40,5 @@ public class MediaService {
       registeredMedia.getUuid() + "/" + registeredMedia.getName(), registeredMedia.getAuthor().getName(), DateUtil.getFormattedCurrentDateTime());
     return mediaRepository.create(registeredMedia);
   }
+
 }

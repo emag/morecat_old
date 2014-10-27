@@ -24,7 +24,7 @@
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  rowsPerPageTemplate="5,10,15">
       <p:column headerText="Preview">
-        <h:outputText value="Preview"/>
+        <h:graphicImage value="../../api/media/#{media.uuid}/#{media.name}" height="100px"/>
       </p:column>
       <p:column headerText="Name">
         <h:outputText value="#{media.name}"/>
