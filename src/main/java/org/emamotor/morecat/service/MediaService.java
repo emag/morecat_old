@@ -35,7 +35,6 @@ public class MediaService {
 
   public Media upload(Media media) {
     Media registeredMedia = mediaRepository.create(media);
-    mediaEventSrc.fire(registeredMedia);
     logger.info("Uploaded media {} by {} #{}",
       registeredMedia.getUuid() + "/" + registeredMedia.getName(), registeredMedia.getAuthor().getName(), DateUtil.getFormattedCurrentDateTime());
     return mediaRepository.create(registeredMedia);

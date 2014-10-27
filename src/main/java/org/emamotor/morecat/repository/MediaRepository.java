@@ -5,8 +5,6 @@ import org.emamotor.morecat.model.Media_;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
 
 /**
  * @author Yoshimasa Tanabe
@@ -34,13 +32,6 @@ public class MediaRepository extends GenericRepository<Media> {
       return null;
     }
     return media;
-  }
-
-  // TODO GenericRepository の findAll をそのまま使うと、java.lang.IllegalArgumentException: Not an entity: null が出る
-  public List<Media> findAll() {
-    CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-    cq.select(cq.from(Media.class));
-    return getEntityManager().createQuery(cq).getResultList();
   }
 
   public Media create(Media newEntity) {

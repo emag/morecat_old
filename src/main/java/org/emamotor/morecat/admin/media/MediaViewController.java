@@ -8,8 +8,6 @@ import org.emamotor.morecat.service.MediaService;
 import org.emamotor.morecat.service.UserService;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.event.Observes;
-import javax.enterprise.event.Reception;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -50,13 +48,15 @@ public class MediaViewController {
     }
   }
 
-  public void onMediaListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Media media) {
-    retrieveAllMedia();
-  }
-
   @PostConstruct
-  public void retrieveAllMedia() {
+  public void init() {
     mediaList = mediaService.findAll();
+
+    String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");
+    if (previousViewMessage == null) {
+      return;
+    }
+    facesContext.addMessage(null, new FacesMessage(previousViewMessage));
   }
 
   public String upload() {
@@ -86,6 +86,8 @@ public class MediaViewController {
     media.setName(file.getSubmittedFileName());
 
     mediaService.upload(media);
+
+    facesContext.getExternalContext().getFlash().put("message", "Uploaded!");
 
     return "view?faces-redirect=true";
   }
