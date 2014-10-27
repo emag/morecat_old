@@ -11,7 +11,10 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.Reception;
 import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -41,6 +44,12 @@ public class MediaViewController {
   @Getter
   private List<Media> mediaList;
 
+  public void validate(FacesContext context, UIComponent component, Object value) {
+    if (value == null) {
+      throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_WARN, "Please input a file", null));
+    }
+  }
+
   public void onMediaListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Media media) {
     retrieveAllMedia();
   }
@@ -50,11 +59,16 @@ public class MediaViewController {
     mediaList = mediaService.findAll();
   }
 
-  public void upload() {
+  public String upload() {
+    if (file == null) {
+      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Please input a file", null));
+      return null;
+    }
+
     Media media = new Media();
 
-    try(ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        InputStream is = file.getInputStream()) {
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+         InputStream is = file.getInputStream()) {
       int length = 0;
       final byte[] buffer = new byte[1024];
       while ((length = is.read(buffer)) != -1) {
@@ -72,6 +86,8 @@ public class MediaViewController {
     media.setName(file.getSubmittedFileName());
 
     mediaService.upload(media);
+
+    return "view?faces-redirect=true";
   }
 
 }
