@@ -1,6 +1,7 @@
 package org.emamotor.morecat.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "users")
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class User extends BaseEntity {
 
   @Column(nullable = false, unique = true)
