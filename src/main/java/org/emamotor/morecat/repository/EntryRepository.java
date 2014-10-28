@@ -47,23 +47,12 @@ public class EntryRepository extends GenericRepository<Entry> {
     setUpCriteria();
 
     List<Entry> entries = findAllPublished(page, size);
+
     CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
     countQuery.select(cb.count(countQuery.from(Entry.class)));
-    Long count = getEntityManager().createQuery(countQuery).getSingleResult();
-    Long totalNumberOfPages = (long) ((count / size) + ((count % size) == 0 ? 0 : 1));
-    boolean lastPage = page + 1 == totalNumberOfPages;
+    Long totalNumberOfEntries = getEntityManager().createQuery(countQuery).getSingleResult();
 
-    Pageable<Entry> entryPage = new Pageable<>();
-    entryPage.setElements(entries);
-    entryPage.setTotalNumberOfElements(count);
-    entryPage.setTotalNumberOfPages(totalNumberOfPages);
-    entryPage.setSize(size);
-    entryPage.setNumber(page);
-    entryPage.setCurrentPageSize(entries.size());
-    entryPage.setFirstPage(page == 0);
-    entryPage.setLastPage(lastPage);
-
-    return entryPage;
+    return new Pageable<>(entries, totalNumberOfEntries, page, size);
   }
 
   public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
