@@ -66,45 +66,6 @@ public class EntryRepository extends GenericRepository<Entry> {
     return entryPage;
   }
 
-  public List<Entry> findAllPublishedByYear(int year) {
-    setUpCriteria();
-
-    cq.select(entry)
-      .where(
-        cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
-        cb.equal(cb.function("year", Integer.class, entry.get(Entry_.createdDate)), year))
-      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
-
-    return getEntityManager().createQuery(cq).getResultList();
-  }
-
-  public List<Entry> findAllPublishedByYearMonth(int year, int month) {
-    setUpCriteria();
-
-    cq.select(entry)
-      .where(
-        cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
-        cb.equal(cb.function("year", Integer.class, entry.get(Entry_.createdDate)), year),
-        cb.equal(cb.function("month", Integer.class, entry.get(Entry_.createdDate)), month))
-      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
-
-    return getEntityManager().createQuery(cq).getResultList();
-  }
-
-  public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
-    setUpCriteria();
-
-    cq.select(entry)
-      .where(
-        cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
-        cb.equal(cb.function("year", Integer.class, entry.get(Entry_.createdDate)), year),
-        cb.equal(cb.function("month", Integer.class, entry.get(Entry_.createdDate)), month),
-        cb.equal(cb.function("day", Integer.class, entry.get(Entry_.createdDate)), day))
-      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
-
-    return getEntityManager().createQuery(cq).getResultList();
-  }
-
   public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
     setUpCriteria();
 

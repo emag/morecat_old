@@ -19,24 +19,8 @@ public class EntryService {
   @Inject
   private EntryRepository entryRepository;
 
-  public List<Entry> findAllPublished(int page, int size) {
-    return entryRepository.findAllPublished(page, size);
-  }
-
   public Pageable<Entry> findPageableAllPublished(int page, int size) {
     return entryRepository.findPageableAllPublished(page, size);
-  }
-
-  public List<Entry> findAllPublishedByYear(int year) {
-    return entryRepository.findAllPublishedByYear(year);
-  }
-
-  public List<Entry> findAllPublishedByYearMonth(int year, int month) {
-    return entryRepository.findAllPublishedByYearMonth(year, month);
-  }
-
-  public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
-    return entryRepository.findAllPublishedByYearMonthDay(year, month, day);
   }
 
   public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
