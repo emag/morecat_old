@@ -1,6 +1,7 @@
 package org.emamotor.morecat.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Type;
@@ -37,6 +38,7 @@ import java.util.Set;
   uniqueConstraints = @UniqueConstraint(columnNames = {"permalink", "created_date"})
 )
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Entry extends BaseEntity {
 
   @Column(nullable = false)
