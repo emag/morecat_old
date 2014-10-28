@@ -25,7 +25,7 @@ public interface EntryResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  Response findAllPublished(@QueryParam("page") int start,
+  Response findAllPublished(@QueryParam("page") int page,
                             @QueryParam("size") @DefaultValue("5") int size);
 
   @GET
@@ -41,11 +41,13 @@ public interface EntryResource {
   @GET
   @Path("/tags")
   @Produces(MediaType.APPLICATION_JSON)
-  Response findAllTags();
+  Response findAllPublishedTags();
 
   @GET
   @Path("/tags/{tag}")
   @Produces(MediaType.APPLICATION_JSON)
-  Response findAllPublishedByTag(@PathParam("tag") String tag);
+  Response findAllPublishedByTag(@PathParam("tag") String tag,
+                                 @QueryParam("page") int page,
+                                 @QueryParam("size") @DefaultValue("5") int size);
 
 }

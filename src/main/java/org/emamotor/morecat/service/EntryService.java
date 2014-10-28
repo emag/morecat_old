@@ -43,6 +43,14 @@ public class EntryService {
     return entryRepository.findById(id);
   }
 
+  public Set<String> findAllPublishedTags() {
+    return entryRepository.findAllPublishedTags();
+  }
+
+  public Pageable<Entry> findAllPublishedByTag(String tag, int page, int size) {
+    return entryRepository.findPageableAllPublishedByTag(tag, page, size);
+  }
+
   public Entry create(Entry newEntry) {
     return entryRepository.create(newEntry);
   }
@@ -55,11 +63,4 @@ public class EntryService {
     entryRepository.delete(id);
   }
 
-  public Set<String> findAllTags() {
-    return entryRepository.findAllTags();
-  }
-
-  public List<Entry> findAllPublishedByTag(String tag) {
-    return entryRepository.findAllPublishedByTag(tag);
-  }
 }

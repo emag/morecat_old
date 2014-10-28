@@ -93,7 +93,7 @@ public class EntryRepository extends GenericRepository<Entry> {
     return getEntityManager().createQuery(cq).getResultList();
   }
 
-  public Set<String> findAllTags() {
+  public Set<String> findAllPublishedTags() {
     List<Entry> publishedEntries = findAllPublished();
     Set<String> tags = new TreeSet<>();
     for (Entry publishedEntry : publishedEntries) {
@@ -112,6 +112,11 @@ public class EntryRepository extends GenericRepository<Entry> {
       .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
     return getEntityManager().createQuery(cq).getResultList();
+  }
+
+  public Pageable<Entry> findPageableAllPublishedByTag(String tag, int page, int size) {
+    List<Entry> entries = findAllPublishedByTag(tag);
+    return new Pageable<>(entries, entries.size(), page, size);
   }
 
 }

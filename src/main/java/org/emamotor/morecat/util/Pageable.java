@@ -34,4 +34,7 @@ public class Pageable<E> {
     this.lastPage = (page + 1) == totalNumberOfPages;
   }
 
+  public <V> Pageable<V> convertElements(List<V> publishElements) {
+    return new Pageable<V>(publishElements, totalNumberOfElements, totalNumberOfPages, size, page, currentPageSize, firstPage, lastPage);
+  }
 }

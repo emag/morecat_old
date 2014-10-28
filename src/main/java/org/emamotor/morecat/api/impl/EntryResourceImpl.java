@@ -36,20 +36,7 @@ public class EntryResourceImpl implements EntryResource {
   @Override
   public Response findAllPublished(int page, int size) {
     Pageable<Entry> internalPage = entryService.findPageableAllPublished(page, size);
-
-    Pageable<PublishedEntryResponse> publishedPage =
-      new Pageable<>(
-        entityList2Response(internalPage.getElements()),
-        internalPage.getTotalNumberOfElements(),
-        internalPage.getTotalNumberOfPages(),
-        internalPage.getSize(),
-        internalPage.getPage(),
-        internalPage.getCurrentPageSize(),
-        internalPage.isFirstPage(),
-        internalPage.isLastPage()
-      );
-
-    return Response.ok(publishedPage).build();
+    return Response.ok(toPublish(internalPage)).build();
   }
 
   @Override
@@ -78,13 +65,14 @@ public class EntryResourceImpl implements EntryResource {
   }
 
   @Override
-  public Response findAllTags() {
-    return Response.ok(entryService.findAllTags()).build();
+  public Response findAllPublishedTags() {
+    return Response.ok(entryService.findAllPublishedTags()).build();
   }
 
   @Override
-  public Response findAllPublishedByTag(String tag) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByTag(tag))).build();
+  public Response findAllPublishedByTag(String tag, int page, int size) {
+    Pageable<Entry> internalPage = entryService.findAllPublishedByTag(tag, page ,size);
+    return Response.ok(toPublish(internalPage)).build();
   }
 
   private PublishedEntryResponse entity2Response(Entry entity) {
@@ -112,6 +100,10 @@ public class EntryResourceImpl implements EntryResource {
     return entities.stream()
       .map(this::entity2Response)
       .collect(Collectors.toList());
+  }
+
+  private Pageable<PublishedEntryResponse> toPublish(Pageable<Entry> internalPage) {
+    return internalPage.convertElements(entityList2Response(internalPage.getElements()));
   }
 
 }
