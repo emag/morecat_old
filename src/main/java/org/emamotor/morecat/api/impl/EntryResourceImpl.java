@@ -51,21 +51,6 @@ public class EntryResourceImpl implements EntryResource {
   }
 
   @Override
-  public Response findAllPublishedByYear(int year) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByYear(year))).build();
-  }
-
-  @Override
-  public Response findAllPublishedByYearMonth(int year, int month) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByYearMonth(year, month))).build();
-  }
-
-  @Override
-  public Response findAllPublishedByYearMonthDay(int year, int month, int day) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByYearMonthDay(year, month, day))).build();
-  }
-
-  @Override
   public Response findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink,
                                                        String sent, Request request) {
     Entry anEntry = entryService.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
