@@ -37,15 +37,17 @@ public class EntryResourceImpl implements EntryResource {
   public Response findAllPublished(int page, int size) {
     Pageable<Entry> internalPage = entryService.findPageableAllPublished(page, size);
 
-    Pageable<PublishedEntryResponse> publishedPage = new Pageable<>();
-    publishedPage.setElements(entityList2Response(internalPage.getElements()));
-    publishedPage.setCurrentPageSize(internalPage.getCurrentPageSize());
-    publishedPage.setFirstPage(internalPage.isFirstPage());
-    publishedPage.setLastPage(internalPage.isLastPage());
-    publishedPage.setNumber(internalPage.getNumber());
-    publishedPage.setSize(internalPage.getSize());
-    publishedPage.setTotalNumberOfElements(internalPage.getTotalNumberOfElements());
-    publishedPage.setTotalNumberOfPages(internalPage.getTotalNumberOfPages());
+    Pageable<PublishedEntryResponse> publishedPage =
+      new Pageable<>(
+        entityList2Response(internalPage.getElements()),
+        internalPage.getTotalNumberOfElements(),
+        internalPage.getTotalNumberOfPages(),
+        internalPage.getSize(),
+        internalPage.getPage(),
+        internalPage.getCurrentPageSize(),
+        internalPage.isFirstPage(),
+        internalPage.isLastPage()
+      );
 
     return Response.ok(publishedPage).build();
   }
