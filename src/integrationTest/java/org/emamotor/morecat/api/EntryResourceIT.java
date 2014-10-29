@@ -174,4 +174,92 @@ public class EntryResourceIT {
     assertThat(responseEntity.getCurrentPageSize(), is(2L));
   }
 
+  @Test
+  public void pagination_tag_page_0_size_5_total_10() throws Exception {
+    String tagName = "tag1";
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/tags/tag1")
+      .queryParam("page", "0").queryParam("size", "5");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>() {
+      });
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(true));
+    assertThat(responseEntity.isLastPage(), is(false));
+    assertThat(responseEntity.getTotalNumberOfPages(), is(2L));
+    assertThat(responseEntity.getCurrentPageSize(), is(5L));
+  }
+
+  @Test
+  public void pagination_tag_page_1_size_5_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/tags/tag1")
+      .queryParam("page", "1").queryParam("size", "5");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(false));
+    assertThat(responseEntity.isLastPage(), is(true));
+    assertThat(responseEntity.getCurrentPageSize(), is(5L));
+  }
+
+  @Test
+  public void pagination_tag_page_0_size_4_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/tags/tag1")
+      .queryParam("page", "0").queryParam("size", "4");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(true));
+    assertThat(responseEntity.isLastPage(), is(false));
+    assertThat(responseEntity.getTotalNumberOfPages(), is(3L));
+    assertThat(responseEntity.getCurrentPageSize(), is(4L));
+  }
+
+  @Test
+  public void pagination_tag_page_1_size_4_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/tags/tag1")
+      .queryParam("page", "1").queryParam("size", "4");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(false));
+    assertThat(responseEntity.isLastPage(), is(false));
+    assertThat(responseEntity.getCurrentPageSize(), is(4L));
+  }
+
+  @Test
+  public void pagination_tag_page_2_size_4_total_10() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/tags/tag1")
+      .queryParam("page", "2").queryParam("size", "4");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+    Pageable<PublishedEntryResponse> responseEntity =
+      response.readEntity(new GenericType<Pageable<PublishedEntryResponse>>(){});
+
+    // Verify
+    assertThat(responseEntity.isFirstPage(), is(false));
+    assertThat(responseEntity.isLastPage(), is(true));
+    assertThat(responseEntity.getCurrentPageSize(), is(2L));
+  }
 }
