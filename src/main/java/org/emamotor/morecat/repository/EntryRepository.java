@@ -33,14 +33,14 @@ public class EntryRepository extends GenericRepository<Entry> {
     return getEntityManager().createQuery(cq).getResultList();
   }
 
-  public List<Entry> findAllPublished(int start, int size) {
+  public List<Entry> findAllPublished(int page, int size) {
     setUpCriteria();
 
     cq.select(entry)
       .where(cb.equal(entry.get(Entry_.state), EntryState.PUBLIC))
       .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
-    return getEntityManager().createQuery(cq).setFirstResult(start * size).setMaxResults(size).getResultList();
+    return getEntityManager().createQuery(cq).setFirstResult(page * size).setMaxResults(size).getResultList();
   }
 
   public Pageable<Entry> findPageableAllPublished(int page, int size) {
@@ -102,7 +102,7 @@ public class EntryRepository extends GenericRepository<Entry> {
     return tags;
   }
 
-  public List<Entry> findAllPublishedByTag(String tag) {
+  public List<Entry> findAllPublishedByTag(String tag, int page, int size) {
     setUpCriteria();
 
     cq.select(entry)
@@ -111,12 +111,23 @@ public class EntryRepository extends GenericRepository<Entry> {
         cb.isMember(tag, entry.get(Entry_.tags)))
       .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
-    return getEntityManager().createQuery(cq).getResultList();
+    return getEntityManager().createQuery(cq).setFirstResult(page * size).setMaxResults(size).getResultList();
   }
 
   public Pageable<Entry> findPageableAllPublishedByTag(String tag, int page, int size) {
-    List<Entry> entries = findAllPublishedByTag(tag);
-    return new Pageable<>(entries, entries.size(), page, size);
+    setUpCriteria();
+
+    List<Entry> entries = findAllPublishedByTag(tag, page, size);
+
+    CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+    countQuery.select(cb.count(countQuery.from(Entry.class)))
+      .where(
+        cb.equal(entry.get(Entry_.state), EntryState.PUBLIC),
+        cb.isMember(tag, entry.get(Entry_.tags))
+      );
+    Long totalNumberOfEntries = getEntityManager().createQuery(countQuery).getSingleResult();
+
+    return new Pageable<>(entries, totalNumberOfEntries, page, size);
   }
 
 }
