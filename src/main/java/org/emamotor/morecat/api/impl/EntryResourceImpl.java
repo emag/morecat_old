@@ -17,7 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,11 +77,6 @@ public class EntryResourceImpl implements EntryResource {
     return Response
       .ok(pager, MediaType.APPLICATION_JSON)
       .build();
-  }
-
-  private String formatUrl(Entry entry) {
-    DateFormat df = new SimpleDateFormat("/yyyy/MM/dd/");
-    return String.format("%s%s%s%s", uri.getBaseUri(), PATH_PREFIX, df.format(entry.getCreatedDate()), entry.getPermalink());
   }
 
   @Override
