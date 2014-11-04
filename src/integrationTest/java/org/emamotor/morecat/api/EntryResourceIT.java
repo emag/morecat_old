@@ -13,10 +13,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.Path;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,6 +33,9 @@ import static org.junit.Assert.*;
 public class EntryResourceIT {
 
   private static final String RESOURCE_PREFIX = JAXRSActivator.class.getAnnotation(ApplicationPath.class).value().substring(1);
+  private static final String PATH_PREFIX = EntryResource.class.getAnnotation(Path.class).value().substring(1);
+  private static final String BASE_PATH = RESOURCE_PREFIX + "/" + PATH_PREFIX;
+
   @ArquillianResource
   private URL deploymentUrl;
 
@@ -58,20 +61,51 @@ public class EntryResourceIT {
   }
 
   @Test
-  public void should_cache_anEntry() throws Exception {
+  public void should_have_previous_and_next() throws Exception {
     // Setup
-    WebTarget target = client.target(deploymentUrl.toString() + RESOURCE_PREFIX + "/entries/2014/1/1/permalink1");
-    response = target.request().get();
-    assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
-
-    EntityTag eTag = response.getEntityTag();
-    response.close();
+    WebTarget target = client.target(deploymentUrl.toString() + BASE_PATH + "/2014/09/09/permalink9");
 
     // Exercise
-    response = target.request().header("If-None-Match", eTag).get();
+    response = target.request(MediaType.APPLICATION_JSON).get();
+
     // Verify
-    assertThat(response.getStatus(), is(Response.Status.NOT_MODIFIED.getStatusCode()));
-    response.close();
+    assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
+
+    PublishedPager<PublishedEntryResponse> pager =  response.readEntity(new GenericType<PublishedPager<PublishedEntryResponse>>(){});
+    assertThat(pager.getNext(), is(notNullValue()));
+    assertThat(pager.getPrevious(), is(notNullValue()));
+  }
+
+  @Test
+  public void should_have_only_previous() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + BASE_PATH + "/2014/10/10/permalink10");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+
+    // Verify
+    assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
+
+    PublishedPager<PublishedEntryResponse> pager =  response.readEntity(new GenericType<PublishedPager<PublishedEntryResponse>>(){});
+    assertThat(pager.getNext(), is(nullValue()));
+    assertThat(pager.getPrevious(), is(notNullValue()));
+  }
+
+  @Test
+  public void should_have_only_next() throws Exception {
+    // Setup
+    WebTarget target = client.target(deploymentUrl.toString() + BASE_PATH + "/2014/01/01/permalink1");
+
+    // Exercise
+    response = target.request(MediaType.APPLICATION_JSON).get();
+
+    // Verify
+    assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
+
+    PublishedPager<PublishedEntryResponse> pager =  response.readEntity(new GenericType<PublishedPager<PublishedEntryResponse>>(){});
+    assertThat(pager.getNext(), is(notNullValue()));
+    assertThat(pager.getPrevious(), is(nullValue()));
   }
 
   @Test

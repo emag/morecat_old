@@ -5,11 +5,13 @@ import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.Entry_;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.util.Pageable;
+import org.emamotor.morecat.util.Pager;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -74,6 +76,35 @@ public class EntryRepository extends GenericRepository<Entry> {
     return anEntry;
   }
 
+  public Pager<Entry> findPagerPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+    Entry anEntry = findPublishedByYearMonthDayPermalink(year, month, day, permalink);
+    if (anEntry == null) {
+      return null;
+    }
+
+    Pager<Entry> pager = new Pager<>();
+    pager.setElement(anEntry);
+
+    List<Entry> allPublished = findAllPublished();
+    for (int i = 0; i < allPublished.size(); i++) {
+      Entry target = allPublished.get(i);
+      if (target.equals(anEntry)) {
+        if (i  > 0) {
+          pager.setNext(Optional.of(allPublished.get(i - 1)));
+        } else {
+          pager.setNext(Optional.empty());
+        }
+        if (i + 1 < allPublished.size()) {
+          pager.setPrevious(Optional.of(allPublished.get(i + 1)));
+        } else {
+          pager.setPrevious(Optional.empty());
+        }
+      }
+    }
+
+    return pager;
+  }
+
   public List<Entry> findAllByAdmin() {
     setUpCriteria();
 
@@ -88,7 +119,7 @@ public class EntryRepository extends GenericRepository<Entry> {
 
     cq.select(entry)
       .where(cb.equal(entry.get(Entry_.author), author))
-      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));;
+      .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
     return getEntityManager().createQuery(cq).getResultList();
   }

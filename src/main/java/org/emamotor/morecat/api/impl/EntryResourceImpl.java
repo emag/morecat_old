@@ -2,17 +2,22 @@ package org.emamotor.morecat.api.impl;
 
 import am.ik.marked4j.Marked;
 import org.emamotor.morecat.api.EntryResource;
+import org.emamotor.morecat.api.Next;
+import org.emamotor.morecat.api.Previous;
 import org.emamotor.morecat.api.PublishedEntryResponse;
+import org.emamotor.morecat.api.PublishedPager;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.service.EntryService;
 import org.emamotor.morecat.util.Pageable;
+import org.emamotor.morecat.util.Pager;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.EntityTag;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +26,11 @@ import java.util.stream.Collectors;
  * @author tanabe
  */
 public class EntryResourceImpl implements EntryResource {
+
+  @Context
+  private UriInfo uri;
+
+  private static final String PATH_PREFIX = EntryResource.class.getAnnotation(Path.class).value().substring(1);
 
   @Inject
   private Marked marked;
@@ -40,28 +50,35 @@ public class EntryResourceImpl implements EntryResource {
   }
 
   @Override
-  public Response findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink,
-                                                       String sent, Request request) {
-    Entry anEntry = entryService.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
-    if (anEntry == null) {
+  public Response findPagerPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+    Pager<Entry> internalPager = entryService.findPagerPublishedByYearMonthDayPermalink(year, month, day, permalink);
+    if (internalPager == null) {
       return Response.status(Response.Status.NOT_FOUND).entity(null).build();
     }
 
-    EntityTag eTag = new EntityTag(Integer.toString(anEntry.hashCode()));
-    CacheControl cc = new CacheControl();
-    cc.setMaxAge(5);
+    PublishedPager<PublishedEntryResponse> pager = new PublishedPager<>();
 
-    Response.ResponseBuilder builder = request.evaluatePreconditions(eTag);
-    if (builder != null) {
-      builder.cacheControl(cc);
-      return builder.build();
-    }
+    pager.setElement(entity2Response(internalPager.getElement()));
+
+    internalPager.getNext().ifPresent((Entry next) -> {
+      pager.setNext(new Next(
+        next.getTitle(),
+        formatUrl(next)));
+    });
+    internalPager.getPrevious().ifPresent((Entry previous) -> {
+      pager.setPrevious(new Previous(
+        previous.getTitle(),
+        formatUrl(previous)));
+    });
 
     return Response
-      .ok(entity2Response(anEntry), MediaType.APPLICATION_JSON)
-      .cacheControl(cc)
-      .tag(eTag)
+      .ok(pager, MediaType.APPLICATION_JSON)
       .build();
+  }
+
+  private String formatUrl(Entry entry) {
+    DateFormat df = new SimpleDateFormat("/yyyy/MM/dd/");
+    return String.format("%s%s%s%s", uri.getBaseUri(), PATH_PREFIX, df.format(entry.getCreatedDate()), entry.getPermalink());
   }
 
   @Override

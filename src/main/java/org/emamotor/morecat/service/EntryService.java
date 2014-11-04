@@ -3,6 +3,7 @@ package org.emamotor.morecat.service;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.repository.EntryRepository;
+import org.emamotor.morecat.util.Pager;
 import org.emamotor.morecat.util.Pageable;
 
 import javax.ejb.Stateless;
@@ -23,8 +24,8 @@ public class EntryService {
     return entryRepository.findPageableAllPublished(page, size);
   }
 
-  public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
-    return entryRepository.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
+  public Pager<Entry> findPagerPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+    return entryRepository.findPagerPublishedByYearMonthDayPermalink(year, month, day, permalink);
   }
 
   public List<Entry> findAll() {
