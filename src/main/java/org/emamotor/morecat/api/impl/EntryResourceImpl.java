@@ -63,12 +63,16 @@ public class EntryResourceImpl implements EntryResource {
     internalPager.getNext().ifPresent((Entry next) -> {
       pager.setNext(new Next(
         next.getTitle(),
-        formatUrl(next)));
+        next.getCreatedDate(),
+        next.getPermalink()
+      ));
     });
     internalPager.getPrevious().ifPresent((Entry previous) -> {
       pager.setPrevious(new Previous(
         previous.getTitle(),
-        formatUrl(previous)));
+        previous.getCreatedDate(),
+        previous.getPermalink()
+      ));
     });
 
     return Response

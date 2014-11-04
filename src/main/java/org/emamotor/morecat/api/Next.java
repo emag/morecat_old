@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author Yoshimasa Tanabe
  */
@@ -12,5 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Next {
   private String title;
-  private String link;
+  private Date createdDate;
+  private String permalink;
 }
