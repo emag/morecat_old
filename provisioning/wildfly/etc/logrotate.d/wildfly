@@ -1,0 +1,16 @@
+/opt/wildfly/current/myserver/log/console.log {
+  prerotate
+      /bin/cat /var/run/console_log.pid | /usr/bin/xargs /bin/kill -STOP || true
+  endscript
+
+  daily
+  rotate 13
+  missingok
+  notifempty
+  sharedscripts
+  copytruncate
+
+  postrotate
+      /bin/cat /var/run/console_log.pid | /usr/bin/xargs /bin/kill -CONT
+  endscript
+}

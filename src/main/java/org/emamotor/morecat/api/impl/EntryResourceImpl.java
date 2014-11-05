@@ -2,16 +2,21 @@ package org.emamotor.morecat.api.impl;
 
 import am.ik.marked4j.Marked;
 import org.emamotor.morecat.api.EntryResource;
+import org.emamotor.morecat.api.Next;
+import org.emamotor.morecat.api.Previous;
 import org.emamotor.morecat.api.PublishedEntryResponse;
+import org.emamotor.morecat.api.PublishedPager;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.service.EntryService;
+import org.emamotor.morecat.util.Pageable;
+import org.emamotor.morecat.util.Pager;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.EntityTag;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +26,11 @@ import java.util.stream.Collectors;
  */
 public class EntryResourceImpl implements EntryResource {
 
+  @Context
+  private UriInfo uri;
+
+  private static final String PATH_PREFIX = EntryResource.class.getAnnotation(Path.class).value().substring(1);
+
   @Inject
   private Marked marked;
 
@@ -28,58 +38,56 @@ public class EntryResourceImpl implements EntryResource {
   private EntryService entryService;
 
   @Override
-  public Response findAllPublished(int start, int size) {
-    return Response.ok(entityList2Response(entryService.findAllPublished(start, size))).build();
+  public Response findRecentOnes(int size) {
+    return findAllPublished(0, size);
   }
 
   @Override
-  public Response findAllPublishedByYear(int year) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByYear(year))).build();
+  public Response findAllPublished(int page, int size) {
+    Pageable<Entry> internalPage = entryService.findPageableAllPublished(page, size);
+    return Response.ok(toPublish(internalPage)).build();
   }
 
   @Override
-  public Response findAllPublishedByYearMonth(int year, int month) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByYearMonth(year, month))).build();
-  }
-
-  @Override
-  public Response findAllPublishedByYearMonthDay(int year, int month, int day) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByYearMonthDay(year, month, day))).build();
-  }
-
-  @Override
-  public Response findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink,
-                                                       String sent, Request request) {
-    Entry anEntry = entryService.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
-    if (anEntry == null) {
+  public Response findPagerPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+    Pager<Entry> internalPager = entryService.findPagerPublishedByYearMonthDayPermalink(year, month, day, permalink);
+    if (internalPager == null) {
       return Response.status(Response.Status.NOT_FOUND).entity(null).build();
     }
 
-    EntityTag eTag = new EntityTag(Integer.toString(anEntry.hashCode()));
-    CacheControl cc = new CacheControl();
-    cc.setMaxAge(5);
+    PublishedPager<PublishedEntryResponse> pager = new PublishedPager<>();
 
-    Response.ResponseBuilder builder = request.evaluatePreconditions(eTag);
-    if (builder != null) {
-      builder.cacheControl(cc);
-      return builder.build();
-    }
+    pager.setElement(entity2Response(internalPager.getElement()));
+
+    internalPager.getNext().ifPresent((Entry next) -> {
+      pager.setNext(new Next(
+        next.getTitle(),
+        next.getCreatedDate(),
+        next.getPermalink()
+      ));
+    });
+    internalPager.getPrevious().ifPresent((Entry previous) -> {
+      pager.setPrevious(new Previous(
+        previous.getTitle(),
+        previous.getCreatedDate(),
+        previous.getPermalink()
+      ));
+    });
 
     return Response
-      .ok(entity2Response(anEntry), MediaType.APPLICATION_JSON)
-      .cacheControl(cc)
-      .tag(eTag)
+      .ok(pager, MediaType.APPLICATION_JSON)
       .build();
   }
 
   @Override
-  public Response findAllTags() {
-    return Response.ok(entryService.findAllTags()).build();
+  public Response findAllPublishedTags() {
+    return Response.ok(entryService.findAllPublishedTags()).build();
   }
 
   @Override
-  public Response findAllPublishedByTag(String tag) {
-    return Response.ok(entityList2Response(entryService.findAllPublishedByTag(tag))).build();
+  public Response findAllPublishedByTag(String tag, int page, int size) {
+    Pageable<Entry> internalPage = entryService.findAllPublishedByTag(tag, page ,size);
+    return Response.ok(toPublish(internalPage)).build();
   }
 
   private PublishedEntryResponse entity2Response(Entry entity) {
@@ -107,6 +115,10 @@ public class EntryResourceImpl implements EntryResource {
     return entities.stream()
       .map(this::entity2Response)
       .collect(Collectors.toList());
+  }
+
+  private Pageable<PublishedEntryResponse> toPublish(Pageable<Entry> internalPage) {
+    return internalPage.convertElements(entityList2Response(internalPage.getElements()));
   }
 
 }
