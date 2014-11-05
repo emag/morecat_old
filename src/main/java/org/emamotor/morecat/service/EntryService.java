@@ -3,6 +3,8 @@ package org.emamotor.morecat.service;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.repository.EntryRepository;
+import org.emamotor.morecat.util.Pager;
+import org.emamotor.morecat.util.Pageable;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,24 +20,12 @@ public class EntryService {
   @Inject
   private EntryRepository entryRepository;
 
-  public List<Entry> findAllPublished(int start, int size) {
-    return entryRepository.findAllPublished(start, size);
+  public Pageable<Entry> findPageableAllPublished(int page, int size) {
+    return entryRepository.findPageableAllPublished(page, size);
   }
 
-  public List<Entry> findAllPublishedByYear(int year) {
-    return entryRepository.findAllPublishedByYear(year);
-  }
-
-  public List<Entry> findAllPublishedByYearMonth(int year, int month) {
-    return entryRepository.findAllPublishedByYearMonth(year, month);
-  }
-
-  public List<Entry> findAllPublishedByYearMonthDay(int year, int month, int day) {
-    return entryRepository.findAllPublishedByYearMonthDay(year, month, day);
-  }
-
-  public Entry findPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
-    return entryRepository.findPublishedByYearMonthDayPermalink(year, month, day, permalink);
+  public Pager<Entry> findPagerPublishedByYearMonthDayPermalink(int year, int month, int day, String permalink) {
+    return entryRepository.findPagerPublishedByYearMonthDayPermalink(year, month, day, permalink);
   }
 
   public List<Entry> findAll() {
@@ -54,6 +44,14 @@ public class EntryService {
     return entryRepository.findById(id);
   }
 
+  public Set<String> findAllPublishedTags() {
+    return entryRepository.findAllPublishedTags();
+  }
+
+  public Pageable<Entry> findAllPublishedByTag(String tag, int page, int size) {
+    return entryRepository.findPageableAllPublishedByTag(tag, page, size);
+  }
+
   public Entry create(Entry newEntry) {
     return entryRepository.create(newEntry);
   }
@@ -66,11 +64,4 @@ public class EntryService {
     entryRepository.delete(id);
   }
 
-  public Set<String> findAllTags() {
-    return entryRepository.findAllTags();
-  }
-
-  public List<Entry> findAllPublishedByTag(String tag) {
-    return entryRepository.findAllPublishedByTag(tag);
-  }
 }

@@ -1,0 +1,6 @@
+ batch
+
+ /subsystem=logging/logger=org.hibernate.SQL:add(level=DEBUG)
+ /subsystem=logging/logger=org.hibernate.type.descriptor.sql.BasicBinder:add(level=TRACE)
+
+ run-batch

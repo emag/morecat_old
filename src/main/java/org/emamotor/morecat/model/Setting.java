@@ -1,6 +1,7 @@
 package org.emamotor.morecat.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "settings")
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Setting extends BaseEntity {
 
   @Column(name = "blog_name", nullable = false)

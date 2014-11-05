@@ -1,7 +1,6 @@
 package org.emamotor.morecat;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.gradle.archive.importer.embedded.EmbeddedGradleImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
@@ -17,8 +16,8 @@ public class MoreCatDeployment {
       .importBuildOutput().as(WebArchive.class)
       .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
       .addAsResource("import.sql")
-      .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-      .addAsWebInfResource("test-ds.xml");
+      .addAsWebInfResource("test-ds.xml", "morecat-ds.xml")
+      .addAsWebInfResource("jboss-web.xml", "jboss-web.xml");
   }
 
 }
