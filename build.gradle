@@ -2,7 +2,9 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 apply plugin: "java"
 apply plugin: "war"
+
 apply plugin: 'findbugs'
+apply plugin: 'jacoco'
 
 apply from: "generate-schema.gradle"
 apply from: "flyway.gradle"
