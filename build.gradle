@@ -10,11 +10,6 @@ apply from: "generate-schema.gradle"
 apply from: "flyway.gradle"
 
 group = "org.emamotor.morecat"
-
-project.ext {
-  artifactId = name
-}
-
 version = "0.3.0-SNAPSHOT"
 
 war.archiveName = "morecat.war"
@@ -22,8 +17,10 @@ war.archiveName = "morecat.war"
 sourceCompatibility = targetCompatibility = 1.8
 
 ext {
-  wildflyVersion = "8.1.0.Final"
-  hibernateVersion = "4.3.5.Final"
+  wildflyVersion = "8.2.0.Final"
+  resteasyVersion = "3.0.10.Final"
+  hibernateVersion = "4.3.7.Final"
+  hibernateValidatorVersion = "5.1.3.Final"
   arquillianVersion = "1.1.5.Final"
   expectedGradleVersion = "2.1"
   defaultEnvironment = "development"
@@ -34,15 +31,10 @@ tasks.withType(AbstractCompile) each {
   it.options.encoding = "UTF-8"
 }
 
-repositories {
-  maven { url "https://repository.jboss.org/nexus/content/groups/public-jboss" }
-  maven { url "https://repository.jboss.org/nexus/content/repositories" }
-  maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
-  maven { url "http://repository.jboss.org/nexus/content/groups/public" }
-  maven { url "http://repository.jboss.org/nexus/content/repositories/deprecated" }
+repositories { 
+  mavenCentral()
   maven { url "http://repository.primefaces.org" }
   maven { url "http://repo.jfrog.org/artifactory/repo" }
-  mavenCentral()
 }
 
 configurations {
@@ -57,12 +49,13 @@ configurations {
 }
 
 dependencies {
-  providedCompile "org.wildfly:wildfly-spec-api:$wildflyVersion"
+  providedCompile "javax:javaee-api:7.0"
+  providedCompile "org.jboss.resteasy:resteasy-jackson-provider:$resteasyVersion"
+  providedCompile "org.hibernate:hibernate-validator:$hibernateValidatorVersion"
   providedCompile "org.hibernate:hibernate-core:$hibernateVersion"
   apt "org.hibernate:hibernate-jpamodelgen:$hibernateVersion"
-  providedCompile "org.hibernate:hibernate-validator:5.1.1.Final"
+
   providedCompile "org.projectlombok:lombok:1.14.2"
-  providedCompile "org.jboss.resteasy:resteasy-jackson-provider:3.0.8.Final"
 
   compile "org.apache.commons:commons-lang3:3.3.2"
   compile "am.ik.marked4j:marked4j:0.9.1"
@@ -72,11 +65,11 @@ dependencies {
   compile "org.primefaces.themes:eggplant:1.0.10"
 
   testCompile "junit:junit:4.+"
-  testCompile "org.jboss.resteasy:resteasy-client:3.0.8.Final"
+  testCompile "org.jboss.resteasy:resteasy-client:$resteasyVersion"
   testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
   testCompile "org.jboss.arquillian.protocol:arquillian-protocol-servlet:$arquillianVersion"
-  testCompile group: "org.jboss.shrinkwrap.resolver", name: "shrinkwrap-resolver-gradle-depchain", version: "2.2.0-alpha-2"
   testRuntime "org.wildfly:wildfly-arquillian-container-managed:$wildflyVersion"
+  testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:2.2.0-beta-1"
 }
 
 sourceSets {

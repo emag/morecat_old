@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-  <security-domain>java:jboss/jaas/morecat-security</security-domain>
+  <security-domain>morecat-security</security-domain>
   <disable-audit>true</disable-audit>
   <context-root>/</context-root>
 </jboss-web>
