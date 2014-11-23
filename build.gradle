@@ -10,9 +10,11 @@ apply from: "generate-schema.gradle"
 apply from: "flyway.gradle"
 
 group = "org.emamotor.morecat"
+
 project.ext {
-  artifactId = "morecat"
+  artifactId = name
 }
+
 version = "0.3.0-SNAPSHOT"
 
 war.archiveName = "morecat.war"
