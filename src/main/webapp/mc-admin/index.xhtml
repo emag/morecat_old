@@ -26,24 +26,8 @@
     <p:layoutUnit position="center">
 
       <div align="center" style="margin-top: 20px">
-        <h:form>
-
-          <p:growl id="growl"/>
-
-          <p:panelGrid columns="2">
-
-            <h:outputText value="Mail Address"/>
-            <p:inputText id="email" value="#{authController.email}"/>
-            <h:outputText value="Password"/>
-            <p:password id="password" value="#{authController.password}"/>
-            <f:facet name="footer">
-              <p:commandButton value="Submit" update="growl" actionListener="#{authController.login}"
-                               type="submit" icon="ui-icon-check" style="margin:0"/>
-            </f:facet>
-
-          </p:panelGrid>
-
-        </h:form>
+        <!-- TODO more attractive -->
+        <a href="/mc-admin/overview/view.xhtml">Administration Console</a>
       </div>
 
     </p:layoutUnit>

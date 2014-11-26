@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
@@ -36,8 +35,8 @@ public class ProfileEditController implements Serializable {
 
   @PostConstruct
   public void init() {
-    this.profile = authService.getLoginUserByEmail(
-      ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName());
+//    this.profile = authService.getLoginUserName(
+//      ((HttpServletRequest) facesContext.getExternalContext().getRequest()).getUserPrincipal().getName());
   }
 
   public void doSave() {

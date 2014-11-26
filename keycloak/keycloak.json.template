@@ -1,0 +1,10 @@
+{
+  "realm": "morecat",
+  "realm-public-key": "${keycloakRealmPublicKey}",
+  "auth-server-url": "${keycloakAuthServerUrl}",
+  "ssl-required": "external",
+  "resource": "morecat",
+  "credentials": {
+    "secret": "${keycloakCredentialSecret}"
+  }
+}

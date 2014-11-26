@@ -6,3 +6,9 @@
 .ui-layout-north .ui-layout-unit-content {
   overflow: visible !important;
 }
+
+.ui-menuitem-icon.keycloak {
+  background: url(/resources/images/keycloak.png) no-repeat;
+  height: 16px;
+  width: 16px;
+}
