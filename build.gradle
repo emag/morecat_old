@@ -55,6 +55,7 @@ dependencies {
   providedCompile 'org.projectlombok:lombok:1.14.2'
 
   compile 'org.apache.commons:commons-lang3:3.3.2'
+  providedCompile 'org.apache.httpcomponents:httpclient:4.2.1'
   compile 'am.ik.marked4j:marked4j:0.9.1'
   compile 'org.slf4j:slf4j-api:1.7.7'
   compile 'ch.qos.logback:logback-classic:1.1.2'
