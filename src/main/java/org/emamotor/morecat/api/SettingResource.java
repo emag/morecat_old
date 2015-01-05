@@ -2,6 +2,7 @@ package org.emamotor.morecat.api;
 
 import org.emamotor.morecat.service.SettingService;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * @author Yoshimasa Tanabe
  */
+@ApplicationScoped
 @Path("/settings")
 public class SettingResource {
 

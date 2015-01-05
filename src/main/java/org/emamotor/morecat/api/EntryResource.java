@@ -6,6 +6,7 @@ import org.emamotor.morecat.service.EntryService;
 import org.emamotor.morecat.util.Pageable;
 import org.emamotor.morecat.util.Pager;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * @author tanabe
  */
+@ApplicationScoped
 @Path("/entries")
 public class EntryResource {
 
