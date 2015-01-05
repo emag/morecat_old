@@ -19,7 +19,7 @@ ext {
   resteasyVersion = '3.0.10.Final'
   hibernateVersion = '4.3.7.Final'
   hibernateValidatorVersion = '5.1.3.Final'
-  keycloakVersion = '1.1.0.Beta1'
+  keycloakVersion = '1.1.0.Beta2'
   arquillianVersion = '1.1.5.Final'
   expectedGradleVersion = '2.1'
 }
