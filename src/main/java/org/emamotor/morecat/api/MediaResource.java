@@ -3,6 +3,7 @@ package org.emamotor.morecat.api;
 import org.emamotor.morecat.model.Media;
 import org.emamotor.morecat.service.MediaService;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.Response;
 /**
  * @author Yoshimasa Tanabe
  */
+@ApplicationScoped
 @Path("/media")
 public class MediaResource {
 

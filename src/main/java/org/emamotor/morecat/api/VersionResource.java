@@ -2,6 +2,7 @@ package org.emamotor.morecat.api;
 
 import org.emamotor.morecat.util.Version;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -10,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * @author Yoshimasa Tanabe
  */
+@ApplicationScoped
 @Path("/version")
 public class VersionResource {
 
