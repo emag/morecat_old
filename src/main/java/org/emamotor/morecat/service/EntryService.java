@@ -1,10 +1,9 @@
 package org.emamotor.morecat.service;
 
 import org.emamotor.morecat.model.Entry;
-import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.repository.EntryRepository;
-import org.emamotor.morecat.util.Pager;
 import org.emamotor.morecat.util.Pageable;
+import org.emamotor.morecat.util.Pager;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -36,8 +35,8 @@ public class EntryService {
     return entryRepository.findAllByAdmin();
   }
 
-  public List<Entry> findAllByAuthor(User author) {
-    return entryRepository.findAllByAuthor(author);
+  public List<Entry> findAllByAuthor(String authorName) {
+    return entryRepository.findAllByAuthor(authorName);
   }
 
   public Entry findById(Integer id) {

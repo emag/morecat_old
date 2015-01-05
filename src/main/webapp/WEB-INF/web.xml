@@ -50,13 +50,10 @@
       <role-name>ADMIN</role-name>
     </auth-constraint>
   </security-constraint>
+
   <login-config>
-    <auth-method>FORM</auth-method>
-    <realm-name>MoreCat Auth</realm-name>
-    <form-login-config>
-      <form-login-page>/mc-admin/login.xhtml</form-login-page>
-      <form-error-page>/mc-admin/login.xhtml</form-error-page>
-    </form-login-config>
+    <auth-method>KEYCLOAK</auth-method>
+    <realm-name>morecat</realm-name>
   </login-config>
 
   <error-page>

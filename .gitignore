@@ -36,3 +36,6 @@ rebel.xml
 
 # Ansible
 hosts
+
+# Keycloak
+src/main/webapp/WEB-INF/keycloak.json

@@ -92,7 +92,7 @@ public class EntryResourceImpl implements EntryResource {
 
   private PublishedEntryResponse entity2Response(Entry entity) {
     PublishedEntryResponse response = new PublishedEntryResponse();
-    response.setAuthorName(entity.getAuthor().getName());
+    response.setAuthorName(entity.getAuthorName());
     switch (entity.getFormat()) {
       case MARKDOWN:
         response.setContent(marked.marked(entity.getContent()));

@@ -21,7 +21,7 @@
           <p:menuitem value="MoreCat #{versionController.version}"/>
           <f:facet name="options">
             <p:menuButton value="Welcome, #{authController.loginUserName}">
-              <p:menuitem value="Edit Profile" outcome="/mc-admin/profile/edit"/>
+              <p:menuitem value="Edit Profile" url="#{authController.accountManagerUrl}"/>
               <p:menuitem value="Logout" action="#{authController.logout}"/>
             </p:menuButton>
           </f:facet>
@@ -38,9 +38,9 @@
           <p:menuitem value="Overview" outcome="/mc-admin/overview/view" icon="ui-icon-home"/>
           <p:menuitem value="Entries" outcome="/mc-admin/entries/view" icon="ui-icon-document"/>
           <p:menuitem value="Media" outcome="/mc-admin/media/view" icon="ui-icon-image"/>
-          <p:menuitem value="Users" outcome="/mc-admin/users/view" icon="ui-icon-person"
-                      rendered="#{request.isUserInRole('ADMIN')}"/>
           <p:menuitem value="Settings" outcome="/mc-admin/settings/view" icon="ui-icon-wrench"
+                      rendered="#{request.isUserInRole('ADMIN')}"/>
+          <p:menuitem value="Keycloak" url="#{authController.keycloakAdminConsoleUrl}" icon="keycloak"
                       rendered="#{request.isUserInRole('ADMIN')}"/>
         </p:menu>
       </h:form>

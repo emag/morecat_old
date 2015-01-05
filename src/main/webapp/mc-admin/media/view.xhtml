@@ -14,7 +14,8 @@
     <h2>Media</h2>
 
     <h:form enctype="multipart/form-data">
-      <h:inputFile id="file" value="#{mediaViewController.file}"/>
+      <h:inputFile id="file" label="file" value="#{mediaViewController.file}" required="true" requiredMessage="File not selected"/>
+      <h:message style="color: red" for="file" />
       <p:separator/>
       <h:commandButton value="Upload" action="#{mediaViewController.upload}"/>
     </h:form>
@@ -30,7 +31,7 @@
         <h:outputText value="#{media.name}"/>
       </p:column>
       <p:column headerText="Author">
-        <h:outputText value="#{media.author.name}"/>
+        <h:outputText value="#{media.authorName}"/>
       </p:column>
       <p:column headerText="Action">
         <h:outputLink value="../../api/media/#{media.uuid}/#{media.name}">

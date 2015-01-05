@@ -3,16 +3,13 @@ package org.emamotor.morecat.admin.media;
 import lombok.Getter;
 import lombok.Setter;
 import org.emamotor.morecat.model.Media;
-import org.emamotor.morecat.model.User;
+import org.emamotor.morecat.service.AuthService;
 import org.emamotor.morecat.service.MediaService;
-import org.emamotor.morecat.service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -34,19 +31,13 @@ public class MediaViewController {
   private MediaService mediaService;
 
   @Inject
-  private UserService userService;
+  private AuthService authService;
 
   @Getter @Setter
   private Part file;
 
   @Getter
   private List<Media> mediaList;
-
-  public void validate(FacesContext context, UIComponent component, Object value) {
-    if (value == null) {
-      throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_WARN, "Please input a file", null));
-    }
-  }
 
   @PostConstruct
   public void init() {
@@ -60,11 +51,6 @@ public class MediaViewController {
   }
 
   public String upload() {
-    if (file == null) {
-      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Please input a file", null));
-      return null;
-    }
-
     Media media = new Media();
 
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -76,12 +62,12 @@ public class MediaViewController {
       }
       media.setContent(bos.toByteArray());
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
 
-    HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-    User author = userService.findByEmail(request.getUserPrincipal().getName());
-    media.setAuthor(author);
+    media.setAuthorName(
+      authService.getLoginUserName(
+        (HttpServletRequest) facesContext.getExternalContext().getRequest()));
 
     media.setName(file.getSubmittedFileName());
 

@@ -3,7 +3,6 @@ package org.emamotor.morecat.repository;
 import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.Entry_;
-import org.emamotor.morecat.model.User;
 import org.emamotor.morecat.util.Pageable;
 import org.emamotor.morecat.util.Pager;
 
@@ -114,11 +113,11 @@ public class EntryRepository extends GenericRepository<Entry> {
     return getEntityManager().createQuery(cq).getResultList();
   }
 
-  public List<Entry> findAllByAuthor(User author) {
+  public List<Entry> findAllByAuthor(String authorName) {
     setUpCriteria();
 
     cq.select(entry)
-      .where(cb.equal(entry.get(Entry_.author), author))
+      .where(cb.equal(entry.get(Entry_.authorName), authorName))
       .orderBy(cb.desc(entry.get(Entry_.createdDate)), cb.desc(entry.get(Entry_.createdTime)));
 
     return getEntityManager().createQuery(cq).getResultList();

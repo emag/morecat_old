@@ -6,7 +6,6 @@ import org.emamotor.morecat.util.DateUtil;
 import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -18,9 +17,6 @@ public class MediaService {
 
   @Inject
   private Logger logger;
-
-  @Inject
-  private Event<Media> mediaEventSrc;
 
   @Inject
   private MediaRepository mediaRepository;
@@ -36,7 +32,7 @@ public class MediaService {
   public Media upload(Media media) {
     Media registeredMedia = mediaRepository.create(media);
     logger.info("Uploaded media {} by {} #{}",
-      registeredMedia.getUuid() + "/" + registeredMedia.getName(), registeredMedia.getAuthor().getName(), DateUtil.getFormattedCurrentDateTime());
+      registeredMedia.getUuid() + "/" + registeredMedia.getName(), registeredMedia.getAuthorName(), DateUtil.getFormattedCurrentDateTime());
     return mediaRepository.create(registeredMedia);
   }
 
