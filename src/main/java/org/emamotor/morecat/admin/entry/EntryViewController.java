@@ -39,8 +39,7 @@ public class EntryViewController {
     if (request.isUserInRole(String.valueOf(Role.ADMIN))) {
       entries = entryService.findAllByAdmin();
     } else {
-//      entries = entryService.findAllByAuthor(
-//        authService.getLoginUserName(request.getUserPrincipal().getName()));
+      entries = entryService.findAllByAuthor(authService.getLoginUserName(request));
     }
 
     String previousViewMessage = (String) facesContext.getExternalContext().getFlash().get("message");

@@ -18,9 +18,6 @@ public class AuthService {
   @Inject
   private Logger logger;
 
-  @Inject
-  private UserService userService;
-
   public void logout(HttpServletRequest request) {
     KeycloakSecurityContext session = (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
     logger.info("User ({}) logged out #{}", session.getIdToken().getPreferredUsername(), DateUtil.getFormattedCurrentDateTime());

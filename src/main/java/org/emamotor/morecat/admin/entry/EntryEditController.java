@@ -8,9 +8,8 @@ import org.emamotor.morecat.model.Entry;
 import org.emamotor.morecat.model.EntryFormat;
 import org.emamotor.morecat.model.EntryState;
 import org.emamotor.morecat.model.Role;
-import org.emamotor.morecat.model.User;
+import org.emamotor.morecat.service.AuthService;
 import org.emamotor.morecat.service.EntryService;
-import org.emamotor.morecat.service.UserService;
 import org.emamotor.morecat.util.DateUtil;
 import org.slf4j.Logger;
 
@@ -42,7 +41,7 @@ public class EntryEditController implements Serializable {
   private EntryService entryService;
 
   @Inject
-  private UserService userService;
+  private AuthService authService;
 
   @Getter
   @Setter
@@ -58,14 +57,14 @@ public class EntryEditController implements Serializable {
   public void doFind() {
 
     HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-    User author = userService.findByEmail(request.getUserPrincipal().getName());
+    String authorName = authService.getLoginUserName(request);
 
     // new entry
     if (entry.getId() == null
       || (this.entry = entryService.findById(entry.getId())) == null) {
 
       this.entry = new Entry();
-      this.entry.setAuthor(author);
+      this.entry.setAuthorName(authorName);
       this.entry.setFormat(EntryFormat.MARKDOWN);
       this.entry.setState(EntryState.DRAFT);
 
@@ -73,15 +72,15 @@ public class EntryEditController implements Serializable {
     }
 
     // existing entry
-    // Authors can edit their own entries
+    // Authors can only edit their own entries
     if (!request.isUserInRole(String.valueOf(Role.ADMIN))
-      && !this.entry.getAuthor().equals(author)) {
+      && !this.entry.getAuthorName().equals(authorName)) {
 
       try {
         // TODO Should I redirect the user to Forbidden page?
         facesContext.getExternalContext().redirect(request.getContextPath() + "/mc-admin/overview/view.xhtml");
       } catch (IOException e) {
-        logger.error("IOException occurred, Username : " + request.getUserPrincipal().getName(), e);
+        logger.error("IOException occurred, Username : " + authorName, e);
         facesContext.addMessage(null, new FacesMessage("System error!"));
       }
 
@@ -122,7 +121,7 @@ public class EntryEditController implements Serializable {
     }
 
     logger.info("[{}]Edit entry {} by {} #" + DateUtil.getFormattedCurrentDateTime(),
-      this.entry.getState(), this.entry.getTitle(), this.entry.getAuthor().getName());
+      this.entry.getState(), this.entry.getTitle(), this.entry.getAuthorName());
 
     return true;
   }

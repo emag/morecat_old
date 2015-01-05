@@ -1,7 +1,9 @@
 package org.emamotor.morecat.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Type;
@@ -55,9 +57,12 @@ public class Entry extends BaseEntity {
   @NotEmpty(message = "Permalink must not be empty")
   private String permalink;
 
-  @ManyToOne
-  @JoinColumn(name = "author_id", nullable = false)
-  private User author;
+  /**
+   * Keycloak user name
+   */
+  @Column(name = "author_name", nullable = false)
+  @NotNull
+  private String authorName;
 
   @Temporal(TemporalType.DATE)
   @Column(name = "created_date", nullable = false)
